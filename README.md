@@ -1,6 +1,6 @@
 # UC Berkeley PhD thesis
 
-Template pulled from [Harold Pimentel's thesis](https://github.com/pimentel/ucbthesis-phd).
+Template pulled from [Harold Pimentel's page](https://github.com/pimentel/ucbthesis-phd).
 Originally pulled from [Paul Vojta's website](https://math.berkeley.edu/~vojta/tex/ucbthesis-phd.html) and slightly adapted.
 
 ## configuration
