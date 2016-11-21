@@ -1,12 +1,22 @@
-# UC Berkeley PhD thesis
+# Biostatistics Ph.D. dissertation, U.C. Berkeley
 
-Template pulled from [Harold Pimentel's page](https://github.com/pimentel/ucbthesis-phd).
-Originally pulled from [Paul Vojta's website](https://math.berkeley.edu/~vojta/tex/ucbthesis-phd.html) and slightly adapted.
+> This is the Ph.D. dissertation of [Nima Hejazi]()...
+
+---
+
+## Summary
+
+---
 
 ## configuration
 
-Make sure to set the variables in `src/configuration.tex`.
-In addition, make sure to correctly set the `documentclass` in the beginning of files `src/thesis.tex` and `src/approvalpage.tex` if writing a masters thesis.
+* Make sure to set the variables in `src/configuration.tex`.
+
+* In addition, make sure to correctly set the `documentclass` in the beginning
+    of files `src/thesis.tex` and `src/approvalpage.tex` if writing a masters
+    thesis.
+
+---
 
 ## required tooling
 
@@ -18,6 +28,8 @@ If you are running TeX Live, you can install it using the package manager:
 tlmgr install latexmk
 ```
 
+---
+
 ## targets
 
 - `all` make everything
@@ -26,7 +38,9 @@ tlmgr install latexmk
 - `clean` clean up everything
 - `link` make symbolic links into the directory `pdf` of the approval page and the actual thesis
 
-## gulp
+---
+
+## `gulp`
 
 There is a `gulpfile.js` included.
 You don't need to use it, but it is pretty convenient if you like to look at your changes instantly.
@@ -38,3 +52,18 @@ Assuming `npm` is installed, run the following:
 ```
 npm install --global gulp-cli
 ```
+
+---
+
+## sources
+
+Template pulled from [Harold Pimentel's
+page](https://github.com/pimentel/ucbthesis-phd).
+
+Originally pulled from [Paul Vojta's
+website](https://math.berkeley.edu/~vojta/tex/ucbthesis-phd.html) and slightly
+adapted.
+
+---
+
+## License
