@@ -10,7 +10,6 @@
 % document a "dissertation", not a "thesis".
 
 \documentclass{ucbthesis}
-\usepackage{biblatex}
 
 % To compile this file, run "latex thesis", then "biber thesis"
 % (or "bibtex thesis", if the output from latex asks for that instead),
@@ -24,12 +23,7 @@
 % be indented (like the others), then include this line:
 % \usepackage{indentfirst}
 
-\newtheorem{theorem}{Jibberish}
-
-\bibliography{references}
-
-\hyphenation{mar-gin-al-ia}
-\hyphenation{bra-va-do}
+\input{_preamble}
 
 \begin{document}
 

@@ -193,7 +193,7 @@
 % Take care of changed defaults
 
 \ifnum\thes@sidedness<0
-  \PassOptionsToClass{oneside}{memoir}
+  \PassOptionsToClass{oneside,oldfontcommands}{memoir}
   \renewcommand\thes@sidedness{1}
 \fi
 

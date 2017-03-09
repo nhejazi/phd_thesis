@@ -1,8 +1,8 @@
 # My Biostatistics Ph.D. Dissertation
 
-> "Topics in Data-Adaptive Estimation and Causal Inference," a doctoral
-> dissertation submitted in partial satisfaction of the requirements for the
-> Ph.D. in Biostatistics, at U.C. Berkeley, by [Nima
+> "Nonparametric and Data-Adaptive Techniques for the Assessment of Variable
+> Importance," a doctoral dissertation submitted in partial satisfaction of the
+> requirements for the Ph.D. in Biostatistics, at U.C. Berkeley, by [Nima
 > Hejazi](http://nimahejazi.org).
 
 ---
