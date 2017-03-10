@@ -1,9 +1,9 @@
-# My Biostatistics Ph.D. Dissertation
+# Biostatistics Ph.D. Dissertation
 
 > "Nonparametric and Data-Adaptive Techniques for the Assessment of Variable
-> Importance," a doctoral dissertation submitted in partial satisfaction of the
-> requirements for the Ph.D. in Biostatistics, at U.C. Berkeley, by [Nima
-> Hejazi](http://nimahejazi.org).
+> Importance," a dissertation submitted in partial satisfaction of the
+> requirements for the Doctor of Philosophy (Ph.D.) in Biostatistics, at U.C.
+> Berkeley, by [Nima Hejazi](http://nimahejazi.org).
 
 ---
 
@@ -13,13 +13,8 @@ This dissertation consists in theoretical and data analytic work centered around
 the development and application of methods for data-adaptive estimation,
 nonparametric inference, and causal inference...
 
----
-
-## Related
-
-* ...
-
-* ...
+__The compiled dissertation document (in PDF) is available for browsing
+[here](http://www.stat.berkeley.edu/~nhejazi/publications/dissertation-phd-biostat.pdf).__
 
 ---
 
@@ -33,6 +28,14 @@ nonparametric inference, and causal inference...
 
 _N.B._, a functional installation of a LaTeX distribution (_e.g._,
 [MacTeX](http://www.tug.org/mactex/)) is required to compile this dissertation.
+
+---
+
+## Related
+
+* ...
+
+* ...
 
 ---
 
