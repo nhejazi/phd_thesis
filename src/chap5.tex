@@ -1,0 +1,36 @@
+\chapter{Software Package}
+
+To support widespread use of this newly developed methodology, an R package,
+``biotmle,'' which provides a generalized implementation of this biomarker
+discovery procedure, has been made publicly available. As previously described
+in Section~\ref{estimation}, the method, based on targeted minimum loss-based
+estimation~\cite{van2011targeted} and a generalization of the moderated
+statistics of Smyth~\cite{smyth2004linear}, is designed for use with both
+microarray and next-generation biological sequencing data. The statistical
+approach made available in this software package relies on the use of TMLE to
+rigorously evaluate the association between a set of potential biomarkers and
+another variable of interest while adjusting for potential confounding from
+another set of user-specified covariates. The implementation is in the form of a
+package for the R language for statistical computing \cite{R}.
+
+There are two principal ways in which the biomarker discovery techniques in
+the ``biotmle'' R package may be used: to evaluate the association between (1) a
+phenotypic measure (say, environmental exposure) and a biomarker of interest,
+and (2) an outcome of interest (e.g., survival status at a given time) and a
+biomarker measurement, both while controlling for background covariates (e.g.,
+BMI, age). By using a TMLE-based procedure to estimate the average treatment
+effect in a targeted manner, the package produces easily interpretable results
+in the form of a variable importance measure (see~\cite{van2011targeted} for an
+extended discussion), making the ``biotmle'' package aptly suited for
+applications in bioinformatics, genomics, and molecular epidemiology.
+
+While the principal results produced by this R package matches those produced by
+the immensely popular ``limma'' R package~\cite{smyth2005limma}, ``biotmle''
+provides several unique utilities, largely in the form of several expressive
+plotting methods --- for example, a heatmap based on the recently developed
+``superheat'' R package~\cite{barter2017superheat} --- and a custom ``biotmle''
+class, based on the popular ``SummarizedExperiment''
+class~\cite{huber2015orchestrating}. While the R package is currently publicly
+available at \url{https://github.com/nhejazi/biotmle}, submission of the
+software package to the centralized repository maintained by the Bioconductor
+project~\cite{gentleman2004bioconductor} is underway.

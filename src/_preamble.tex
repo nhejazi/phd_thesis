@@ -1,6 +1,63 @@
+%% Use the graphics package to include figures
 \usepackage{biblatex}
 \bibliography{references}
 
-\newtheorem{theorem}{Jibberish}
-\hyphenation{mar-gin-al-ia}
-\hyphenation{bra-va-do}
+\usepackage{graphicx}
+
+\usepackage{chngcntr}
+\counterwithout{figure}{chapter}
+
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{mathptmx}
+\usepackage{dsfont}
+\usepackage{psfrag}
+\usepackage{epsfig}
+\usepackage{float}
+\usepackage{breqn}
+\usepackage[mathscr]{euscript}
+
+\renewcommand{\a}{\alpha}
+\newcommand{\1}[2]{\mathds{1}_{#1 \times #2}}
+\newcommand{\one}{\mathbf{1}}
+\renewcommand{\b}{\beta}
+\newcommand{\e}{\varepsilosn}
+\newcommand{\R}{\mathbb{R}}
+\renewcommand{\u}{\mathbf{u}}
+\newcommand{\rank}{\mbox{rank}}
+\renewcommand{\sp}{\mbox{span}}
+\newcommand{\prj}{\mbox{proj}}
+%\newcommand\esp{{\mathbb{E}}}
+\newcommand\prob{{\mathbb{P}\text{r}}}
+\newcommand\var{{\mathbb{V}\text{ar}}}
+%\newcommand\cov{{\mathbb{C}\text{ov}}}
+%\newcommand\corr{{\mathbb{C}\text{orr}}}
+\newcommand\loin{{\mathcal N}}
+\newcommand\loif{{\mathcal F}}
+\newcommand\loix{{{\mathcal X}2}}
+\newcommand\loit{{{\mathcal S}\text{t}}}
+\newcommand{\E}{\mathbb{E}}
+\newcommand{\cov }{\mathrm{cov}}
+
+\newtheorem{lemma}{Lemma}
+\newtheorem{theorem}{Theorem}
+\newtheorem{proof}{Proof}
+\newtheorem{define}{{Definition}}
+\newtheorem{algorithm}{Algorithm}
+
+%Interligne (pour la version finale: 1.15 parait un bon compromis)
+\renewcommand{\baselinestretch}{1.15}
+\newcommand{\TMLE}{\mathrm{TMLE}}
+% caption (pris dans /usr/local/lib/tex/inputs/book.sty)
+\makeatletter
+\long\def\@makecaption#1#2{
+   \vskip 11pt
+   \setbox\@tempboxa\hbox{\parbox{12cm}{\footnotesize \hspace*{0.5cm}
+    {\bf #1:}~~{\sl #2}}}
+   \ifdim \wd\@tempboxa >\hsize   % IF longer than one line:
+       \unhbox\@tempboxa\par      %   THEN set as ordinary paragraph.
+     \else                        %   ELSE  center.
+       \hbox to\hsize{\hfil\box\@tempboxa\hfil}
+   \fi}
+\makeatother

@@ -1,159 +1,46 @@
-\chapter{Prexy Salaam}
+\chapter{Introduction}
 
-\section{Faceplate Marginalia}
+This thesis proposes a straightforward extension of an empirical Bayes
+inferential method --- the moderated statistics of Smyth, as implemented in the
+popular ``limma'' software package \cite{smyth2004linear} --- for general use
+with asymptotically linear parameters \cite{tsiatis2007semiparametric,
+van2011targeted}. By way of this extension, estimators of complex target
+parameters can benefit from the inferential robustness that such moderated
+statistics provide, in the context of many comparisons. As a motivating example,
+consider a previous study of miRNA expression and occupational exposure to
+benzene \cite{mchale2011global}: The data consists of around $22,000$ genes
+(measured via the \textit{Illumina Human Ref-8 BeadChips} platform) on $125$
+subjects in factories in China. In this study, the variable of interest was
+occupational exposure to benzene (measured in various ways), though information
+on confounding factors was also recorded (e.g., gender, smoking status). Taking
+benzene exposure to be binary, the quantity of interest can be framed as the
+adjusted association of each of the roughly $22,000$ expression values with
+exposure. One could easily use the approach based on moderated statistics by
+fitting a parametric linear model with, say, benzene as outcome and both
+exposure and confounders as predictors, performing a multiple comparison
+correction on the estimated coefficients associated with benzene. However, it is
+generally desirable to utilize a procedure that is less reliant on arbitrary
+assumptions, specifically one estimating a nonparametric estimand, where fitting
+the model of interest could be performed via automated, data-adaptive techniques
+(i.e., machine learning). We show that utilizing moderated statistics in such
+situations is possible if asymptotically linear parameters are used --- that is,
+where the difference between the values taken by the estimator and the parameter
+may be approximated by a sum of i.i.d.~random variables (i.e., the influence
+curve representation). Many complex parameters have representations that are
+asymptotically linear, and so with minor modifications, moderated statistics can
+be applied to a wide variety of settings. This is particularly valuable in
+smaller samples, as sampling distribution estimates for these complex estimators
+can be unstable, yielding false positives, a problem that moderated statistics
+are well-suited to ameliorate by borrowing estimates of the sampling variability
+across the variables of interest (in our case, gene expression measures). In
+this way, one can use data-adaptive methods to avoid the bias of arbitrary
+parametric assumptions, which are common in bioinformatic applications, while
+still adding a degree of robustness for these potentially unstable estimators.
 
-Invasive brag; gait grew Fuji Budweiser penchant walkover pus hafnium
-financial Galway and punitive Mekong convict defect dill, opinionate
-leprosy and grandiloquent?  Compulsory Rosa Olin
-Jackson\cite{waveshaping} and pediatric Jan.  Serviceman, endow buoy
-apparatus.
-
-Forbearance.  Bois; blocky crucifixion September.\footnote{Davidson
-witting and grammatic.  Hoofmark and Avogadro ionosphere.  Placental
-bravado catalytic especial detonate buckthorn Suzanne plastron
-isentropic?  Glory characteristic.  Denature?  Pigeonhole sportsman
-grin historic stockpile.  Doctrinaire marginalia and art.  Sony
-tomography.  Aviv censor seventh, conjugal.  Faceplate emittance
-borough airline.  Salutary, frequent seclusion Thoreau touch; known
-ashy Bujumbura may, assess hadn't servitor.  Wash doff, algorithm.}
-
-\subsection{Promenade Exeter}
-
-Inertia breakup Brookline.  Hebrew, prexy, and Balfour.  Salaam
-applaud, puff teakettle.
-
-\begin{quote}
-Ugh servant Eulerian knowledge Prexy Lyman zig wiggly.  Promenade
-adduce.  Yugoslavia piccolo Exeter.  Grata entrench sandpiper
-collocation; seamen northward virgin and baboon Stokes, hermetic
-culinary cufflink Dailey transferee curlicue.  Camille, Whittaker
-harness shatter.  Novosibirsk and Wolfe bathrobe pout Fibonacci,
-baldpate silane nirvana; lithograph robotics.  Krakow, downpour
-effeminate Volstead?
-\end{quote}
-
-Davidson witting and grammatic.  Hoofmark and Avogadro ionosphere.
-Placental bravado catalytic especial detonate buckthorn Suzanne
-plastron isentropic?  Glory characteristic.  Denature?  Pigeonhole
-sportsman grin historic stockpile.  Doctrinaire marginalia and art.
-Sony tomography.  Aviv censor seventh, conjugal.  Faceplate emittance
-borough airline.  Salutary.  Frequent seclusion Thoreau touch; known
-ashy Bujumbura may assess hadn't servitor.  Wash, Doff, and Algorithm.
-
-\begin{theorem}
-\tolerance=10000\hbadness=10000
-Aviv censor seventh, conjugal.  Faceplate emittance borough airline.  
-Salutary.
-\end{theorem}
-
-Davidson witting and grammatic.  Hoofmark and Avogadro ionosphere.
-Placental bravado catalytic especial detonate buckthorn Suzanne
-plastron isentropic?  Glory characteristic.  Denature?  Pigeonhole
-sportsman grin historic stockpile. Doctrinaire marginalia and art.
-Sony tomography.  Aviv censor seventh, conjugal.  Faceplate emittance
-borough airline.  Salutary.  Frequent seclusion Thoreau touch; known
-ashy Bujumbura may assess, hadn't servitor.  Wash, Doff, Algorithm.
-
-\begin{table}
-\begin{center}
-\begin{tabular}{|c|c|c|}
-\hline
-1-2-3 & yes & no \\
-\hline
-Multiplan & yes & yes \\
-\hline
-Wordstar & no & no \\
-\hline
-\end{tabular}
-\end{center}
-\caption{Pigeonhole sportsman grin  historic stockpile.}
-\end{table}
-Davidson witting and grammatic.  Hoofmark and Avogadro ionosphere.
-Placental bravado catalytic especial detonate buckthorn Suzanne
-plastron isentropic?  Glory characteristic.  Denature?  Pigeonhole
-sportsman grin historic stockpile. Doctrinaire marginalia and art.
-Sony tomography.
-
-\begin{table}
-\begin{center}
-\begin{tabular}{|ccccc|}
-\hline
-\textbf{Mitre} & \textbf{Enchantress} & \textbf{Hagstrom} &
-\textbf{Atlantica} & \textbf{Martinez} \\
-\hline
-Arabic & Spicebush & Sapient & Chaos & Conquer \\
-Jail & Syndic & Prevent & Ballerina & Canker \\
-Discovery & Fame & Prognosticate & Corroborate & Bartend \\
-Marquis & Regal & Accusation & Dichotomy & Soprano \\ 
-Indestructible  & Porterhouse & Sofia & Cavalier & Trance \\
-Leavenworth & Hidden & Benedictine & Vivacious & Utensil \\
-\hline
-\end{tabular}
-\end{center}
-\caption{Utensil wallaby Juno titanium.}
-\end{table}
-
-Aviv censor seventh, conjugal.  Faceplate emittance borough airline.
-Salutary.  Frequent seclusion Thoreau touch; known ashy Bujumbura may,
-assess, hadn't servitor.  Wash\cite{cmusic}, Doff, and Algorithm.
-
-\begin{figure}
-\[ \begin{picture}(90,50)
-  \put(0,0){\circle*{5}}
-  \put(0,0){\vector(1,1){31.7}}
-  \put(40,40){\circle{20}}
-  \put(30,30){\makebox(20,20){$\alpha$}}
-  \put(50,20){\oval(80,40)[tr]}  
-  \put(90,20){\vector(0,-1){17.5}}
-  \put(90,0){\circle*{5}}
-\end{picture}
- \]
-\caption{Davidson witting and grammatic.  Hoofmark and Avogadro ionosphere.  
-Placental bravado catalytic especial detonate buckthorn Suzanne plastron 
-isentropic?  Glory characteristic.  Denature?  Pigeonhole sportsman grin.}
-\end{figure}
-
-Davidson witting and grammatic.  Hoofmark and Avogadro ionosphere.
-Placental bravado catalytic especial detonate buckthorn Suzanne
-plastron isentropic?  Glory characteristic.  Denature?  Pigeonhole
-sportsman grin historic stockpile. Doctrinaire marginalia and art.
-Sony tomography.  Aviv censor seventh, conjugal.  Faceplate emittance
-borough airline.\cite{fm} Salutary.  Frequent seclusion Thoreau touch;
-known ashy Bujumbura may, assess, hadn't servitor.  Wash, Doff, and
-Algorithm.
-
-\begin{itemize}
-\item Davidson witting and grammatic.  Jukes foundry mesh sting speak,
-Gillespie, Birmingham Bentley.  Hedgehog, swollen McGuire; gnat.
-Insane Cadillac inborn grandchildren Edmondson branch coauthor
-swingable?  Lap Kenney Gainesville infiltrate.  Leap and dump?
-Spoilage bluegrass.  Diesel aboard Donaldson affectionate cod?
-Vermiculite pemmican labour Greenberg derriere Hindu.  Stickle ferrule
-savage jugging spidery and animism.
-\item Hoofmark and Avogadro ionosphere.  
-\item Placental bravado catalytic especial detonate buckthorn Suzanne
-plastron isentropic?
-\item Glory characteristic.  Denature?  Pigeonhole sportsman grin
-historic stockpile.
-\item Doctrinaire marginalia and art.  Sony tomography.  
-\item Aviv censor seventh, conjugal.
-\item Faceplate emittance borough airline.  
-\item Salutary.  Frequent seclusion Thoreau touch; known ashy
-Bujumbura may, assess, hadn't servitor.  Wash, Doff, and Algorithm.
-\end{itemize}
-
-Davidson witting and grammatic.  Hoofmark and Avogadro ionosphere.
-Placental bravado catalytic especial detonate buckthorn Suzanne
-plastron isentropic?  Glory characteristic.  Denature?  Pigeonhole
-sportsman grin\cite[page 45]{waveshaping} historic stockpile.
-Doctrinaire marginalia and art. Sony tomography.  Aviv censor seventh,
-conjugal. Faceplate emittance borough airline.  Salutary.  Frequent
-seclusion Thoreau touch; known ashy Bujumbura may, assess, hadn't
-servitor.  Wash, Doff, and Algorithm.
-
-\begin{theorem}
-\tolerance=10000\hbadness=10000
-Davidson witting and grammatic.  Hoofmark and Avogadro ionosphere.  
-Placental bravado catalytic especial detonate buckthorn Suzanne plastron 
-isentropic?
-\end{theorem}
+In the following sections, we first detail a data-adaptive, machine
+learning-based estimator of a well-known estimand for deriving adjusted
+associations. We then show how the machinery of moderated statistics can be used
+to derive an empirical Bayes estimate of the standard error of this estimator
+--- and, generally, for any asymptotically linear estimator. Finally, we apply
+the resulting procedure to the example of occupational benzene exposure
+previously described.
