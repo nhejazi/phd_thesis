@@ -1,17 +1,19 @@
 # Biostatistics Ph.D. Dissertation
 
-> "Nonparametric and Data-Adaptive Techniques for the Assessment of Variable
-> Importance," a dissertation submitted in partial satisfaction of the
-> requirements for the Doctor of Philosophy (Ph.D.) in Biostatistics, at U.C.
-> Berkeley, by [Nima Hejazi](http://nimahejazi.org).
+> "Robust Estimation of Stochastic Intervention Effects in Complex Observational
+> Studies," a dissertation submitted in partial satisfaction of the requirements
+> for the Doctor of Philosophy (Ph.D.) in Biostatistics, at U.C. Berkeley, by
+> [Nima Hejazi](https://nimahejazi.org).
 
 ---
 
 ## Summary
 
 This dissertation consists in theoretical and data analytic work centered around
-the development and application of methods for data-adaptive estimation,
-nonparametric inference, and causal inference...
+estimation and inference for causal effects defined via stochastic interventions
+in complex settings. Extensions are provided for causal mediation analysis,
+corrections for two-phase sampling for application in vaccine efficacy trials,
+time-to-event outcomes, and nonparametric conditional density estimation.
 
 __The compiled dissertation document (in PDF) is available for browsing
 [here](http://www.stat.berkeley.edu/~nhejazi/publications/dissertation-phd-biostat.pdf).__
@@ -31,17 +33,9 @@ _N.B._, a functional installation of a LaTeX distribution (_e.g._,
 
 ---
 
-## Related
-
-* ...
-
-* ...
-
----
-
 ## License
 
-&copy; 2021 [Nima Hejazi](http://nimahejazi.org)
+&copy; 2021 [Nima Hejazi](https://nimahejazi.org)
 
 The contents of this repository are released under a <a rel="license"
 href="http://creativecommons.org/licenses/by-nc-sa/4.0/">Creative Commons
