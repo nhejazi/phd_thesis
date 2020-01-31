@@ -1,7 +1,8 @@
 # Biostatistics PhD Thesis
 
-> "Robust Estimation of Stochastic Intervention Effects in Complex Observational
-> Studies," by [Nima Hejazi](https://nimahejazi.org)
+> "Robust Evaluation of the Causal Effects of Stochastic Interventions in
+> Complex Observational and Quasi-Experimental Studies," by [Nima
+> Hejazi](https://nimahejazi.org)
 
 ---
 
