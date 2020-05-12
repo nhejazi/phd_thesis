@@ -1,13 +1,13 @@
 # Biostatistics PhD Thesis
 
-> "Evaluating Stochastic Treatment Regimes in Observational and
-> Quasi-Experimental Studies," by [Nima Hejazi](https://nimahejazi.org)
+> "Semiparametric and Robust Methods for Evaluating Stochastic Treatment
+> Regimes," by [Nima Hejazi](https://nimahejazi.org)
 
 ---
 
 ## Summary
 
-Pretty self explanatory. My PhD dissertation.
+My PhD dissertation.
 
 This repository is for archival purposes. If you'd like to build the PDF
 yourself (why!?), then you will find all of the necessary files within this
