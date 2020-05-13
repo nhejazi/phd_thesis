@@ -1,7 +1,7 @@
 # Biostatistics PhD Thesis
 
-> "Semiparametric and Robust Methods for Evaluating Stochastic Treatment
-> Regimes," by [Nima Hejazi](https://nimahejazi.org)
+> "Nonparametric and Robust Methods for Causal Inference with Stochastic
+> Interventions," by [Nima Hejazi](https://nimahejazi.org)
 
 ---
 
