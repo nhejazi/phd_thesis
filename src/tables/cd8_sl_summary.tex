@@ -1,0 +1,49 @@
+\begin{table}[H]
+\caption{\label{tab:cd8_sl_coefs} Weights and risk estimates assigned to each
+  individual learning algorithm in the ensemble model for $\overline{Q}_{n,Y}$
+  used in the reported re-analysis of the CD8+ immunogenic marker.}
+\centering
+\begin{tabular}[t]{l|r|r|r|r}
+\hline
+Learner & Weight & Min. Fold Risk & Mean CV-Risk & Max. Fold Risk\\
+\hline
+Ridge ($\ell_2$ penalized) & 0.161 & 0.013 & 0.037 & 0.075\\
+\hline
+Lasso ($\ell_1$ penalized) & 0.161 & 0.011 & 0.037 & 0.075\\
+\hline
+Elastic net ($\alpha = 0.25$) & 0.003 & 0.012 & 0.037 & 0.075\\
+\hline
+Elastic net ($\alpha = 0.50$) & 0.000 & 0.014 & 0.037 & 0.076\\
+\hline
+Elastic net ($\alpha = 0.75$) & 0.131 & 0.014 & 0.037 & 0.074\\
+\hline
+Random forest (50 trees) & 0.090 & 0.053 & 0.088 & 0.129\\
+\hline
+Random forest (100 trees) & 0.055 & 0.048 & 0.089 & 0.136\\
+\hline
+Random forest (500 trees) & 0.119 & 0.049 & 0.088 & 0.127\\
+\hline
+xgboost(20 iterations) & 0.000 & 0.043 & 0.064 & 0.112\\
+\hline
+xgboost(50 iterations) & 0.000 & 0.036 & 0.074 & 0.128\\
+\hline
+xgboost (100 iterations & 0.000 & 0.031 & 0.076 & 0.134\\
+\hline
+xgboost (300 iterations) & 0.000 & 0.029 & 0.086 & 0.146\\
+\hline
+Highly adaptive lasso (default) & 0.000 & 0.046 & 0.078 & 0.115\\
+\hline
+Highly adaptive lasso (custom) & 0.000 & 0.044 & 0.078 & 0.132\\
+\hline
+Multivariate adaptive regression splines & 0.000 & 0.029 & 0.100 & 0.159\\
+\hline
+Polynomial spline regression & 0.000 & 0.015 & 0.040 & 0.080\\
+\hline
+Multilayer perceptron network & 0.067 & 0.007 & 0.040 & 0.085\\
+\hline
+GLM with Bayesian priors & 0.214 & 0.016 & 0.037 & 0.073\\
+\hline
+Super Learner & 1.000 & --- & --- & ---\\
+\hline
+\end{tabular}
+\end{table}

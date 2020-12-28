@@ -1,50 +1,10 @@
 %% Use the graphics package to include figures
-\usepackage{biblatex}
+\usepackage[natbib]{biblatex}
 \bibliography{references}
 
 \usepackage{graphicx}
-
 \usepackage{chngcntr}
 \counterwithout{figure}{chapter}
-
-\usepackage{amsmath}
-\usepackage{amsfonts}
-\usepackage{amssymb}
-\usepackage{mathptmx}
-\usepackage{dsfont}
-\usepackage{psfrag}
-\usepackage{epsfig}
-\usepackage{float}
-\usepackage{breqn}
-\usepackage[mathscr]{euscript}
-
-\renewcommand{\a}{\alpha}
-\newcommand{\1}[2]{\mathds{1}_{#1 \times #2}}
-\newcommand{\one}{\mathbf{1}}
-\renewcommand{\b}{\beta}
-\newcommand{\e}{\varepsilosn}
-\newcommand{\R}{\mathbb{R}}
-\renewcommand{\u}{\mathbf{u}}
-\newcommand{\rank}{\mbox{rank}}
-\renewcommand{\sp}{\mbox{span}}
-\newcommand{\prj}{\mbox{proj}}
-%\newcommand\esp{{\mathbb{E}}}
-\newcommand\prob{{\mathbb{P}\text{r}}}
-\newcommand\var{{\mathbb{V}\text{ar}}}
-%\newcommand\cov{{\mathbb{C}\text{ov}}}
-%\newcommand\corr{{\mathbb{C}\text{orr}}}
-\newcommand\loin{{\mathcal N}}
-\newcommand\loif{{\mathcal F}}
-\newcommand\loix{{{\mathcal X}2}}
-\newcommand\loit{{{\mathcal S}\text{t}}}
-\newcommand{\E}{\mathbb{E}}
-\newcommand{\cov }{\mathrm{cov}}
-
-\newtheorem{lemma}{Lemma}
-\newtheorem{theorem}{Theorem}
-\newtheorem{proof}{Proof}
-\newtheorem{define}{{Definition}}
-\newtheorem{algorithm}{Algorithm}
 
 %Interligne (pour la version finale: 1.15 parait un bon compromis)
 \renewcommand{\baselinestretch}{1.15}
@@ -61,3 +21,169 @@
        \hbox to\hsize{\hfil\box\@tempboxa\hfil}
    \fi}
 \makeatother
+
+\usepackage{amsmath}
+\usepackage{times}
+\usepackage{bm}
+
+\let\procedure\relax
+\let\endprocedure\relax
+\usepackage[ruled,vlined]{algorithm2e}
+
+% general-purpose packages
+\usepackage{float}
+\usepackage{comment}
+\graphicspath{ {figs/} }
+\usepackage[english]{babel}
+\usepackage{dsfont}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[inline,shortlabels]{enumitem}
+%\usepackage{caption}
+\usepackage{subcaption}
+\usepackage{refcount}
+\usepackage{lmodern}
+\usepackage{color}
+\usepackage{booktabs}
+\usepackage{tikz}
+\usepackage{url}
+
+% math packages
+\usepackage{mathtools}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{bbm}
+
+\usepackage{setspace}
+\usepackage{multirow}
+\usepackage{hyperref}
+\hypersetup{colorlinks,citecolor=blue,urlcolor=blue}
+
+% math packages
+\usepackage{amsthm}
+\usepackage{amsxtra}
+\usepackage{commath}
+
+% custom math definitions and macros that conflict with Biometrika's
+\newtheorem{theorem}{Theorem}
+\newtheorem{lemma}{Lemma}
+\newtheorem{assumption}{Assumption}
+
+% math macros
+\newtheorem{coro}{Corollary}
+\DeclareMathOperator{\opt}{opt}
+\DeclareMathOperator{\dr}{IF}
+\newcommand{\hopt}{\hat h_{\opt}}
+\newcommand{\supp}{\mathop{\mathrm{supp}}}
+{\theoremstyle{definition} \newtheorem{assumptioniden}{}}
+\renewcommand\theassumptioniden{{A}\arabic{assumptioniden}}
+\AtEndDocument{\refstepcounter{theorem}\label{finalthm}}
+\AtEndDocument{\refstepcounter{equation}\label{finaleq}}
+\DeclareMathOperator{\expit}{expit}
+\DeclareMathOperator{\bern}{Bern}
+\DeclareMathOperator{\logit}{logit}
+\DeclareMathOperator{\var}{Var}
+\DeclareMathOperator{\Rem}{Rem}
+\newcommand{\pt}{\mbox{$p_0$}}
+\renewcommand{\P}{\mathsf{P}}
+\newcommand{\m}{\mathsf{m}}
+\newcommand{\p}{\mathsf{p}}
+\newcommand{\q}{\mathsf{q}}
+\renewcommand{\r}{\mathsf{r}}
+\renewcommand{\b}{\mathsf{b}}
+\renewcommand{\d}{\mathsf{d}}
+\newcommand{\g}{\mathsf{g}}
+\newcommand{\h}{\mathsf{h}}
+\newcommand{\e}{\mathsf{e}}
+\newcommand{\uu}{\mathsf{u}}
+\newcommand{\vv}{\mathsf{v}}
+\newcommand{\s}{\mathsf{s}}
+\newcommand{\indep}{\mbox{$\perp\!\!\!\perp$}}
+\newcommand{\rs}{R}
+\newcommand{\ds}{D^\dag}
+\newcommand{\dd}{\mathrm{d}}
+\newcommand{\Pnj}{\mathsf{P}_{n,j}}
+\newcommand{\Pn}{\mathsf{P}_n}
+\newcommand{\Gnj}{\mathsf{G}_{n,j}}
+\newcommand{\Gn}{\mathsf{G}_{n}}
+\newcommand{\mut}{\mu_0}
+\newcommand{\psii}{\psi_{\mbox{\scriptsize I}, \delta}}
+\newcommand{\psid}{\psi_{\mbox{\scriptsize D}, \delta}}
+\newcommand{\psios}{\hat\psi^{\mbox{\scriptsize os}}_\delta}
+\newcommand{\psitmle}{\hat\psi^{\mbox{\scriptsize tmle}}_\delta}
+\newcommand{\psidos}{\hat\psi_{\mbox{\scriptsize D},
+  \delta}^{\mbox{\scriptsize os}}}
+\newcommand{\psiios}{\hat\psi_{\mbox{\scriptsize I},
+  \delta}^{\mbox{\scriptsize os}}}
+\newcommand{\psidtmle}{\hat\psi_{\mbox{\scriptsize D},
+  \delta}^{\mbox{\scriptsize tmle}}}
+\newcommand{\psiitmle}{\hat\psi_{\mbox{\scriptsize I},
+  \delta}^{\mbox{\scriptsize tmle}}}
+\newcommand{\thetaos}{\hat\theta_{\mbox{\scriptsize os}}(\delta)}
+\newcommand{\thetatmle}{\hat\theta_{\mbox{\scriptsize tmle}}(\delta)}
+\newcommand{\thetaaipw}{\hat\theta_{\mbox{\scriptsize aipw}}(\delta)}
+\newcommand{\hgd}{\hat g_\delta}
+\newcommand{\one}{\mathds{1}}
+\newcommand{\R}{\mathbb{R}}
+\renewcommand{\rmdefault}{ptm}
+\newcommand{\E}{\mathsf{E}}
+\newcommand{\M}{\mathcal{M}}
+\newcommand{\1}{\mathbbm{1}}
+\newcommand{\prob}{\mathbb{P}}
+\renewenvironment{proof}{{\it Proof }}{\qed \\}
+\DeclareMathOperator*{\argmin}{\arg\!\min}
+\def\independenT#1#2{\mathrel{\rlap{$#1#2$}\mkern2mu{#1#2}}}
+
+\pgfdeclarelayer{background}
+\pgfsetlayers{background,main}
+\usetikzlibrary{arrows,positioning}
+\tikzset{
+%Define standard arrow tip
+>=stealth',
+%Define style for boxes
+punkt/.style={
+rectangle,
+rounded corners,
+draw=black, very thick,
+text width=6.5em,
+minimum height=2em,
+text centered},
+% Define arrow style
+pil/.style={
+->,
+thick,
+shorten <=2pt,
+shorten >=2pt,}
+}
+\newcommand{\Vertex}[2]% pos, name
+{\node[minimum width=0.6cm,inner sep=0.05cm] (#2) at (#1) {$\footnotesize#2$};
+% \node[circle,draw,minimum width=0.6cm,inner sep=0] (#2) at (#1) {};
+% \node[rounded corners=3pt,below,draw=black,fill=white,inner sep=1.5pt] at (#2.south) {\footnotesize#2};
+}
+\newcommand{\Vertexr}[2]% pos, name
+{\node[rectangle, draw, minimum width=0.6cm,inner sep=0.05cm] (#2) at (#1) {$\footnotesize#2$};
+% \node[circle,draw,minimum width=0.6cm,inner sep=0] (#2) at (#1) {};
+% \node[rounded corners=3pt,below,draw=black,fill=white,inner sep=1.5pt] at (#2.south) {\footnotesize#2};
+}
+\newcommand{\ArrowR}[3]%
+{ \begin{pgfonlayer}{background}
+\draw[->,#3] (#1) to[bend right=30] (#2);
+\end{pgfonlayer}
+}
+\newcommand{\ArrowL}[3]%
+{ \begin{pgfonlayer}{background}
+\draw[->,#3] (#1) to[bend left=45] (#2);
+\end{pgfonlayer}
+}
+\newcommand{\EdgeL}[3]%
+{ \begin{pgfonlayer}{background}
+\draw[dashed,#3] (#1) to[bend right=-45] (#2);
+\end{pgfonlayer}
+}
+
+\newcommand{\Arrow}[3]%
+{ \begin{pgfonlayer}{background}
+\draw[->,#3] (#1) -- +(#2);
+\end{pgfonlayer}
+}
+
