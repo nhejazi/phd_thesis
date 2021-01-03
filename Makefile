@@ -30,7 +30,7 @@ link: $(OUTPUT_DIRECTORY)/thesis.pdf $(OUTPUT_DIRECTORY)/approvalpage.pdf
 
 web:
 	rsync --chmod=go+r $(OUTPUT_DIRECTORY)/thesis.pdf \
-		nhejazi@arwen.berkeley.edu:/mirror/data/pub/users/nhejazi/publications/dissertation-phd-biostat.pdf
+		nhejazi@arwen.berkeley.edu:/mirror/data/pub/users/nhejazi/publications/thesis-phd-biostat.pdf
 
 clean:
 	rm -rf \
