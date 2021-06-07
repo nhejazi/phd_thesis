@@ -1,4 +1,4 @@
-\chapter{Corrections for Two-Phase Sampling}
+\chapter{Correcting for Biased Sampling}
 
 The advent and subsequent widespread availability of preventive vaccines has
 altered the course of public health over the past century. Despite this success,
@@ -1013,30 +1013,29 @@ lasso}\label{cond_dens}
 
 In section~\ref{est_nuisance_param}, several of the challenges associated
 with conditional density estimation were briefly expressed. The auxiliary
-covariate given in equation (\ref{eqn:aux_covar}) of the EIF is a ratio of
-such conditional densities. In the construction of our proposed estimators, the
-exposure mechanism $q_{0,A}$ is a density of the intervention $A$, conditional
-on the observed covariates $W$, which must be evaluated at both the observed
-values and the post-intervention counterfactual values. As consistent estimation
-of the the generalized propensity score is an integral part of our proposed
-methodology, we outline here a conditional density estimator, built around the
-HAL regression function, that achieves the convergence rate required by our
-formal theorem. We note that proposals for the data adaptive estimation of such
-quantities are sparse in the literature~\citep[e.g.,][]{zhu2015boosting}.
-Notably, \citet{diaz2011super} gave a proposal for constructing semiparametric
-estimators of such a target quantity based on exploiting the relationship
-between the hazard and density functions. Our proposal builds upon theirs in
-several key ways: (i) we adjust their algorithm so as to incorporate
-sample-level weights, necessary for making use of inverse probability of
-censoring weights; and (ii) we replace their use of an arbitrary classification
-model with one based on the HAL regression function. While our first
-modification is general and may be applied to the estimation strategy
-\citet{diaz2011super} propose, our latter contribution requires adjusting the
-penalization aspect of HAL regression to respect the use of a loss function
-appropriate for prediction on the hazard scale. To make these contributions
-widely accessible, we introduce the \texttt{haldensify} \texttt{R}
-package~\citep{hejazi2020haldensify}, available at
-\url{https://github.com/nhejazi/haldensify}
+covariate appearing in the form of the EIF is a ratio of such conditional
+densities. In the construction of our proposed estimators, the exposure
+mechanism $q_{0,A}$ is a density of the intervention $A$, conditional on the
+observed covariates $W$, which must be evaluated at both the observed values and
+the post-intervention counterfactual values. As consistent estimation of the the
+generalized propensity score is an integral part of our proposed methodology, we
+outline here a conditional density estimator, built around the HAL regression
+function, that achieves the convergence rate required by our formal theorem. We
+note that proposals for the data adaptive estimation of such quantities are
+sparse in the literature~\citep[e.g.,][]{zhu2015boosting}. Notably,
+\citet{diaz2011super} gave a proposal for constructing semiparametric estimators
+of such a target quantity based on exploiting the relationship between the
+hazard and density functions. Our proposal builds upon theirs in several key
+ways: (i) we adjust their algorithm so as to incorporate sample-level weights,
+necessary for making use of inverse probability of censoring weights; and (ii)
+we replace their use of an arbitrary classification model with one based on the
+HAL regression function. While our first modification is general and may be
+applied to the estimation strategy \citet{diaz2011super} propose, our latter
+contribution requires adjusting the penalization aspect of HAL regression to
+respect the use of a loss function appropriate for prediction on the hazard
+scale. To make these contributions widely accessible, we introduce the
+\texttt{haldensify} \texttt{R} package~\citep{hejazi2020haldensify}, available
+at \url{https://github.com/nhejazi/haldensify}
 
 To build an estimator of a conditional density, \citet{diaz2011super} considered
 discretizing the observed $a \in A$ based on a number of bins $T$ and a binning
