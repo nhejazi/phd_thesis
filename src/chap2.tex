@@ -1,4 +1,4 @@
-\chapter{Correcting for Biased Sampling}
+\chapter{Correcting for Biased Sampling}\label{two}
 
 The advent and subsequent widespread availability of preventive vaccines has
 altered the course of public health over the past century. Despite this success,
@@ -1088,6 +1088,7 @@ a manner consistent with this loss.
 In section~\ref{os_tml_est}, we introduced a novel algorithm for targeted
 minimum loss estimation with inverse probability of censoring weights. We
 formalize our procedure in Algorithm~\ref{alg:ipcw_targeting}:
+
 \begin{algorithm}[H]
 \label{alg:ipcw_targeting}
 \SetAlgoLined
@@ -1136,6 +1137,7 @@ With the MLE $\epsilon_n$, construct the updated estimate of the
 }
 \caption{Efficient updating procedure for IPCW-TML estimation}
 \end{algorithm}
+
 Note that in the two working logistic regression models defined above, the
 inputs $g_{n,C}$ and $\overline{Q}_{n,Y}$ are both treated as offsets (known
 parameter value equal to one); thus, the working models are one-dimensional.

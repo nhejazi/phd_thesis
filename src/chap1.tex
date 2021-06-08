@@ -1,4 +1,4 @@
-\chapter{Generalizing the Propensity Score}
+\chapter{Generalizing the Propensity Score}\label{one}
 
 Continuous treatment variables have posed a significant challenge for causal
 inference, both in the formulation and identification of scientifically
@@ -503,7 +503,7 @@ generally speaking, methods for the selection of $\lambda$ must be tailored to
 the estimation goal in order to yield suitable candidate estimators.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\section{Estimation of the generalized propensity score}\label{methods}
+\section{Estimation of the Generalized Propensity Score}\label{methods}
 
 We now turn our focus to two distinct procedures for estimation of the
 generalized propensity score $g_{0,A}$, from which we may be able to
@@ -994,7 +994,7 @@ desirable asymptotic properties.
 %Lemma 2: Plateau selection satisfies the EIF
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\section{Numerical studies}\label{sim}
+\section{Numerical Studies}\label{sim}
 
 To examine numerically the performance of our proposed IPW estimators, we
 considered a set of simulation studies across three distinct data-generating
@@ -1119,7 +1119,7 @@ treatment mechanism in the prior scenario. While the form of the outcome
 mechanism differs from that in the previous scenario, we again do not expect its
 form to affect the construction of our IPW estimators much. In this setting, the
 form of the treatment mechanism is $A \mid W \sim \text{Normal}\left(\mu = W_1
-+ 2 W_2 - 2 \cdot (1 - W_1) \cdot W_2, \sigma^2 = 2 W_1 + 0.5 (1 - W_1) + W2
++ 2 W_2 - 2 \cdot (1 - W_1) \cdot W_2, \sigma^2 = 2 W_1 + 0.5 (1 - W_1) + W_2
 \right)$, and that of the outcome mechanism is $Y \mid A, W \sim
 \text{Bernoulli}\left(p = \text{expit}(5 (A - 2) + W_1 + 3 W_2^4 - 2 W_3 - 4 (1
 - W_1) W_2)\right)$.
@@ -1192,7 +1192,7 @@ size --- that is, at $n=100$, the IPW estimator based on minimization of the
 EIF term arising from Lemma~\ref{lemma:dcar} achieves the lowest bias and best
 efficiency. By $n=500$, most estimator variants are nearly unbiased, with the
 best performing being IPW estimators minimizing $\lvert P_n D_\text{DCAR}
-\rvert$ via targeted undersmoothing and the less restrictive ($\tau = 0.$)
+\rvert$ via targeted undersmoothing and the less restrictive ($\tau = 0.2$)
 agnostic undersmoothing selector based on equation~\ref{eqn:plateau_psi_rel}. In
 terms of efficiency, all candidates but the IPW estimators constructed from
 agnostic undersmoothing based on equation~\ref{eqn:plateau_psi_rel} succeed in

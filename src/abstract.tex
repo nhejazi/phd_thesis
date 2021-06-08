@@ -3,56 +3,75 @@
 \begin{abstract}
 
 Nearly a century ago, the foundations of modern statistics laid the groundwork
-for a science of causality.
-Today, causal inference is central to the study of the most impactful questions
-at the intersection of science and policy: By what mechanisms do novel
-therapeutics mitigate relapse in addiction disorders? How do immunobiological
-markers mediate action mechanisms of vaccines? While randomization provides
-``gold standard'' tools for quantifying causal effects, such trials are costly
-and limit the scope of scientific inquiry. Thus, techniques for statistical
-causal inference with complex, observational data are critical to today's, and
-tomorrow's, scientific endeavors.
+for a science of causality. Today, causal inference is central to the study of
+the most impactful questions at the intersection of science and policy: By what
+mechanisms do novel therapeutics mitigate relapse in addiction disorders? How do
+immunobiological markers mediate action mechanisms of vaccines? While
+randomization provides ``gold standard'' tools for quantifying causal effects,
+such trials are costly and limit the scope of scientific inquiry. Thus,
+techniques for statistical causal inference with complex, observational data are
+critical to today's, and tomorrow's, scientific endeavors.
 
 Observational studies obviate many of the shortcomings of randomized trials but
-bring their own challenges and promises.
-Without randomization, causal inference is plagued by confounding: vaccinees may
-be more likely to engage in risky behaviors and patients assigned a candidate
-therapeutic are not uniformly ``treated'' due to physician heterogeneity.
-Adjusting for potential confounders is a daunting challenge in an era where
-studies routinely measure numerous high-dimensional, longitudinal
-characteristics. Further, observational studies empower scientists to assess
-mechanistic, path-specific causal effects that \textit{cannot be learned} with
-randomized data. Tools from non/semi-parametric statistical theory and machine
-learning are needed to avoid imposing unrealistic statistical assumptions, and
-novel causal effect estimands are required to better address mechanistic
-questions.
-
-This thesis extends theory and methods for
-non/semi-parametric causal inference in settings with quantitative treatments,
-path-specific causal effects, complex sampling designs --- all within the
-framework of \textit{stochastic treatment regimes}.
+bring their own challenges and promises. Without randomization, causal inference
+is plagued by confounding: vaccinees may be more likely to engage in risky
+behaviors and patients assigned a candidate therapeutic are not uniformly
+``treated'' due to clinician heterogeneity. Adjusting for potential confounders
+is a daunting challenge in an era where studies routinely measure numerous
+high-dimensional, longitudinal characteristics. Further, observational studies
+empower scientists to assess mechanistic, path-specific causal effects that
+\textit{cannot be learned} with randomized data. Tools from non/semi-parametric
+statistical theory and machine learning are needed to avoid imposing unrealistic
+statistical assumptions, and novel causal effect estimands are required to
+better address mechanistic questions.
 
 Causal inference methodology is critical to answering real-world scientific
 questions, but traditional approaches make too many simplifying assumptions. By
-ignoring complex sampling, continuous-valued treatments, and confounding of
-path-specific effects, standard methods fall far short of empowering mechanistic
-discovery. Such techniques often require \textit{a priori} modeling assumptions
-unsupported by domain knowledge, limiting their utility further. The fellow will
-develop new theory and methods urgently required for estimation and inference in
-these settings.
+ignoring biased sampling designs, continuous-valued (or ``quantitative'')
+treatments, and confounding of path-specific effects, standard statistical
+methods fall far short of empowering mechanistic discovery. Such techniques
+often require \textit{a priori} modeling assumptions unsupported by domain
+knowledge, limiting their utility for real-world data analyses.
 
-Path-specific causal effects arise across a diversity of scientific efforts to
-quantify mechanistic knowledge. In order to utilize ``Big Data'' to develop
-actionable insights, modern, large-scale studies require novel
-non/semi-parametric techniques for flexible, efficient estimation of robust
-path-specific effects that may be bridged between heterogeneous populations.
-This is not enough, however. Real-world studies routinely rely upon
-outcome-dependent two-phase sampling designs (e.g., case-cohort) to circumvent
-constraints imposed by measuring costly biomarker variables and rare outcomes.
-Thus, methodological advances for efficiently estimating complex parameters
-under such designs are of increasingly great relevance, and their development
-will help to maximize what \textit{can be learned} from critical and timely
-scientific inquiries, such as how best to tailor future vaccines to mitigate
-infection risk.
+This thesis extends theory and methods for non/semi-parametric causal inference
+in settings with quantitative treatments, with particular attention paid to
+issues emerging from biased sampling designs and path-specific causal effects.
+Across this range of problems, \textit{stochastic treatment regimes} are
+leveraged as a unifying framework for formulating and evaluating the causal
+effects of quantitative treatments. Chapter~\ref{one} considers estimation of
+the generalized propensity score, a nuisance parameter critical to constructing
+estimators of the causal effects of stochastic interventions. Since this
+nuisance quantity is the conditional density of the treatment, given baseline
+covariates, its estimation is significantly more challenging than the classical
+propensity score for treatments with few levels. Towards this end, we formulate
+algorithms for flexibly estimating this quantity using the highly adaptive lasso
+nonparametric regression estimator; moreover, we complement these contributions
+by developing novel inverse probability weighted estimators, capable of
+attaining the nonparametric efficiency bound. Chapter~\ref{two} focuses on the
+application of the causal effects of stochastic interventions in real-world
+studies, which routinely rely upon outcome-dependent two-phase sampling designs
+(e.g., case-cohort) to circumvent constraints imposed by measuring costly
+biomarker variables and rare outcomes. The contribution of this work includes
+a methodological advance that marries the separate literatures on causal
+inference with stochastic interventions and biased sampling corrections, which
+ultimately allows for complex causal parameters to be efficiently estimated
+under such designs, helping to maximize what \textit{can be learned} from
+critical and timely scientific inquiries, such as how best to tailor future
+vaccines to mitigate infection risk. The work is motivated by the secondary aim
+of an HIV vaccine efficacy, which probed how the vaccination-induced
+immunogenicity of candidate immune correlates of protection may best be
+modulated by future vaccines, and the proposed methodology is demonstrated
+through a re-analysis of the data from this trial. Chapter~\ref{three} examines
+path-specific causal effects (i.e., causal mediation analysis), formulated based
+upon stochastic interventions, introducing a new class of direct and indirect
+effect parameters that remain identifiable under intermediate confounding. The
+goal of this body of work is to develop nonparametric techniques for flexible,
+efficient estimation of robust path-specific effects that may be used to
+quantify mechanistic knowledge and extract actional insights from the ``Big
+Data'' produced by modern, large-scale studies and across a great diversity of
+scientific efforts. Chapter~\ref{four} discusses open source software packages
+for causal inference, which implement the statistical methodology discussed
+prior. Chapter~\ref{five} concludes with a discussion of future avenues of
+investigation that may motivate postdoctoral research.
 
 \end{abstract}
