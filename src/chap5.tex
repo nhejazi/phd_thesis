@@ -1,334 +1,653 @@
-\chapter{Future Directions}\label{five}
+\chapter{Open Source Software for Causal Inference}\label{five}
 
-While the presented body of work has provided novel statistical methodology for
-working with stochastic treatment regimes, there is yet much more to do. To
-motivate future efforts, there is demand for the development of theory, methods,
-and software for (1) higher-order efficient estimation of novel causal effects,
-including (in)direct effects; and (2) generalizable, nonparametric estimation of
-flexible, path-specific causal effects for time-to-event outcomes and
-outcome-dependent sampling. Through an established collaborative network, these
-developments will be guided by scientific necessity and applied in analyzing
-Phase III COVID-19 vaccine efficacy trials.
+\section{The \texttt{txshift} \texttt{R} Package}
 
-\section{Where Can We Go From Here?}
+\subsection{Summary}
 
-Over the last century, a new science of causality, ushered in by the foundations
-of statistics, has emerged. Today, causal inference lies at the heart of
-questions of science, policy, and medicine, What, if any, nutritional
-interventions are most effective in promoting child growth and inhibiting
-wasting in at-risk regions? such as determining which immunobiological pathways
-mediate the action mechanism by which a candidate vaccine reduces infection
-risk. By what mechanistic pathways does a novel therapeutic mitigate the risk of
-substance abuse disorder relapse? What immunobiological pathways mediate the
-action mechanism by which a candidate vaccine reduces infection risk? While
-randomization, which enforces balance across treatment groups on average,
-remains the ``gold standard'' for elucidating causal questions, randomized
-controlled trials (RCTs) can be costly and constrained by ethics and
-practicality (e.g., individuals cannot be forced to vaccinate). Consequently,
-science has turned increasingly to observational studies, necessitating the
-development of robust statistical methods for causal effect estimation and
-uncertainty quantification, subject to the complications arising in the absence
-of randomization. Even in RCTs, answering complex causal questions, such as
-those concerning path-specific effects, requires posing causal models akin to
-those used for observational studies.
+Statistical causal inference has traditionally focused on effects defined by
+inflexible static interventions, applicable only to binary or categorical
+exposures. The evaluation of such interventions is often plagued by many
+problems, both theoretical (e.g., non-identification) and practical (e.g.,
+positivity violations); however, stochastic interventions provide a promising
+solution to these fundamental issues~\citep{diaz2018stochastic}. The
+\texttt{txshift} \texttt{R} package provides researchers in (bio)statistics,
+epidemiology, health policy, economics, and related disciplines with access to
+state-of-the-art statistical methodology for evaluating the causal effects of
+stochastic shift interventions on \textit{continuous-valued} exposures.
+\texttt{txshift} estimates the causal effects of modified treatment policies (or
+``feasible interventions''), which take into account the natural value of an
+exposure in assigning an intervention level. To accommodate use in study designs
+incorporating outcome-dependent two-phase sampling (e.g., case-control), the
+package provides two types of modern corrections, both rooted in semiparametric
+theory, for constructing unbiased and efficient estimates, despite the
+significant limitations induced by such designs. Thus, \texttt{txshift} makes
+possible the estimation of the causal effects of stochastic interventions in
+experimental and observational study settings subject to real-world design
+limitations that commonly arise in modern scientific practice.
 
-Fueled by the deluge of ``Big Data'' amassed across collaborative research
-networks, observational studies arm today's scientists with the means to
-investigate elaborate, albeit daunting, questions. Fortunately, formal causal
-inference frameworks outline tools for expressing such questions in terms of
-hypothetical interventions and complex \textit{path-specific}
-effects~\citep{pearl2000causality,hernan2020causal}. Consider, for example,
-efficacy trials to evaluate candidate preventive vaccines for COVID-19; the
-observed data are a sample of random variables $X$, with distribution $P_0$,
-where $X = (L, A, Z, M, Y)$ consists of baseline covariates $L$ (e.g., age, sex,
-co-morbidities), randomized vaccine v.~placebo assignment $A$, mediating
-immunologic biomarkers such as binding or neutralizing antibody levels $M$,
-mediator-outcome confounders affected by treatment $Z$ (e.g., post-vaccination
-risky behavior), and symptomatic SARS-CoV-2 infection $Y$. Two distinct pathways
-reveal the direct and indirect effects~\citep{vanderweele2015explanation} of
-vaccination: (1) $A \rightarrow Y$, and (2) $A \rightarrow M \rightarrow Y$ for
-the partial effect through immunologic biomarkers. Causal inference empowers us
-to investigate how disease risk \textit{would have changed} under counterfactual
-treatment regimens, defined by interventions setting $A = a$ to $a^{\star} \in
-\mathcal{A}$, that propagate to mediators $M$ to yield $M(a^{\star}) \in
-\mathcal{M}$. These counterfactual random variables (i.e., $a^{\star}$ and
-$M(a^{\star})$), with distribution $P_0^{\star}$, may be used to define highly
-interpretable causal estimands $\psi_0^{\star} = \psi(P_0^{\star})$ --- for
-example, the natural indirect effect $\psi_0^{\star}
-= \mathbb{E}[Y(M(a^{\star}), a^{\star}) - Y(M(a),
-a^{\star})]$~\citep{robins1992identifiability}, quantifying the causal impact of
-vaccination on disease risk \textit{mediated only through} the immunologic
-biomarkers $M$.
+\subsection{Statement of Need}
 
-Although observational studies have led to a renaissance in statistical causal
-inference, many significant challenges remain: causal estimands can be
-``unidentifiable'' (i.e., learning $\psi(P_0^{\star})$ may be impossible from
-observed data $X$), under even mildly non-standard conditions; unfounded
-parametric assumptions can cause estimation bias, leading to questionable
-conclusions; and, estimation of the statistical parameter $\psi(P)$ may be
-complicated by biased sampling and high-dimensional or longitudinal data. Even
-effect definitions can prove limiting: mediation analysis has focused on natural
-(in)direct effects, whose identification assumptions preclude intermediate
-confounding by $Z$~\citep{petersen2006estimation, tchetgen2014identification,
-miles2017partial, vanderweele2017mediation}. While data adaptive regression may
-address parametric model estimation bias, its use necessitates augmented
-estimators~\citep{pfanzagl1985contributions, vdl2011targeted, vdl2018targeted,
-coyle2020targeted} and mathematically intricate
-derivations~\citep{carone2018higher} on a case-by-case basis for novel causal
-estimands, motivating the dissemination of robust statistical software.
-Real-world study designs, such as outcome-dependent two-phase sampling (the norm
-in immunologic biomarker correlates analyses~\citep{haynes2012immune}), require
-substantial corrections to ensure efficient effect
-estimation~\citep{hejazi2020efficient} and extensions for complex (e.g.,
-possibly right-censored time-to-event) outcomes.
+Researchers seeking to build upon or apply cutting-edge statistical approaches
+for causal inference often face significant obstacles: such methods are usually
+not accompanied by robust, well-tested, and well-documented software packages.
+Yet coding such methods from scratch is often impractical for the applied
+researcher, as understanding the theoretical underpinnings of these methods
+requires advanced training, severely complicating the assessment and testing of
+bespoke causal inference software. What's more, even when such software tools
+exist, they are usually minimal implementations, providing support only for
+deploying the statistical method in problem settings untouched by the
+complexities of real-world data. The \texttt{txshift} \texttt{R} package solves
+this problem by providing an open source tool for evaluating the causal effects
+of flexible, stochastic interventions, applicable to categorical or
+continuous-valued exposures, while providing corrections for appropriately
+handling data generated by commonly used but complex two-phase sampling designs.
 
-Vaccine efficacy trials present unlimited yet pressing challenges, from a dire
-need for path-specific causal estimands robustly identifiable and estimable with
-right-censored mediators and outcomes to efficiency theory for estimation under
-novel two-phase sampling designs.
+\subsection{Background}
 
-%Fred Hutch statisticians often see randomized studies in which scientists try
-%to make comparisons between nonrandomized subgroups of patients --- and that
-%can be a problem. For example, say a study is pulling out and comparing the
-%quality of life of survivors a year out from experimental treatment. If half of
-%patients on Treatment A survive to one year but only a tiny fraction of
-%patients on Treatment B do, unknown factors may be driving any observed
-%differences in quality of life between the survivor groups. Maybe the few
-%survivors of Treatment B are unusually hearty, so that anything notable in
-%their quality of life is due to that underlying heartiness rather than the
-%treatment they received.
+Causal inference has traditionally focused on the effects of static
+interventions, under which the magnitude of the exposure is set to a fixed,
+prespecified value for each unit. The evaluation of such interventions faces
+a host of issues, among them non-identification, violations of the assumption of
+positivity, and inefficiency. Stochastic interventions provide a promising
+solution to these fundamental issues by allowing for the target parameter to be
+defined as the mean counterfactual outcome under a hypothetically shifted
+version of the observed exposure distribution~\citep{diaz2012population}.
+Modified treatment policies, a particular class of such interventions, may be
+interpreted as shifting the natural exposure level at the level of a given
+observational unit~\citep{haneuse2013estimation, diaz2018stochastic}.
 
-Grounding future research efforts, we briefly review the methodological
-contributions made thus far, which have leveraged advances in
-non/semi-parametric causal inference to develop improved statistical estimation
-techniques as well as new effect definitions extending causal inference
-approaches to non-standard yet real-world settings.
+Despite the promise of such advances in causal inference, real data analyses are
+often further complicated by economic constraints, such as when the primary
+variable of interest is far more expensive to collect than auxiliary covariates.
+Two-phase sampling is often used to bypass these limitations --- unfortunately,
+these sampling schemes produce side effects that require further adjustment when
+formal statistical inference is the principal goal of a study. Among the rich
+literature on two-phase designs, \citet{rose2011targeted2sd} stand out for
+providing a study of nonparametric efficiency theory under a broad class of
+two-phase designs. Their work provides guidance on constructing efficient
+estimators of causal effects under general two-phase sampling designs.
 
-\section{Nonparametric-efficient Estimation and Corrections for Two-phase
-  Sampling}
+\subsection{\texttt{txshift}'s Scope}
 
-Despite significant strides in statistical causal inference with the development
-of multiply robust non/semi-parametric techniques (e.g., double machine
-learning~\citep{chernozhukov2017double, chernozhukov2018double}, targeted
-minimum loss estimation~\citep{vdl2006targeted, vdl2011targeted,
-vdl2018targeted}), classical procedures such as inverse probability weighting
-(IPW)~\citep{horvitz1952generalization, rosenbaum1983central, hernan2020causal}
-remain widely used for their ease of implementation across a diversity of
-settings~\citep{hernan2020causal}. Though straightforward, IPW estimators
-require consistent estimation of a re-weighting mechanism $\pi_0(A \mid L)$,
-used to induce balance on $A$. Estimates $\pi_n(A \mid L)$ are usually obtained
-via finite-dimensional parametric models, a practice prone to biasing estimates
-through model misspecification. While machine learning provides a potential
-solution, most approaches are inconsistent with efficiency theory, which
-requires a fast convergence rate ($1/\sqrt[4]{n}$) of the estimate to the true
-mechanism (typically unattainable by machine learning). We have formulated
-a novel class of IPW estimators~\citep{ertefaie2020nonparametric} by coupling
-a recent machine learning algorithm (the highly adaptive
-lasso~\citep{benkeser2016highly, vdl2017generally, bibaut2019fast,
-hejazi2020hal9001}) with sieve-based selection strategies to achieve guarantees
-of consistency and non/semi-parametric efficiency without sacrificing flexible
-estimation of $\pi_n(A \mid L)$. Our work is the first demonstration that IPW
-estimators can successfully incorporate flexible modeling without compromising
-asymptotic bias or variance, outlining numerous avenues for future
-investigation.
+Building on these prior works, \citet{hejazi2020efficient} outlined a novel
+approach for use in such settings: augmented targeted minimum loss (TML) and
+one-step estimators for the causal effects of stochastic interventions, with
+guarantees of consistency, efficiency, and multiple robustness despite the
+presence of two-phase sampling. These authors further outlined a technique that
+summarizes the effect of shifting an exposure variable on the outcome of
+interest via a nonparametric working marginal structural model, analogous to
+a dose-response analysis. The \texttt{txshift} software package, for the
+\texttt{R} language and environment for statistical computing~\citep{R},
+implements this methodology.
 
-While non/semi-parametric causal inference can provide interpretable estimands,
-their estimation is often complicated by thorny challenges posed by complex
-study designs. For example, immune correlates analyses of vaccine efficacy
-trials commonly use outcome-dependent two-phase
-sampling~\citep{haynes2012immune}, in which immunologic biomarkers are measured
-on a subset of study participants based on outcome status (e.g., infection) and
-on demographic characteristics, severely complicating the statistical estimation
-problem. \citet{janes2017higher} followed just such a design in providing the
-first immune correlates analysis of the HIV Vaccine Trial Network 505 preventive
-HIV-1 vaccine efficacy trial~\citep{hammer2013efficacy}. Seeking to quantify the
-causal impact of post-vaccination antibody and T-cell immunologic biomarkers on
-the risk of HIV-1 infection, in~\citet{hejazi2020efficient}, we fused two
-disparate literatures on (1) stochastic
-interventions~\citep{stock1989nonparametric,diaz2012population}, to adopt
-a counterfactual framework applicable to continuous-valued immunologic
-biomarkers, and (2) non/semi-parametric efficiency for two-phase
-designs~\citep{breslow2003large,rose2011targeted2sd}, to generalize our causal
-effect estimates beyond the second-phase sample.
-%\peter{always use ``phase'' not ``stage'' (just a convention in the field)}
-Our approach allowed for the mean counterfactual HIV-1 infection risk in the 505
-trial to be quantified under hypothetical shifts in the observed immunologic
-biomarker profile. We developed non/semi-parametric estimators of such causal
-effect estimands, with guarantees of efficiency and multiple robustness despite
-two-phase sampling. Using marginal structural
-models~\citep{neugebauer2007nonparametric}, we formulated a dose-response
-analysis strategy for summarizing the effects of shifting immunogenicity along
-a pre-specified grid, providing a variable importance measure for ranking
-immunologic biomarkers as study endpoints in future vaccine trials.
+\texttt{txshift} is designed to facilitate the construction of TML and one-step
+estimators of the causal effects of modified treatment policies that shift the
+observed exposure value up (or down) by an arbitrary scalar $\delta$, which may
+possibly take into account the natural value of the exposure (and, in future
+versions, the covariates). The \texttt{R} package includes tools for deploying
+these efficient estimators under outcome-dependent two-phase sampling designs,
+with two types of corrections: (1) a reweighting procedure that introduces
+inverse probability of censoring weights directly into relevant loss functions,
+as discussed in \citet{rose2011targeted2sd}; as well as (2) an augmented
+efficient influence function estimating equation, studied more thoroughly by
+\citet{hejazi2020efficient}. \texttt{txshift} integrates with the \texttt{sl3}
+package~\citep{coyle2020sl3} to allow for ensemble machine learning to be
+leveraged in the estimation of nuisance parameters. What's more, the
+\texttt{txshift} package draws on both the
+\texttt{hal9001}~\citep{coyle2021hal9001,hejazi2020hal9001} and
+\texttt{haldensify}~\citep{hejazi2020haldensify} \texttt{R} packages to allow
+each of the efficient estimators to be constructed in a manner consistent with
+the methodological and theoretical advances of~\citet{hejazi2020efficient},
+which require fast convergence rates of nuisance parameters to their true
+counterparts for efficiency of the resultant estimator.
 
-\section{Robust and Efficient Causal Mediation Analysis for Complex
-  Path-specific Effects}
+\subsection{Availability}
 
-While interest in path-specific effects dates back to the work
-of~\citet{wright1934method}, causal mediation analysis came into its modern form
-only with the definition and identifiability of the natural (in)direct
-effects~\citep{robins1992identifiability, pearl2001direct}. Though the natural
-(in)direct effects were significant advances, they face several limitations:
-they cannot accommodate continuous-valued treatments (i.e., $A \in \{0, 1\}$);
-they are defined by \textit{static} interventions, which deterministically set
-$A$ to a fixed value $a$ in its support $\mathcal{A}$; their identification
-requires a restriction on ``cross-world'' counterfactuals of the mediators $M$,
-which is incompatible with randomization; and they are unidentifiable in the
-presence of mediator-outcome confounders $Z$ affected by treatment $A$
-(``intermediate confounders''). All this significantly limits the scope of
-application of these canonical causal effects. To combat these shortcomings, we
-developed, in~\citet{diaz2020causal}, a path-specific decomposition of the
-population intervention effect~\citep{diaz2012population} of flexible,
-stochastic interventions~\citep{stock1989nonparametric, diaz2013assessing,
-kennedy2019nonparametric}, accommodating multivariate $M$ and applicable to
-categorical or continuous $A$. Our novel (in)direct effects do not require any
-cross-world counterfactual independencies, allowing for their implications to be
-rigorously tested in RCTs. We outlined modern, multiply robust estimators of our
-(in)direct effects (implemented in our open source \texttt{medshift} software
-package~\citep{hejazi-gh-medshift}), alongside corresponding non/semi-parametric
-efficiency theory.
+The \texttt{txshift} package has been made publicly available both via
+GitHub (\url{https://github.com/nhejazi/txshift}) and the Comprehensive
+\texttt{R} Archive Network (\url{https://CRAN.R-project.org/package=txshift}).
+Use of the \texttt{txshift} package has been extensively documented in the
+package's \texttt{README}, two vignettes, and its \texttt{pkgdown} documentation
+website (\url{https://code.nimahejazi.org/txshift}).
 
-Though our developments laid the foundations of a new, general framework for
-causal mediation analysis, our (in)direct effects, like their natural effect
-counterparts, could not accommodate intermediate confounders $Z$, motivating
-work on ``interventional'' (in)direct effects~\citep{diaz2020nonparametric,
-hejazi2020nonparametric}. Inteventional (in)direct
-effects~\citep{vanderweele2014effect, vansteelandt2017interventional} are a new
-class of causal estimands utilizing joint static and stochastic interventions
-(to $A$ and $M$, respectively) to remain identifiable under intermediate
-confounding. In our initial contribution to the literature on interventional
-effects, we provided the first detailed developments of efficiency theory and
-non/semi-parametric efficient estimators for existing interventional (in)direct
-effects~\citep{diaz2020nonparametric} (and the first open source software
-package, \texttt{medoutcon}, for their application~\citep{hejazi-gh-medoutcon}).
-We then expanded upon our new mediation analysis framework by defining the
-\textit{stochastic} interventional (in)direct
-effects~\citep{hejazi2020nonparametric}, applicable to categorical or continuous
-$A$ and identifiable under less restrictive assumptions than their classical
-counterparts. It remains to generalize such effects to accommodate censored
-mediators and (possibly time-to-event) outcomes.
+\section{The \texttt{medshift} \texttt{R} Package}
 
-\section{Higher-order Efficiency for Estimation of Novel Causal Effects}
+\subsection{Background}
 
-\begin{enumerate}[label=(\alph*)]
-  \itemsep0.2pt
-  \item Theoretical development and evaluation of novel higher-order efficient
-    estimators based on targeted undersmoothing with the highly adaptive lasso
-    nonparametric regression function.
-  \item Higher-order efficient estimators of the causal (in)direct effects of
-    stochastic interventions.
-  \item Motivated by immune correlates analyses of COVID-19 and HIV-1 vaccine
-    efficacy trials, develop techniques for higher-order efficient estimation
-    under two-phase sampling designs.
+This \texttt{R} package aims to provide tools for assessing the population
+intervention direct effect and the population intervention indirect effect,
+based on the effect decomposition of the population intervention effect
+introduced in~\citet{diaz2020causal}.
+
+To proceed, we'll use as our running example a simple data set from an
+observational study of the relationship between BMI and kids behavior,
+distributed as part of the \texttt{mma} \texttt{R} package on the Comprehensive
+\texttt{R} Archive Netowrk (\url{https://CRAN.R-project.org/package=mma}).
+First, let's load the packages we'll be using and set a seed for
+reproducibility; then, load this data set and take a quick look.
+
+\begin{lstlisting}[language=R]
+# preliminaries
+library(data.table)
+library(dplyr)
+library(sl3)
+library(medshift)
+library(mma)
+set.seed(429153)
+
+# load and examine data
+data(weight_behavior)
+dim(weight_behavior)
+head(weight_behavior)
+
+##        bmi  age sex  race numpeople car gotosch snack tvhours cmpthours
+## 1 18.20665 12.2   F OTHER         5   3       2     1       4         0
+## 2 22.78401 12.8   M OTHER         4   3       2     1       4         2
+## 3 19.60725 12.6   F OTHER         4   2       4     2      NA        NA
+## 4 25.56754 12.1   M OTHER         2   3       2     1       0         2
+## 5 15.07408 12.3   M OTHER         4   1       2     1       2         1
+## 6 22.98338 11.8   M OTHER         4   1       1     1       4         3
+##   cellhours sports exercises sweat overweigh
+## 1         0      2         2     1         0
+## 2         0      1         8     2         0
+## 3        NA   <NA>         4     2         0
+## 4         0      2         9     1         1
+## 5         3      1        12     1         0
+## 6         2      1         1     1         0
+\end{lstlisting}
+
+The documentation for the data set describes it as a ``database obtained from
+the Louisiana State University Health Sciences Center, New Orleans, by  Dr.
+Richard Scribner. He  explored the relationship  between BMI and kids behavior
+through a survey at children, teachers and parents in Grenada in 2014. This data
+set includes $691$ observations and $15$ variables.''
+
+Unfortunately, the data set contains a few observations with missing values. As
+these are unrelated to the object of our analysis, we'll simply remove these for
+the time being. Note that in a real data analysis, we might consider strategies
+to fully make of the observed data, perhaps by imputing missing values. For now,
+we simply remove the incomplete observations, resulting in a data set with fewer
+observations (now $567$ units) but otherwise the same structure as the original.
+
+\begin{lstlisting}[language=R]
+# remove missing values
+is_na <- unique(do.call(c, apply(apply(weight_behavior, 2, is.na), 2, which)))
+weight_behavior_complete <- weight_behavior[-is_na, ]
+weight_behavior_complete$sports <-
+  as.numeric(weight_behavior_complete$sports) - 1
+dim(weight_behavior_complete)
+head(weight_behavior_complete)
+
+##        bmi  age sex  race numpeople car gotosch snack tvhours cmpthours
+## 1 18.20665 12.2   F OTHER         5   3       2     1       4         0
+## 2 22.78401 12.8   M OTHER         4   3       2     1       4         2
+## 4 25.56754 12.1   M OTHER         2   3       2     1       0         2
+## 5 15.07408 12.3   M OTHER         4   1       2     1       2         1
+## 6 22.98338 11.8   M OTHER         4   1       1     1       4         3
+## 8 19.15658 12.1   F OTHER         3   3       2     1       0         0
+##   cellhours sports exercises sweat overweigh
+## 1         0      1         2     1         0
+## 2         0      0         8     2         0
+## 4         0      1         9     1         1
+## 5         3      0        12     1         0
+## 6         2      0         1     1         0
+## 8         1      0         1     3         0
+\end{lstlisting}
+
+For the analysis of this observational data set, we focus on the effect of
+participating in a sports team (\texttt{sports}) on the BMI of children
+(\texttt{bmi}), taking several related covariates as mediators (\texttt{snack},
+\texttt{exercises}, \texttt{overweigh}) and all other collected covariates as
+potential confounders. Considering an NPSEM, we separate the observed variables
+from the data set into their corresponding nodes as follows.
+
+\begin{lstlisting}[language=R]
+Y <- weight_behavior_complete$bmi
+A <- weight_behavior_complete$sports
+Z <- weight_behavior_complete %>%
+  select(snack, exercises, overweigh)
+W <- weight_behavior_complete %>%
+  select(age, sex, race, numpeople, car, gotosch, tvhours, cmpthours,
+         cellhours, sweat)
+\end{lstlisting}
+
+Finally, in our analysis, we consider an incremental propensity score
+intervention (IPSI), as first proposed by~\citet{kennedy2017nonparametric},
+wherein the \textit{odds of participating in a sports team} is modulated by
+a fixed amount ($0 \leq \delta \leq \infty$), specified \textit{a priori}, for
+each individual. Such an intervention may be interpreted as the effect of
+a school program that motivates children to participate in sports teams. To
+exemplify our approach, we postulate a motivational intervention that
+\textit{triples the odds} of participating in a sports team for each individual:
+\begin{lstlisting}[language=R]
+delta_shift_ipsi <- 3
+\end{lstlisting}
+
+To easily incorporate ensemble machine learning into the estimation procedure,
+we rely on the facilities provided in the \texttt{sl3} \texttt{R}
+package (\url{https://tlverse.org/sl3})~\citep{coyle2021sl3}.
+We construct an ensemble learner using a handful of popular machine learning
+algorithms below.
+
+\begin{lstlisting}[language=R]
+# SL learners used for continuous data (the nuisance parameter M)
+xgb_contin_lrnr <- Lrnr_xgboost$new(nrounds = 50, objective = "reg:linear")
+enet_contin_lrnr <- Lrnr_glmnet$new(alpha = 0.5, family = "gaussian",
+                                    nfolds = 3)
+lasso_contin_lrnr <- Lrnr_glmnet$new(alpha = 1, family = "gaussian",
+                                     nfolds = 3)
+fglm_contin_lrnr <- Lrnr_glm_fast$new(family = gaussian())
+contin_lrnr_lib <- Stack$new(enet_contin_lrnr, lasso_contin_lrnr,
+                             fglm_contin_lrnr, xgb_contin_lrnr)
+sl_contin_lrnr <- Lrnr_sl$new(learners = contin_lrnr_lib,
+                              metalearner = Lrnr_nnls$new())
+# SL learners used for binary data (nuisance parameters G and E in this case)
+xgb_binary_lrnr <- Lrnr_xgboost$new(nrounds = 50, objective = "reg:logistic")
+enet_binary_lrnr <- Lrnr_glmnet$new(alpha = 0.5, family = "binomial",
+                                    nfolds = 3)
+lasso_binary_lrnr <- Lrnr_glmnet$new(alpha = 1, family = "binomial",
+                                     nfolds = 3)
+fglm_binary_lrnr <- Lrnr_glm_fast$new(family = binomial())
+binary_lrnr_lib <- Stack$new(enet_binary_lrnr, lasso_binary_lrnr,
+                             fglm_binary_lrnr, xgb_binary_lrnr)
+logistic_metalearner <- make_learner(Lrnr_solnp,
+                                     metalearner_logistic_binomial,
+                                     loss_loglik_binomial)
+sl_binary_lrnr <- Lrnr_sl$new(learners = binary_lrnr_lib,
+                              metalearner = logistic_metalearner)
+\end{lstlisting}
+
+\subsection{Decomposing the population intervention effect}
+
+We may decompose the population intervention effect (PIE) in terms of a
+\textit{population intervention direct effect} (PIDE) and a \textit{population
+intervention indirect effect} (PIIE):
+\begin{equation*}
+  \overbrace{\mathbb{E}\{Y(A_\delta, Z(A_\delta)) -
+    Y(A_\delta, Z)\}}^{\text{PIIE}} +
+    \overbrace{\mathbb{E}\{Y(A_\delta, Z) - Y(A, Z)\}}^{\text{PIDE}}.
+\end{equation*}
+
+This decomposition of the PIE as the sum of the population intervention direct
+and indirect effects has an interpretation analogous to the corresponding
+standard decomposition of the average treatment effect. In the sequel, we will
+compute each of the components of the direct and indirect effects above using
+appropriate estimators as follows.
+
+\begin{itemize}
+\item For $\mathbb{E}\{Y(A, Z)\}$, the sample mean $\frac{1}{n}\sum_{i=1}^n
+  Y_i$ is sufficient;
+\item for $\mathbb{E}\{Y(A_{\delta}, Z)\}$, an efficient one-step estimator for
+  the effect of a joint intervention altering the exposure mechanism but not the
+  mediation mechanism, as proposed in~\citet{diaz2020causal}; and,
+\item for $\mathbb{E}\{Y(A_{\delta}, Z_{A_{\delta}})\}$, an efficient one-step
+  estimator for the effect of a joint intervention altering both the exposure
+  and mediation mechanisms, as proposed in~\citet{kennedy2017nonparametric} and
+  implemented in the \texttt{npcausal} \texttt{R}
+  package (\url{https://github.com/ehkennedy/npcausal}).
+\end{itemize}
+
+\subsection{Estimating the effect decomposition term}
+
+As given in~\citet{diaz2020causal}, the statistical functional identifying the
+decomposition term that appears in both the PIDE and PIIE
+$\mathbb{E}\{Y(A_{\delta}, Z)\}$, which corresponds to altering the exposure
+mechanism while keeping the mediation mechanism fixed, is
+\begin{equation*}
+  \theta_0(\delta) = \int m_0(a, z, w) g_{0,\delta}(a \mid w) p_0(z, w)
+    d\nu(a, z, w),
+\end{equation*}
+for which a one-step estimator is available. The corresponding \textit{efficient
+influence function} (EIF) with respect to the nonparametric model $\mathcal{M}$
+is $D_{\eta,\delta}(o) = D^Y_{\eta,\delta}(o)
++ D^A_{\eta,\delta}(o) + D^{Z,W}_{\eta,\delta}(o) - \theta(\delta)$. The
+one-step estimator may be computed using the EIF estimating equation, making use
+of cross-fitting~\citep{zheng2011cross,chernozhukov2018double} to circumvent any
+need for entropy conditions (i.e., Donsker class restrictions). The resultant
+estimator is
+\begin{equation*}
+  \hat{\theta}(\delta) = \frac{1}{n} \sum_{i = 1}^n D_{\hat{\eta}_{j(i)},
+  \delta}(O_i) = \frac{1}{n} \sum_{i = 1}^n \left\{ D^Y_{\hat{\eta}_{j(i)},
+  \delta}(O_i) + D^A_{\hat{\eta}_{j(i)}, \delta}(O_i) +
+  D^{Z,W}_{\hat{\eta}_{j(i)}, \delta}(O_i) \right\},
+\end{equation*}
+which is implemented in the \texttt{medshift} \texttt{R} package. We make use of
+that implementation to estimate $\mathbb{E}\{Y(A_{\delta}, Z)\}$ via its
+one-step estimator $\hat{\theta}(\delta)$, as demonstrated below.
+
+\begin{lstlisting}[language=R]
+# let's compute the parameter where A (but not Z) are shifted
+theta_eff <- medshift(W = W, A = A, Z = Z, Y = Y,
+                      delta = delta_shift_ipsi,
+                      g_learners = sl_binary_lrnr,
+                      e_learners = sl_binary_lrnr,
+                      m_learners = sl_contin_lrnr,
+                      phi_learners = Lrnr_hal9001$new(),
+                      estimator = "onestep",
+                      estimator_args = list(cv_folds = 3))
+summary(theta_eff)
+\end{lstlisting}
+
+\subsection{Estimating the direct effect}
+
+Recall that, based on the decomposition outlined previously, the population
+intervention direct effect may be denoted $\beta_{\text{PIDE}}(\delta) =
+\theta_0(\delta) - \mathbb{E}Y$. Thus, an estimator of the PIDE,
+$\hat{\beta}_{\text{PIDE}}(\delta)$ may be expressed as a composition of
+estimators of its constituent parameters:
+\begin{equation*}
+  \hat{\beta}_{\text{PIDE}}({\delta}) = \hat{\theta}(\delta) -
+  \frac{1}{n} \sum_{i = 1}^n Y_i.
+\end{equation*}
+
+Based on the above, we may construct an estimator of the PIDE using quantities
+already computed. The convenience function below applies the simple delta method
+required in the case of a linear contrast between the two constituent
+parameters:
+\begin{lstlisting}[language=R]
+# convenience function to compute inference via delta method: EY1 - EY0
+linear_contrast <- function(params, eifs, ci_level = 0.95) {
+  # bounds for confidence interval
+  ci_norm_bounds <- c(-1, 1) * abs(stats::qnorm(p = (1 - ci_level) / 2))
+  param_est <- params[[1]] - params[[2]]
+  eif <- eifs[[1]] - eifs[[2]]
+  se_eif <- sqrt(var(eif) / length(eif))
+  param_ci <- param_est + ci_norm_bounds * se_eif
+  # parameter and inference
+  out <- c(param_ci[1], param_est, param_ci[2])
+  names(out) <- c("lwr_ci", "param_est", "upr_ci")
+  return(out)
+}
+\end{lstlisting}
+
+With the above convenience function in hand, we'll construct or extract the
+necessary components from existing objects and simply apply the function:
+\begin{lstlisting}[language=R]
+# parameter estimates and EIFs for components of direct effect
+EY <- mean(Y)
+eif_EY <- Y - EY
+params_de <- list(theta_eff$theta, EY)
+eifs_de <- list(theta_eff$eif, eif_EY)
+
+# direct effect = EY - estimated quantity
+de_est <- linear_contrast(params_de, eifs_de)
+de_est
+##       lwr_ci    param_est       upr_ci
+##       -0.4961   -0.0073         0.4815
+\end{lstlisting}
+
+As given above, we have for our estimate of the direct effect
+$\hat{\beta}_{\text{PIDE}}({\delta}) = -0.007$.
+
+\section{The \texttt{haldensify} \texttt{R} Package}
+
+\subsection{Motivations}
+
+In causal inference problems, both classical estimators (e.g., based on inverse
+probability weighting) and doubly robust estimators (e.g., one-step estimation,
+targeted minimum loss estimation) require estimation of the propensity score, a
+nuisance parameter corresponding to the treatment mechanism. While exposures of
+interest may often be continuous-valued, most approaches opt to discretize the
+exposure so as to estimate effects based on categorical exposures --- such
+a simplification is often done out of convenience, to avoid estimation of the
+\textit{generalized propensity score}~\citep{hirano2004propensity,
+imai2004causal}, which is a conditional density function. The
+\texttt{haldensify} package introduces a flexible approach for estimating such
+conditional density functions, using the highly adaptive lasso (HAL),
+a nonparametric regression function that has been proven to converge to a given
+target function(al) at $n^{-1/3}$-rate under minimal conditions.
+
+Consider data generated by typical cohort sampling $O = (W, A, Y)$, where $W$ is
+a vector of baseline covariates, A is a continuous-valued exposure, and $Y$ is
+an outcome of interest. Estimation of the generalized propensity score $g_{0,A}$
+corresponds to estimating the conditional density of $A$ given $W = w$. A simple
+strategy for estimating this nuisance function is to assume a parametric working
+model and use parametric regression to generate suitable density estimates. For
+example, one could operate under the working assumption that $A$ given $W$
+follows a normal distribution with homoscedastic variance and mean
+$\sum_{j=1}^p \beta_j \phi_j(W)$, where $\phi = (\phi_j : j)$ are user-selected
+basis functions and $\beta = (\beta_j : j)$ are unknown regression parameters.
+In this case, a density estimate would be generated by fitting a linear
+regression of $A$ on $\phi(W)$ to estimate the conditional mean of $A$ given
+$W$, paired with an estimate of the variance of $A$. Then, the estimated
+conditional density would be given by the density of a Gaussian distribution
+evaluated at these estimates. Unfortunately, most such approaches do not allow
+for flexible modeling of $g_{0,A}$. This motivated our development of a novel
+and flexible procedure for constructing conditional density estimates
+$g_{n,A}(a \mid w)$ of $A$ given $W = w$ (possibly subject to observation-level
+weights), evaluated at $a \in \mathcal{A}$.
+
+\subsection{Pooled hazards conditional density estimation}
+
+As consistent estimation of the generalized propensity score is an integral part
+of constructing estimators of the causal effects of continuous-valued exposures,
+our conditional density estimator, built around the HAL regression function, may
+be quite useful in flexibly constructing such estimates. We note that proposals
+for the data adaptive estimation of such quantities are sparse in the
+literature~\citep[e.g.,][]{zhu2015boosting}. Notably, \citet{diaz2011super} gave
+a proposal for constructing semiparametric estimators of such a target quantity
+based on exploiting the relationship between the hazard and density functions.
+Our proposal builds upon theirs in several key ways:
+
+\begin{enumerate}
+  \item We adjust their algorithm so as to incorporate sample-level weights,
+     necessary for making use of sample-level weights (e.g., inverse probability
+     of censoring weighting); and
+  \item we replace their use of an arbitrary classification model with the HAL
+     regression function.
 \end{enumerate}
 
-Higher-order efficient estimation of the complex statistical functionals arising
-in non/semi-parametric causal inference is an area largely undeveloped, though
-the first steps advancing this research program are slowly being
-taken~\citep{robins2008higher,carone2018higher}. Such techniques are desirable
-for the fact that they expand the nuisance parameter configurations under which
-multiply robust estimators may attain the non/semi-parametric efficiency bound.
-In our work constructing nonparametric-efficient IPW
-estimators~\citep{ertefaie2020nonparametric}, we demonstrated that a targeted
-undersmoothing approach based on the highly adaptive lasso (HAL) could solve
-a critical component of the estimating equation implied by the efficient
-influence function (EIF), $D^{\star}$. A significant step in developing this
-family of approaches for higher-order efficient estimation requires deriving
-second-order remainder terms $R_2(P, P_0)$ of the EIF Taylor expansion, for
-example, in problems with flexible stochastic interventions on the treatment
-$A$ and/or of complex causal (in)direct effect estimands. The formulation of
-a unique targeted undersmoothing approach to construct HAL nuisance parameter
-estimators solving the EIF estimating equation $D^{\star}$ and remainder
-$R_2(P, P_0)$ would constitute a generalizable strategy for higher-order
-estimation without reliance on specialized knowledge beyond standard
-non/semi-parametric efficiency theory, a significant step past similar recent
-developments~\citep{vdl2017generally, benkeser2017doubly}. Like related
-approaches, our estimators would be equipped with multiply robust confidence
-intervals, allowing for valid, efficient statistical inference even under
-nuisance parameter misspecification. Extending our undersmoothing approach to
-the augmented EIFs implied by outcome-dependent two-phase sampling corrections
-would allow our higher-order estimators to be applied in statistical analyses of
-immune correlates in vaccine efficacy trials, through our ongoing collaborations
-with the COVID-19 Prevention Trials and HIV Vaccine Trials Networks.
+While our first modification is general and may be applied to the estimation
+strategy of~\citet{diaz2011super}, our latter contribution requires adjusting
+the penalization aspect of HAL regression models so as to respect the use of
+a loss function appropriate for density estimation on the hazard scale.
 
-\section{Nonparametric Causal Inference for Path-specific Effects in Complex
-  Settings}
+To build an estimator of a conditional density, \citet{diaz2011super} considered
+discretizing the observed $a \in A$ based on a number of bins $T$ and a binning
+procedure (e.g., including the same number of points in each bin or forcing
+bins to be of the same length). We note that the choice of the tuning parameter
+$T$ corresponds roughly to the choice of bandwidth in classical kernel density
+estimation; this will be made clear upon further examination of the proposed
+algorithm. The data $\{A, W\}$ are reformatted such that the hazard of an
+observed value $a \in A$ falling in a given bin may be evaluated via standard
+classification techniques. In fact, this proposal may be viewed as
+a re-formulation of the classification problem into a corresponding set of
+hazard regressions:
+\begin{equation*}
+   \mathbb{P} (a \in [\alpha_{t-1}, \alpha_t) \mid W) = \mathbb{P} (a \in
+   [\alpha_{t-1}, \alpha_t) \mid A \geq \alpha_{t-1}, W) \times
+   \prod_{j = 1}^{t -1} \{1 - \mathbb{P} (a \in [\alpha_{j-1}, \alpha_j)
+   \mid A \geq \alpha_{j-1}, W) \},
+\end{equation*}
+where the probability that a value of $a \in A$ falls in a bin $[\alpha_{t-1},
+\alpha_t)$ may be directly estimated from a standard classification model. The
+likelihood of this model may be re-expressed in terms of the likelihood of
+a binary variable in a data set expressed through a repeated measures structure.
+Specifically, this re-formatting procedure is carried out by creating a data set
+in which any given observation $A_i$ appears (repeatedly) for as many intervals
+$[\alpha_{t-1}, \alpha_t)$ that there are prior to the interval to which the
+observed $a$ belongs. A new binary outcome variable, indicating $A_i \in
+[\alpha_{t-1}, \alpha_t)$, is recorded as part of this new data structure. With
+the re-formatted data, a pooled hazard regression, spanning the support of $A$
+is then executed. Finally, the conditional density estimator
+\begin{equation*}
+   g_{n, \alpha}(a \mid W) = \frac{\mathbb{P}(a \in [\alpha_{t-1}, \alpha_t)
+      \mid W)}{(\alpha_t - \alpha_{t-1})},
+\end{equation*}
+for $\alpha_{t-1} \leq a \le \alpha_t$, may be constructed. As part of this
+procedure, the hazard estimates are mapped to density estimates through
+rescaling of the estimates by the bin size ($\alpha_t - \alpha_{t-1}$).
 
-\begin{enumerate}[label=(\alph*)]
-  \itemsep0.2pt
-  \item Outlining novel decompositions of (in)direct causal effects and their
-    efficient estimation in settings with possibly right-censored time-to-event
-    outcomes and two-phase sampling.
-  \item Formulating and developing novel causal inference transport methodology
-    for bridging these (in)direct effects to new and heterogeneous populations
-    (e.g., across vaccine trials).
-  \item For application in immune correlates analyses of COVID-19 and HIV-1
-     vaccine efficacy trials, extend the above (in)direct effects and develop
-     open source software for their adoption.
-  %\item Formulation of novel direct and indirect effects of stochastic
-    %interventions on exposures and mediators based on path decompositions
-    %involving intermediate confounders.
+In its original proposal, a key element of this procedure was the use of any
+arbitrary classification procedure for estimating $\mathbb{P}(a \in
+[\alpha_{t-1}, \alpha_t) \mid W)$, facilitating the incorporation of flexible,
+data adaptive estimators. We alter this proposal in two ways,
+
+\begin{enumerate}
+  \item replacing the arbitrary estimator of $\mathbb{P}(a \in [\alpha_{t-1},
+      \alpha_t) \mid W)$ with HAL regression~\citep{vdl2015generally,
+      benkeser2016highly,vdl2017generally}, as implemented in the
+      \texttt{hal9001} \texttt{R} package~\citep{coyle2021hal9001,
+      hejazi2020hal9001}; and
+  \item accommodating the use of sample-level weights, making it possible for
+     the resultant conditional density estimator to achieve a convergence rate
+     with respect to a loss-based dissimilarity of
+     $n^{-1/3}$~\citep{bibaut2019fast} under only mild
+     assumptions.
 \end{enumerate}
 
-Biomedical and health studies, vaccine efficacy trials especially, are often
-complicated by time-to-event outcomes and outcome-dependent two-phase
-sampling~\citep{follmann2006augmented} (e.g.,
-case-cohort~\citep{prentice1986case, barlow1999analysis, mcelrath2008hiv}).
-A common goal is to ascertain the effect of a treatment, through mediating
-variables, on the occurrence of a possibly right-censored time-to-event outcome.
-For example, in immune correlates analyses of vaccine
-trials~\citep{haynes2012immune}, the observed data are random variables $X =
-(L, A, Z, M, \Delta, \widetilde{T})$, where $\widetilde{T} = \min(T, C)$ for
-failure time $T$ and censoring time $C$ with $\Delta = \mathbb{I}(T \leq C)$
-indicating observed failure (other variables remain as previously defined). To
-assess the indirect effect of vaccination $A$ through immunologic biomarkers
-$M$, two innovations are necessary: (1) new path-specific effects identifiable
-under intermediate confounding and capable of handling time-to-event outcomes,
-and (2) efficient estimation strategies for outcome-dependent two-phase sampling
-based on $\widetilde{T}$. For (1), we have proposed flexible (in)direct effect
-estimands~\citep{diaz2020causal, hejazi2020nonparametric}, robust to
-intermediate confounding; however, our (in)direct effects accommodate neither
-time-to-event outcomes nor censoring. The study of (in)direct effect estimands
-under such conditions is in its infancy: current
-strategies~\citep[e.g.,][]{tchetgen2011causal, zheng2017longitudinal} break down
-under intermediate confounding or are limited to binary treatments $A \in \{0,
-1\}$. For (2), current methods construct second-phase samples based on $\Delta$
-rather than $\widetilde{T}$, a limitation ignoring the time-to-event nature of
-the outcome process and constraining sampling efficiency. Generalizing
-(in)direct effect estimands necessitates methods for bridging estimates to new
-populations (i.e., external validity); such \textit{causal transport}
-techniques~\citep{pearl2011transportability, pearl2014external,
-bareinboim2016causal} are under study but variants for
-path-specific effects~\citep[e.g.,][]{rudolph2020efficiently}
-are in a nascent stage. We will complement our theoretical and methodological
-pursuits by developing and disseminating open source statistical software and
-with the application of these approaches in immune correlates analyses of Phase
-III vaccine trials through our collaborative role in the COVID-19 Prevention
-Trials Network.
+Our procedure alters the HAL regression function to use a loss function tailored
+for estimation of the hazard, invoking $\ell_1$-penalization in a manner
+consistent with this loss.
 
-%Data structure for time-to-event outcomes under two-phase sampling for Covid-19
-%vaccine efficacy trials: $O = (W, A, M, B, \Delta, C, \tilde{T}$, where $W$ are
-%baseline covariates, $A \in \{0, 1\}$ is placebo or vaccine assignment, $M$ are
-%immune correlates, $\Delta = f(B, W)$ is an indicator of inclusion in the
-%two-phase sample, $B$ is a censoring indicator (for day 57), $C$ is a censoring
-%time, and $\tilde{T} = min(T, C)$. Goal is to estimate direct and indirect
-%effects through the immune correlate under complex censoring structure. $T$ is
-%the time-to-event for symptomatic Covid-19 infection.
+\subsection{Example Code}
 
-\section{Broader Significance and Impact of Future Work}
+First, let's load a few required packages, set a seed to make our example
+reproducible, and generate some very simple, simulated example data.
 
-Since path-specific causal effects are ideal for developing scientific answers
-to questions of mechanism, my proposed research program will have important
-bearings on problems across many fields, from epidemiology and medicine to
-economics and psychology. In the health and medical sciences, where the
-measurement of important but costly variables (e.g., immunologic biomarkers)
-complicates effect estimation, sophisticated methods for handling
-outcome-dependent two-phase sampling, a key tool in scientific trial design, are
-sorely needed. I am particularly motivated by avenues for formulating (in)direct
-effects applicable to complex data from vaccine efficacy trials and will
-leverage my collaborations with the COVID-19 Prevention Trials and HIV Vaccine
-Trials Networks to inform scientifically impactful open problems in causal
-inference. In turn, the methods we develop will help to maximize what we can
-learn about critical and timely scientific questions, such as how best to tailor
-future vaccines to mitigate infection risk.
+\begin{lstlisting}[language=R]
+library(haldensify)
+library(data.table)
+library(ggplot2)
+set.seed(75681)
 
+make_example_data <- function(n_obs) {
+  W <- runif(n_obs, -4, 4)
+  A <- rnorm(n_obs, mean = W, sd = 0.25)
+  dat <- as.data.table(list(A = A, W = W))
+  return(dat)
+}
+
+# number of observations in our simulated dataset
+n_obs <- 200
+example_data <- make_example_data(n_obs)
+
+# let's take a quick look at the data
+head(example_data)
+
+##             A           W
+## 1:  2.3063922  2.24687273
+## 2:  0.9297479  0.91025531
+## 3: -3.2443382 -2.98696024
+## 4: -0.1842217 -0.01204378
+## 5:  3.2756387  3.59166824
+## 6: -2.9132139 -3.02363838
+\end{lstlisting}
+
+The function \texttt{make\_example\_data()}, defined below, generates a baseline
+covariate $W$ and a continuous-valued exposure variable $A$, whose mean is a
+function of $W$.
+
+Next, we'll fit our pooled hazards conditional density estimator via the
+\texttt{haldensify()} function. Based on underlying theory and simulation
+experiments, we recommend setting a relatively large number of bins and using a
+binning strategy that accommodates creating such a large number of bins.
+
+\begin{lstlisting}[language=R]
+haldensify_fit <- haldensify(
+  A = example_data[["A"]],
+  W = example_data[["W"]],
+  n_bins = c(10, 20),
+  grid_type = "equal_range",
+  lambda_seq = exp(seq(-0.1, -10, length = 500)),
+  # the following are passed to hal9001::fit_hal() internally
+  max_degree = 5,
+  num_knots = NULL,
+  smoothness_orders = 0,
+  reduce_basis = 1 / sqrt(n_obs)
+)
+
+# print the output object
+haldensify_fit
+
+## HAL Conditional Density Estimation
+## Number of bins over support of A: 20
+## CV-selected lambda: 4e-04
+## Summary of fitted HAL:
+##         coef                term
+##  1:  4.015834         (Intercept)
+##  2:  8.219963  [ I(W >= -3.305) ]
+##  3:  7.080282  [ I(bin_id >= 9) ]
+##  4: -6.906777  [ I(W >= -3.393) ]
+##  5:  6.111346  [ I(bin_id >= 7) ]
+##  6:  5.984919   [ I(W >= 0.474) ]
+##  7:  5.615845  [ I(bin_id >= 2) ]
+##  8:  5.536335  [ I(bin_id >= 4) ]
+##  9:  5.375681 [ I(bin_id >= 13) ]
+## 10:  5.270633  [ I(W >= -0.267) ]
+\end{lstlisting}
+
+Having constructed the conditional density estimator, we can examine the
+empirical risk over the grid of choices of the $\ell_1$ regularization parameter
+$\lambda$. To do this, we can simply call the available \texttt{plot()} method,
+which uses the cross-validated conditional density fits in the
+\texttt{cv\_tuning\_results} slot of the \texttt{haldensify} object. For example,
+
+\begin{lstlisting}[language=R]
+plot(haldensify_fit)
+\end{lstlisting}
+
+The empirical risk curve of the conditional density estimates across differing
+values of $\lambda$ are visualized in Figure~\ref{fig:haldensify_risk}.
+\begin{figure}[H]
+  \centering
+  \includegraphics[scale=0.28]{haldensify_risk}
+  \caption{Empirical risk of the estimated conditional density $g_{n,A}$ across
+      a grid in the regularization parameter $\lambda$.}
+  \label{fig:haldensify_risk}
+\end{figure}
+
+Finally, we can predict the conditional density over the grid of observed values
+$A$ across different elements of the support $W$. We do this using the
+\texttt{predict()} method of \texttt{haldensify} and plot the results below.
+
+\begin{lstlisting}[language=R]
+# predictions to recover conditional density of A|W
+new_a <- seq(-4, 4, by = 0.05)
+new_dat <- as.data.table(list(
+  a = new_a,
+  w_neg = rep(-2, length(new_a)),
+  w_zero = rep(0, length(new_a)),
+  w_pos = rep(2, length(new_a))
+))
+new_dat[, pred_w_neg := predict(haldensify_fit, new_A = new_dat[["a"]],
+                                new_W = new_dat[["w_neg"]])]
+new_dat[, pred_w_zero := predict(haldensify_fit, new_A = new_dat[["a"]],
+                                 new_W = new_dat[["w_zero"]])]
+new_dat[, pred_w_pos := predict(haldensify_fit, new_A = new_dat[["a"]],
+                                new_W = new_dat[["w_pos"]])]
+
+# visualize results
+dens_dat <-  melt(
+  new_dat,
+  id = c("a"),
+  measure.vars = c("pred_w_pos", "pred_w_zero", "pred_w_neg")
+)
+p_dens <- ggplot(dens_dat, aes(x = a, y = value, colour = variable)) +
+  geom_point() +
+  geom_line() +
+  stat_function(fun = dnorm, args = list(mean = -2, sd = 0.25),
+                colour = "blue", linetype = "dashed") +
+  stat_function(fun = dnorm, args = list(mean = 0, sd = 0.25),
+                colour = "darkgreen", linetype = "dashed") +
+  stat_function(fun = dnorm, args = list(mean = 2, sd = 0.25),
+                colour = "red", linetype = "dashed") +
+  labs(
+    x = "Observed value of W",
+    y = "Estimated conditional density",
+    title = "Conditional density estimates g(A|W)"
+  ) +
+  theme_bw() +
+  theme(legend.position = "none")
+p_dens
+\end{lstlisting}
+
+The resulting conditional density estimates are visualzed in
+Figure~\ref{fig:haldensify_est}.
+\begin{figure}[H]
+  \centering
+  \includegraphics[scale=0.28]{haldensify_est}
+  \caption{Conditional density estimates evaluated at different values of $W$,
+    compared to the reference distribution at those same values.}
+  \label{fig:haldensify_est}
+\end{figure}
