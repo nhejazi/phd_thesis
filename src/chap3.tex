@@ -2,15 +2,40 @@
 
 \section{Introduction}
 
-The core ideas of Chapter~\ref{two} constitute a novel approach to studying
-immune correlates of protection --- those immunogenic markers causally
-antagonistic to the process of infection~\citep{plotkin2012nomenclature} --- in
-vaccine efficacy trials of infectious diseases. By estimating the effect of
-shifting the immune response distribution in the vaccinated
-individuals~\citep{hejazi2020efficient}, it is possible to develop an
-understanding of the mechanism by which a vaccine offers protection.
+The core ideas of Chapter~\ref{two} can form a novel approach to studying immune
+correlates of protection --- those antibody markers causally antagonistic to the
+infectious process~\citep{plotkin2012nomenclature} --- in vaccine efficacy
+trials of infectious diseases. Such analyses can help to better understand which
+antibody markers impact vaccine efficacy and elucidate the mechanism by which
+they may afford protection. In this analytic framework, vaccine efficacy may be
+quantified as the effect of shifting (upwards or downwards) the immune response
+distribution in vaccinees~\citep{hejazi2020efficient}, making it possible to
+develop a more nuanced understanding of the mechanism by which a vaccine
+provides protection.
+
+The data collected on a single individual in a randomized vaccine efficacy trial
+may be represented by the random variable $O = (X, A, S, Y)$, where $X$ are
+baseline risk factors for infection (such as age or body-mass index), $A$ is the
+randomized assignment to placebo or vaccine, $S$ is the immune response activity
+of an antibody of interest, and $Y$ is an indicator of infection. Throughout, we
+assume that $S$ is the scalar-valued activity of a particular antibody, as
+quantified by an established immunological assay, that is a candidate immune
+correlate of protection.
+
+Given the central goal to
+develop a parsimonious surrogate endpoint based on a single immunoassay, the
+main analysis will use each of the methods to assess each of the five
+quantitative readouts (not baseline-subtracted) separately as CoPs, adjusting
+for the same set of baseline covariates as used in the correlates or risk
+analyses described in~\citet{gilbert2021covpn}.
 
 \section{Formulating Vaccine Efficacy Parameters}
+
+Each involves consideration of a binary
+counterfactual outcome $Y(a,s)$ (e.g., indicator of the COVID disease endpoint
+by a pre-specified time) under a hypothetical intervention that both sets
+randomization assignment $A=a$ and sets the Day 57 immunologic marker $S$ to
+a fixed value or based upon a random draw from a analyst-specified distribution.
 
 Specifically, we can consider the
 effect on risk of a given endpoint of a controlled intervention that shifts the
