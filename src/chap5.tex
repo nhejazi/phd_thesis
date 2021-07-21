@@ -123,37 +123,16 @@ To proceed, we'll use as our running example a simple data set from an
 observational study of the relationship between BMI and kids behavior,
 distributed as part of the \texttt{mma} \texttt{R} package on the Comprehensive
 \texttt{R} Archive Netowrk (\url{https://CRAN.R-project.org/package=mma}).
-First, let's load the packages we'll be using and set a seed for
-reproducibility; then, load this data set and take a quick look.
+First, a bit of quick programmatic housekeepking for this data example.
 
-\begin{lstlisting}[language=R]
+\begin{lstlisting}
 # preliminaries
 library(data.table)
 library(dplyr)
+library(tidyr)
 library(sl3)
 library(medshift)
 library(mma)
-set.seed(429153)
-
-# load and examine data
-data(weight_behavior)
-dim(weight_behavior)
-head(weight_behavior)
-
-##        bmi  age sex  race numpeople car gotosch snack tvhours cmpthours
-## 1 18.20665 12.2   F OTHER         5   3       2     1       4         0
-## 2 22.78401 12.8   M OTHER         4   3       2     1       4         2
-## 3 19.60725 12.6   F OTHER         4   2       4     2      NA        NA
-## 4 25.56754 12.1   M OTHER         2   3       2     1       0         2
-## 5 15.07408 12.3   M OTHER         4   1       2     1       2         1
-## 6 22.98338 11.8   M OTHER         4   1       1     1       4         3
-##   cellhours sports exercises sweat overweigh
-## 1         0      2         2     1         0
-## 2         0      1         8     2         0
-## 3        NA   <NA>         4     2         0
-## 4         0      2         9     1         1
-## 5         3      1        12     1         0
-## 6         2      1         1     1         0
 \end{lstlisting}
 
 The documentation for the data set describes it as a ``database obtained from
@@ -169,12 +148,12 @@ to fully make of the observed data, perhaps by imputing missing values. For now,
 we simply remove the incomplete observations, resulting in a data set with fewer
 observations (now $567$ units) but otherwise the same structure as the original.
 
-\begin{lstlisting}[language=R]
-# remove missing values
-is_na <- unique(do.call(c, apply(apply(weight_behavior, 2, is.na), 2, which)))
-weight_behavior_complete <- weight_behavior[-is_na, ]
-weight_behavior_complete$sports <-
-  as.numeric(weight_behavior_complete$sports) - 1
+\begin{lstlisting}
+# load and clean up data
+data(weight_behavior)
+weight_behavior_complete <- weight_behavior %>%
+  drop_na() %>%
+  mutate(as.numeric(sports) - 1)
 dim(weight_behavior_complete)
 head(weight_behavior_complete)
 
@@ -201,7 +180,7 @@ participating in a sports team (\texttt{sports}) on the BMI of children
 potential confounders. Considering an NPSEM, we separate the observed variables
 from the data set into their corresponding nodes as follows.
 
-\begin{lstlisting}[language=R]
+\begin{lstlisting}
 Y <- weight_behavior_complete$bmi
 A <- weight_behavior_complete$sports
 Z <- weight_behavior_complete %>%
@@ -219,7 +198,7 @@ each individual. Such an intervention may be interpreted as the effect of
 a school program that motivates children to participate in sports teams. To
 exemplify our approach, we postulate a motivational intervention that
 \textit{triples the odds} of participating in a sports team for each individual:
-\begin{lstlisting}[language=R]
+\begin{lstlisting}
 delta_shift_ipsi <- 3
 \end{lstlisting}
 
@@ -229,32 +208,48 @@ package (\url{https://tlverse.org/sl3})~\citep{coyle2021sl3}.
 We construct an ensemble learner using a handful of popular machine learning
 algorithms below.
 
-\begin{lstlisting}[language=R]
-# SL learners used for continuous data (the nuisance parameter M)
-xgb_contin_lrnr <- Lrnr_xgboost$new(nrounds = 50, objective = "reg:linear")
-enet_contin_lrnr <- Lrnr_glmnet$new(alpha = 0.5, family = "gaussian",
-                                    nfolds = 3)
-lasso_contin_lrnr <- Lrnr_glmnet$new(alpha = 1, family = "gaussian",
-                                     nfolds = 3)
+\begin{lstlisting}
+# SL learners used for continuous data (nuisance parameter M)
+xgb_contin_lrnr <- Lrnr_xgboost$new(
+  nrounds = 50, objective = "reg:linear"
+)
+enet_contin_lrnr <- Lrnr_glmnet$new(
+  alpha = 0.5, family = "gaussian", nfolds = 3
+)
+lasso_contin_lrnr <- Lrnr_glmnet$new(
+  alpha = 1, family = "gaussian", nfolds = 3
+)
 fglm_contin_lrnr <- Lrnr_glm_fast$new(family = gaussian())
-contin_lrnr_lib <- Stack$new(enet_contin_lrnr, lasso_contin_lrnr,
-                             fglm_contin_lrnr, xgb_contin_lrnr)
-sl_contin_lrnr <- Lrnr_sl$new(learners = contin_lrnr_lib,
-                              metalearner = Lrnr_nnls$new())
-# SL learners used for binary data (nuisance parameters G and E in this case)
-xgb_binary_lrnr <- Lrnr_xgboost$new(nrounds = 50, objective = "reg:logistic")
-enet_binary_lrnr <- Lrnr_glmnet$new(alpha = 0.5, family = "binomial",
-                                    nfolds = 3)
-lasso_binary_lrnr <- Lrnr_glmnet$new(alpha = 1, family = "binomial",
-                                     nfolds = 3)
+contin_lrnr_lib <- Stack$new(
+  enet_contin_lrnr, lasso_contin_lrnr,
+  fglm_contin_lrnr, xgb_contin_lrnr
+)
+sl_contin_lrnr <- Lrnr_sl$new(
+  learners = contin_lrnr_lib,
+  metalearner = Lrnr_nnls$new()
+)
+# SL learners used for binary data (nuisance parameters G and E)
+xgb_binary_lrnr <- Lrnr_xgboost$new(
+  nrounds = 50, objective = "reg:logistic"
+)
+enet_binary_lrnr <- Lrnr_glmnet$new(
+  alpha = 0.5, family = "binomial", nfolds = 3
+)
+lasso_binary_lrnr <- Lrnr_glmnet$new(
+  alpha = 1, family = "binomial", nfolds = 3
+)
 fglm_binary_lrnr <- Lrnr_glm_fast$new(family = binomial())
-binary_lrnr_lib <- Stack$new(enet_binary_lrnr, lasso_binary_lrnr,
-                             fglm_binary_lrnr, xgb_binary_lrnr)
-logistic_metalearner <- make_learner(Lrnr_solnp,
-                                     metalearner_logistic_binomial,
-                                     loss_loglik_binomial)
-sl_binary_lrnr <- Lrnr_sl$new(learners = binary_lrnr_lib,
-                              metalearner = logistic_metalearner)
+binary_lrnr_lib <- Stack$new(
+  enet_binary_lrnr, lasso_binary_lrnr,
+  fglm_binary_lrnr, xgb_binary_lrnr
+)
+logistic_metalearner <- make_learner(
+  Lrnr_solnp, metalearner_logistic_binomial, loss_loglik_binomial
+)
+sl_binary_lrnr <- Lrnr_sl$new(
+  learners = binary_lrnr_lib,
+  metalearner = logistic_metalearner
+)
 \end{lstlisting}
 
 \subsection{Decomposing the population intervention effect}
@@ -287,7 +282,7 @@ appropriate estimators as follows.
   package (\url{https://github.com/ehkennedy/npcausal}).
 \end{itemize}
 
-\subsection{Estimating the effect decomposition term}
+\subsection{Estimating the Effect Decomposition Term}
 
 As given in~\citet{diaz2020causal}, the statistical functional identifying the
 decomposition term that appears in both the PIDE and PIIE
@@ -315,20 +310,22 @@ which is implemented in the \texttt{medshift} \texttt{R} package. We make use of
 that implementation to estimate $\mathbb{E}\{Y(A_{\delta}, Z)\}$ via its
 one-step estimator $\hat{\theta}(\delta)$, as demonstrated below.
 
-\begin{lstlisting}[language=R]
+\begin{lstlisting}
 # let's compute the parameter where A (but not Z) are shifted
-theta_eff <- medshift(W = W, A = A, Z = Z, Y = Y,
-                      delta = delta_shift_ipsi,
-                      g_learners = sl_binary_lrnr,
-                      e_learners = sl_binary_lrnr,
-                      m_learners = sl_contin_lrnr,
-                      phi_learners = Lrnr_hal9001$new(),
-                      estimator = "onestep",
-                      estimator_args = list(cv_folds = 3))
+theta_eff <- medshift(
+  W = W, A = A, Z = Z, Y = Y,
+   delta = delta_shift_ipsi,
+   g_learners = sl_binary_lrnr,
+   e_learners = sl_binary_lrnr,
+   m_learners = sl_contin_lrnr,
+   phi_learners = Lrnr_hal9001$new(),
+   estimator = "onestep",
+   estimator_args = list(cv_folds = 3)
+)
 summary(theta_eff)
 \end{lstlisting}
 
-\subsection{Estimating the direct effect}
+\subsection{Estimating the Direct Effect}
 
 Recall that, based on the decomposition outlined previously, the population
 intervention direct effect may be denoted $\beta_{\text{PIDE}}(\delta) =
@@ -344,11 +341,11 @@ Based on the above, we may construct an estimator of the PIDE using quantities
 already computed. The convenience function below applies the simple delta method
 required in the case of a linear contrast between the two constituent
 parameters:
-\begin{lstlisting}[language=R]
+\begin{lstlisting}
 # convenience function to compute inference via delta method: EY1 - EY0
 linear_contrast <- function(params, eifs, ci_level = 0.95) {
   # bounds for confidence interval
-  ci_norm_bounds <- c(-1, 1) * abs(stats::qnorm(p = (1 - ci_level) / 2))
+  ci_norm_bounds <- c(-1, 1) * abs(qnorm(p = (1 - ci_level) / 2))
   param_est <- params[[1]] - params[[2]]
   eif <- eifs[[1]] - eifs[[2]]
   se_eif <- sqrt(var(eif) / length(eif))
@@ -362,7 +359,7 @@ linear_contrast <- function(params, eifs, ci_level = 0.95) {
 
 With the above convenience function in hand, we'll construct or extract the
 necessary components from existing objects and simply apply the function:
-\begin{lstlisting}[language=R]
+\begin{lstlisting}
 # parameter estimates and EIFs for components of direct effect
 EY <- mean(Y)
 eif_EY <- Y - EY
@@ -381,7 +378,7 @@ $\hat{\beta}_{\text{PIDE}}({\delta}) = -0.007$.
 
 \section{The \texttt{haldensify} \texttt{R} Package}
 
-\subsection{Motivations}
+\subsection{Statement of Need}
 
 In causal inference problems, both classical estimators (e.g., based on inverse
 probability weighting) and doubly robust estimators (e.g., one-step estimation,
@@ -417,7 +414,7 @@ and flexible procedure for constructing conditional density estimates
 $g_{n,A}(a \mid w)$ of $A$ given $W = w$ (possibly subject to observation-level
 weights), evaluated at $a \in \mathcal{A}$.
 
-\subsection{Pooled hazards conditional density estimation}
+\subsection{Conditional Density Estimation by Pooled Hazards Regression}
 
 As consistent estimation of the generalized propensity score is an integral part
 of constructing estimators of the causal effects of continuous-valued exposures,
@@ -427,14 +424,14 @@ for the data adaptive estimation of such quantities are sparse in the
 literature~\citep[e.g.,][]{zhu2015boosting}. Notably, \citet{diaz2011super} gave
 a proposal for constructing semiparametric estimators of such a target quantity
 based on exploiting the relationship between the hazard and density functions.
-Our proposal builds upon theirs in several key ways:
+Our proposal builds upon theirs in several key ways.
 
 \begin{enumerate}
   \item We adjust their algorithm so as to incorporate sample-level weights,
      necessary for making use of sample-level weights (e.g., inverse probability
-     of censoring weighting); and
-  \item we replace their use of an arbitrary classification model with the HAL
-     regression function.
+     of censoring weighting).
+  \item We replace the use of arbitrary classification models with the highly
+  adaptive lasso.
 \end{enumerate}
 
 While our first modification is general and may be applied to the estimation
@@ -488,24 +485,23 @@ data adaptive estimators. We alter this proposal in two ways,
       \alpha_t) \mid W)$ with HAL regression~\citep{vdl2015generally,
       benkeser2016highly,vdl2017generally}, as implemented in the
       \texttt{hal9001} \texttt{R} package~\citep{coyle2021hal9001,
-      hejazi2020hal9001}; and
+      hejazi2020hal9001};
   \item accommodating the use of sample-level weights, making it possible for
      the resultant conditional density estimator to achieve a convergence rate
      with respect to a loss-based dissimilarity of
-     $n^{-1/3}$~\citep{bibaut2019fast} under only mild
-     assumptions.
+     $n^{-1/3}$~\citep{bibaut2019fast} under only mild assumptions.
 \end{enumerate}
 
 Our procedure alters the HAL regression function to use a loss function tailored
 for estimation of the hazard, invoking $\ell_1$-penalization in a manner
 consistent with this loss.
 
-\subsection{Example Code}
+\subsection{Demonstration with Example Code}
 
 First, let's load a few required packages, set a seed to make our example
 reproducible, and generate some very simple, simulated example data.
 
-\begin{lstlisting}[language=R]
+\begin{lstlisting}
 library(haldensify)
 library(data.table)
 library(ggplot2)
@@ -543,7 +539,7 @@ Next, we'll fit our pooled hazards conditional density estimator via the
 experiments, we recommend setting a relatively large number of bins and using a
 binning strategy that accommodates creating such a large number of bins.
 
-\begin{lstlisting}[language=R]
+\begin{lstlisting}
 haldensify_fit <- haldensify(
   A = example_data[["A"]],
   W = example_data[["W"]],
@@ -583,7 +579,7 @@ $\lambda$. To do this, we can simply call the available \texttt{plot()} method,
 which uses the cross-validated conditional density fits in the
 \texttt{cv\_tuning\_results} slot of the \texttt{haldensify} object. For example,
 
-\begin{lstlisting}[language=R]
+\begin{lstlisting}
 plot(haldensify_fit)
 \end{lstlisting}
 
@@ -601,7 +597,7 @@ Finally, we can predict the conditional density over the grid of observed values
 $A$ across different elements of the support $W$. We do this using the
 \texttt{predict()} method of \texttt{haldensify} and plot the results below.
 
-\begin{lstlisting}[language=R]
+\begin{lstlisting}
 # predictions to recover conditional density of A|W
 new_a <- seq(-4, 4, by = 0.05)
 new_dat <- as.data.table(list(
@@ -610,11 +606,14 @@ new_dat <- as.data.table(list(
   w_zero = rep(0, length(new_a)),
   w_pos = rep(2, length(new_a))
 ))
-new_dat[, pred_w_neg := predict(haldensify_fit, new_A = new_dat[["a"]],
+new_dat[, pred_w_neg := predict(haldensify_fit,
+                                new_A = new_dat[["a"]],
                                 new_W = new_dat[["w_neg"]])]
-new_dat[, pred_w_zero := predict(haldensify_fit, new_A = new_dat[["a"]],
+new_dat[, pred_w_zero := predict(haldensify_fit,
+                                 new_A = new_dat[["a"]],
                                  new_W = new_dat[["w_zero"]])]
-new_dat[, pred_w_pos := predict(haldensify_fit, new_A = new_dat[["a"]],
+new_dat[, pred_w_pos := predict(haldensify_fit,
+                                new_A = new_dat[["a"]],
                                 new_W = new_dat[["w_pos"]])]
 
 # visualize results
@@ -627,11 +626,11 @@ p_dens <- ggplot(dens_dat, aes(x = a, y = value, colour = variable)) +
   geom_point() +
   geom_line() +
   stat_function(fun = dnorm, args = list(mean = -2, sd = 0.25),
-                colour = "blue", linetype = "dashed") +
+             colour = "blue", linetype = "dashed") +
   stat_function(fun = dnorm, args = list(mean = 0, sd = 0.25),
-                colour = "darkgreen", linetype = "dashed") +
+             colour = "darkgreen", linetype = "dashed") +
   stat_function(fun = dnorm, args = list(mean = 2, sd = 0.25),
-                colour = "red", linetype = "dashed") +
+             colour = "red", linetype = "dashed") +
   labs(
     x = "Observed value of W",
     y = "Estimated conditional density",
