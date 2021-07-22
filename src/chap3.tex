@@ -17,21 +17,21 @@ infection.
 
 To formalize, let us denote by the random variable $O = (W, A, S, Y)$ the data
 collected on a single individual in a randomized vaccine efficacy trial,
-where $W$ are clinically relevant baseline risk factors for infection (e.g., age
-body mass index), $A$ is the randomized assignment to placebo or vaccine, $S$
-is the immune response activity of an antibody of interest, and $Y$ is an
+where $W$ are clinically relevant baseline risk factors for infection (e.g.,
+age, body mass index), $A$ is the randomized assignment to placebo or vaccine,
+$S$ is the immune response activity of an antibody of interest, and $Y$ is an
 indicator of infection. Throughout, we assume that $S$ is the scalar-valued
-activity of a particular antibody, as quantified by an established
-immunoassay, and is a candidate immune correlate of protection. In measuring
-$S$, we further assume that biological material (e.g., drawn blood) for
-evaluating the activity of the immunologic marker is taken at an \textit{a
-priori}-specificed time post-vaccination. Since such trials often measure the
-time-to-infection, the outcome process is realistically a composite
-time-to-event quantity $\{\tilde{T} = \min(T_F, T_C), \Delta = \mathbb{I}(T_F
-< T_C)\}$, where $T_F$ and $T_C$ are the (mutually unobservable) failure and
-censoring times, respectively, and $\Delta$ is simply the indicator of observed
-failure. We simplify this to $Y \coloneqq \mathbb{I}(\Delta = 1)$ (i.e.,
-observed infection) by the end of the trial.
+activity of a particular antibody, as quantified by an established immunoassay,
+and is a candidate immune correlate of protection. In measuring $S$, we further
+assume that biological material (e.g., drawn blood) for evaluating the activity
+of the immunologic marker is taken at an \textit{a priori}-specificed time
+post-vaccination. Since such trials often measure the time-to-infection, the
+outcome process is generally a composite time-to-event quantity
+$\{\tilde{T} = \min(T_F, T_C), \Delta = \mathbb{I}(T_F < T_C)\}$, where $T_F$
+and $T_C$ are the (mutually unobservable) failure and censoring times,
+respectively, and $\Delta$ is simply the indicator of observed failure. We
+simplify this to $Y \coloneqq \mathbb{I}(\Delta = 1)$ (i.e., observed infection)
+by the end of the trial.
 
 Leveraging the framework developed in Chapter~\ref{two}, we formulate and
 evaluate vaccine efficacy parameters in the context of efficacy trials of the
@@ -88,9 +88,9 @@ hejazi2020efficient}, such as no unmeasured confounding and positivity,
 generally required for all causal analyses, the counterfactual risk
 $\E[Y(1, S(1)
 + \delta)]$ is identified by
-\begin{equation*}
+\begin{equation}\label{eqn:stochintrisk}
   \E[\P(Y = 1 \mid A = 1, S = S + \delta, W = w) \mid A = 1, W] \ .
-\end{equation*}
+\end{equation}
 By examining this quantity across a range of feasible $\delta$ values provides
 insight into the relative contribution of a given immunologic response marker in
 preventing the manifestation of the endpoint of interest.
@@ -101,10 +101,10 @@ this quantity may
 be estimated in the same way as for the controlled vaccine efficacy analyses,
 we define
 stochastic interventional vaccine efficacy (SVE) as
-\begin{equation*}
+\begin{equation}\label{eqn:sve}
 \text{SVE}(\delta) = 1 - \frac{\E[\P(Y = 1 \mid A = 1, S = S + \delta, W = w)
-\mid A = 1, W]}{\P(Y(0)=1)}.
-\end{equation*}
+\mid A = 1, W]}{\P(Y(0)=1)} \ .
+\end{equation}
 
 \section{Considerations for Statistical Estimation}
 
@@ -157,18 +157,18 @@ coordinated across the CoVPN correlates of protection
 analyses~\citep{gilbert2021covpn}.
 
 Output of the analyses will be presented as point and 95\% confidence interval
-estimates of $\E[Y(1, S(1) + \delta)]$ and of $\text{SVE}(s)$ over the values of
-$s$ for each of the Day 57 immunologic markers, for each of a range of $\delta$
-spanning the interval $[-1, 1]$ on the standard unit scale for each immunologic
-marker. As with related analyses, in the context of data from real-world
-COVID-19 trials, these analyses are to be carried out only if diagnostics
-support plausibility of the positivity assumption. Notably, however, the
-positivity assumption for the stochastic interventional effects is unique. Where
-the positivity assumption for effects defined by static interventions requires
-a positive probability of treatment assignment across \textit{all strata}
-defined by baseline factors (i.e., that a discretized immune response value be
-possible regardless of baseline factors), the positivity assumption of our
-effects is
+estimates of $\E[Y(1, S(1) + \delta)]$ and of $\text{SVE}(\delta)$ over the
+values of $s$ for each of the Day 57 immunologic markers, for each of a range of
+$\delta$ spanning the interval $[-1, 1]$ on the standard unit scale for each
+immunologic marker. As with related analyses, in the context of data from
+real-world COVID-19 trials, these analyses are to be carried out only if
+diagnostics support plausibility of the positivity assumption. Notably, however,
+the positivity assumption for the stochastic interventional effects is unique.
+Where the positivity assumption for effects defined by static interventions
+requires a positive probability of treatment assignment across \textit{all
+strata} defined by baseline factors (i.e., that a discretized immune response
+value be possible regardless of baseline factors), the positivity assumption of
+our effects is
 \begin{equation*}
   s_i \in \mathcal{S} \implies s_i + \delta \in \mathcal{S} \mid A = 1, W = w
 \end{equation*}
@@ -176,7 +176,7 @@ effects is
 positivity assumption does not require that the post-intervention exposure
 density, $q_{0,S}(S - \delta \mid A = 1, W)$, place mass across all strata
 defined by $W$. Instead, it requires that the post-intervention exposure
-mechanism be bounded, i.e.,
+mechanism be bounded, that is,
 \begin{equation*}
   \P \{q_{0,S}(S - \delta \mid A = 1, W) / q_{0,S}(S \mid A = 1, W) > 0 \} = 1,
 \end{equation*}
@@ -205,8 +205,6 @@ infection in terms of both counterfactual stochastic interventional risk and
 vaccine efficacy (VE). In the sequel, we demonstrate our approach using the Day
 57 activity of the spike protein binding and pseudo-neutralizing antibodies.
 
-\subsection{Evaluating Spike Protein Binding Antibodies}\label{spba-day57}
-
 \begin{figure}[H]
   \centering
   \includegraphics[width=0.975\linewidth,]{mcop_risk_Day57bindSpike}
@@ -216,19 +214,24 @@ vaccine efficacy (VE). In the sequel, we demonstrate our approach using the Day
 \end{figure}
 
 Estimation of the stochastic interventional risk for the spike protein antibody
-across several values of $\delta$ reveals a monotonic decrease in risk
-with increases in the activity of this immunologic marker. In particular, at
-$\delta = 0$, for the vaccine administered in the current efficacy trial, the
-estimated risk of symptomatic COVID-19 infection at Day 57 is 0.5\%. For
-positive values of $\delta$, reflecting increased activity of the spike protein
-antibody, the estimated risk of the adverse endpoint decreases towards zero.
-This suggests that improvements to the dosage or formulation of the current
-vaccine may be capable of improving its efficacy further still. Considering now
-negative values of $\delta$, it appears that even moderate decreases in the
-modulation of this antibody marker can significantly limit the efficacy of the
-vaccine against infection. For example, with $\delta = -0.5$, the estimated risk
-doubles to 1.00\%; moreover, it appears to grow even higher with more sharply
-negative changes to marker activity.
+across several values of $\delta$ reveals a monotonic decrease in risk with
+increases in the activity of this immunologic marker. In particular, at $\delta
+= 0$, for the vaccine administered in the current efficacy trial, the estimated
+risk of symptomatic COVID-19 infection at Day 57 is 0.5\%. For positive values
+of $\delta$, reflecting increased activity of the spike protein antibody, the
+estimated risk of the adverse endpoint decreases towards zero. This suggests
+that improvements to the dosage or formulation of the current vaccine may be
+capable of improving its efficacy further still. Considering now negative values
+of $\delta$, it appears that even moderate decreases in the modulation of this
+antibody marker can significantly limit the efficacy of the vaccine against
+infection. For example, with $\delta = -0.5$, the estimated risk doubles to
+1.00\%; moreover, risk appears to grow sharply with further decreases in marker
+activity. To summarize the trend in the change in estimated risk across the grid
+in $\delta$, we note that projection onto a working marginal structural model
+(MSM; as per Chapter~\ref{two}) yields a linear form with slope
+$\hat{\beta}_{\text{TMLE}} = -0.0086$ and corresponding p-value of $p < 0.001$
+for the hypothesis test of no trend (i.e., $H_0: \beta = 0$ and $H_1: \beta
+\neq 0$).
 
 \begin{figure}[H]
   \centering
@@ -238,9 +241,28 @@ negative changes to marker activity.
   \label{fig:marker1-sve-day57}
 \end{figure}
 
-Description here...
-
-\subsection{Evaluating Pseudo-neutralizing Antibodies}\label{psna-day57}
+The evaluation of stochastic interventional VE is a process of re-scaling the
+corresponding stochastic interventional risk estimates by the risk of infection
+in the placebo arm of the trial, as per equation~\ref{eqn:sve}. Accordingly, the
+estimated VE provides information similar to that provided by the risk
+estimates. In the case of the spike protein antibody, we find that the VE
+produced by the administered vaccine (i.e., at $\delta = 0$) is just over 90\%.
+What's more, upwards shifts of the activity of this marker have moderate impacts
+on the estimated VE, with vaccine efficacy estimates of roughly 95\% and 97\%
+for $\delta = 0.5$ and $\delta = 1$, respectively. While this analysis suggests
+that reconstituting a future vaccine so as to specifically increase the activity
+of the spike protein antibody may lead to very limited increases in protection,
+the risk estimates at downwards shifts in its activity strongly suggest that all
+vaccines ought to seek to module this marker at the level at which the current
+vaccine does so. Specifically, a decrease of just a half standard unit (i.e.,
+$\delta = -0.5$) leads to an estimated risk of 80\%, while a decrease of a full
+standard unit ($\delta = -1$) yields a risk estimate of about 65\% --- 10\% and
+25\% lower, respectively, than the risk estimate for the administered vaccine.
+Examination of how VE estimates vary along the grid in $\delta$ reveals a sharp
+increasing trend for the projection of the VE estimates onto a linear working
+MSM. The slope parameter of the MSM is estimated to be
+$\hat{\beta}_{\text{TMLE}} = 0.1616$ with a p-value of $p < 0.01$ for the
+hypothesis test of no trend.
 
 \begin{figure}[H]
   \centering
@@ -251,21 +273,15 @@ Description here...
 \end{figure}
 
 Estimation of the stochastic interventional risk for the pseudo-neutralizing
-antibody across several values of $\delta$ reveals that the estimated risk is
-fairly insensitive to changes in the activity of this immunologic marker. To
-start, considering $\delta = 0$,
+antibody across the grid in $\delta$ reveals that the estimated risk is largely
+insensitive to hypothetical changes in the marker activity. To start,
+considering $\delta = 0$ (i.e., the activity of $S$ induced by the currently
+administered vaccine), estimated risk of symptomatic COVID-19 infection at Day
+57 is 0.5\%. The estimated stochastic interventional risk lies close to this
+value for other values of $\delta$, suggesting that the pseudo-neutralizing
+antibody may not be a suitable target for designing future vaccines to further
+curb the risk of symptomatic COVID-19 infection.
 
-for the vaccine administered in the current efficacy trial, the
-estimated risk of symptomatic COVID-19 infection at Day 57 is 0.5\%. For
-positive values of $\delta$, reflecting increased activity of the spike protein
-antibody, the estimated risk of the adverse endpoint decreases towards zero.
-This suggests that improvements to the dosage or formulation of the current
-vaccine may be capable of improving its efficacy further still. Considering now
-negative values of $\delta$, it appears that even moderate decreases in the
-modulation of this antibody marker can significantly limit the efficacy of the
-vaccine against infection. For example, with $\delta = -0.5$, the estimated risk
-doubles to 1.00\%; moreover, it appears to grow even higher with more sharply
-negative changes to marker activity.
 \begin{figure}[H]
   \centering
   \includegraphics[width=0.975\linewidth,]{mcop_sve_Day57pseudoneutid80}
@@ -274,4 +290,11 @@ negative changes to marker activity.
   \label{fig:marker4-sve-day57}
 \end{figure}
 
-Description here...
+Similarly to the estimates of the stochastic interventional risk for shifting of
+the pseudo-neutralizing antibody, the stochastic VE estimates all lie within
+roughly 3\% of the estimated VE at the null shift of $\delta = 0$. Examining the
+VE estimate at that shift, we note an efficacy of roughly 90\%, with no sharp or
+consistent changes in VE estimates at upwards or downwards shifts of the
+activity of this marker. Consistent with the risk analyses, these VE estimates
+suggest the pseudo-neutralizing antibody to be an unpromising candidate for
+targeting by future vaccines.
