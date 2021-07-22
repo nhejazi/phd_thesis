@@ -71,11 +71,11 @@ models~\citep[e.g.,][]{goldberger1972structural, baron1986moderator} for
 mediation analysis. More
 recently, the advent of modern frameworks and formalisms for causal inference,
 including nonparametric structural equation models, directed acyclic graphs,
-and their underlying do-calculus~\citep{pearl1995causal, pearl2000causality},
+and their underlying do-calculus~\citep{pearl1995causal, pearl2009causality},
 provided the necessary foundational tools to express causal mechanisms without
 reliance on more restrictive approaches tied to parametric modeling.
 
-In tandem with the developments of~\citet{pearl2000causality}, similar
+In tandem with the developments of~\citet{pearl2009causality}, similar
 approaches spearheaded by~\citet{robins1986new}, \citet{spirtes2000causation},
 \citet{dawid2000causal}, and~\cite{richardson2013single} allowed nonparametric
 formulations of mediation analysis and uncovered significant limitations of the
@@ -785,7 +785,7 @@ following lemma is a direct consequence.
       Cond.~6 & $\times$  &           &           & $\times$            & $\times$    &           &           & $\times$  & $\times$  \\\hline
     \end{tabular}
     \caption{Different configurations of consistency for nuisance
-      parameters}
+      parameters.}
     \label{tab:dr1}
   \end{table}
   Then $\P D_{\eta_1,\delta}^1=\theta_{1,\delta}$ and $\P
@@ -1079,7 +1079,7 @@ Y \mid (Z, L, A, W) &\sim \text{Bernoulli}\left(p = \expit\left(1 -
     %plogis(1 - 3 / (2 + rowSums(w) / 3 - l - 3 * a + z))
 \end{align*}
 where $\expit(x) \coloneqq \{1 + \exp(x)\}^{-1}$. For each of the sample sizes
-$n \in \{200, 800, 1800, 3200, 5000, 7200, \allowbreak 9800, 12800,
+$n \in \{200, 800, 1800, 3200, 5000, \allowbreak 7200, 9800, 12800,
 16200\}$, $500$ datasets were generated. For every dataset, six variations of
 each of the two efficient estimators was applied --- five variants were based on
 misspecification of a single nuisance parameter among $\{\e, \m, \d, \g, \b\}$

@@ -3,6 +3,7 @@
   individual learning algorithm in the ensemble model for $\overline{Q}_{n,Y}$
   used in the reported re-analysis of the CD4+ immunogenic marker.}
 \centering
+\resizebox{\columnwidth}{!}{%
 \begin{tabular}[t]{l|r|r|r|r}
 \hline
 Learner & Weight & Min. Fold Risk & Mean CV-Risk & Max. Fold Risk\\
@@ -45,5 +46,6 @@ GLM with Bayesian priors & 0.323 & 0.015 & 0.036 & 0.051\\
 \hline
 Super Learner & 1.000 & --- & --- & ---\\
 \hline
-\end{tabular}
+\end{tabular}%
+}
 \end{table}
