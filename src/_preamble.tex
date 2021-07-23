@@ -1,14 +1,18 @@
-%% Use the graphics package to include figures
+\usepackage{hyperref}
+\hypersetup{colorlinks,citecolor=blue,urlcolor=blue}
+
+% load biblatex after hyperref
 \usepackage[natbib]{biblatex}
 \bibliography{references}
 
+%% Use the graphics package to include figures
 \usepackage{graphicx}
+\graphicspath{ {figs/} }
 \usepackage{chngcntr}
 \counterwithout{figure}{chapter}
 
 %Interligne (pour la version finale: 1.15 parait un bon compromis)
 \renewcommand{\baselinestretch}{1.15}
-\newcommand{\TMLE}{\mathrm{TMLE}}
 % caption (pris dans /usr/local/lib/tex/inputs/book.sty)
 \makeatletter
 \long\def\@makecaption#1#2{
@@ -22,50 +26,42 @@
    \fi}
 \makeatother
 
-\usepackage{amsmath}
-\usepackage{times}
-\usepackage{bm}
-
 \let\procedure\relax
 \let\endprocedure\relax
 \usepackage[ruled,vlined]{algorithm2e}
 
 % general-purpose packages
 \usepackage{float}
-\usepackage{comment}
-\graphicspath{ {figs/} }
 \usepackage[english]{babel}
 \usepackage{dsfont}
-\usepackage[utf8]{inputenc}
-\usepackage[OT1]{fontenc}
-\usepackage{fontspec}
+\usepackage{lmodern}
 \usepackage[inline,shortlabels]{enumitem}
-\usepackage{standalone}
-%\usepackage{caption}
+\usepackage{caption}
 \usepackage{subcaption}
 \usepackage{refcount}
-\usepackage{lmodern}
 \usepackage{color}
 \usepackage{booktabs}
 \usepackage{tikz}
-\usepackage{url}
 \usepackage{listings}
-
-% math packages
-\usepackage{mathtools}
-\usepackage{amsfonts}
-\usepackage{amssymb}
-\usepackage{bbm}
-
 \usepackage{setspace}
 \usepackage{multirow}
-\usepackage{hyperref}
-\hypersetup{colorlinks,citecolor=blue,urlcolor=blue}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{textcomp}
+\usepackage{xurl}
+\usepackage{csquotes}
 
 % math packages
+\usepackage{times}
+\usepackage{bm}
+\usepackage{bbm}
+\usepackage{amsmath}
 \usepackage{amsthm}
 \usepackage{amsxtra}
 \usepackage{commath}
+\usepackage{mathtools}
+\usepackage{amsfonts}
+\usepackage{amssymb}
 
 % custom math definitions and macros that conflict with Biometrika's
 \newtheorem{theorem}{Theorem}
@@ -190,6 +186,7 @@ shorten >=2pt,}
 \end{pgfonlayer}
 }
 
+% typesetting code using listings
 \lstset{language=R,
      basicstyle=\ttfamily\small,
      keywordstyle=\ttfamily\small,

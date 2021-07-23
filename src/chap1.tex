@@ -12,13 +12,13 @@ robustness of classical inverse probability weighted estimators of causal effect
 parameters. We present and investigate novel, flexible estimators of the
 generalized propensity score, based on a recently developed nonparametric
 regression function that converges at a fast rate to the target functional.
-Using our proposed estimators, we demonstrate the construction of nonparametric
+Using our proposed estimator, we demonstrate the construction of nonparametric
 inverse probability weighted estimators of a class of causal effect estimands
 tailored to continuous treatments. We outline non-restrictive conditions and
 selection procedures for applying undersmoothing to our generalized propensity
 score estimators to develop inverse probability weighted estimators capable of
 achieving the nonparametric efficiency bound, demonstrating the attainability of
-these properties in numerical experiments. Free and open source software
+these properties in numerical experiments. Open source software
 implementing our proposed estimation techniques, the \texttt{haldensify}
 \texttt{R} package, is briefly introduced.
 
@@ -26,7 +26,7 @@ implementing our proposed estimation techniques, the \texttt{haldensify}
 
 From the biomedical and health sciences to the social and economic sciences,
 research efforts often aim to quantify the causal impacts of intervening on
-continuous-valued (or ``quantitative'') treatments. Evaluating the causal
+continuous-valued treatments. Evaluating the causal
 effects of such treatments opens the door to addressing myriad complex
 scientific questions; examples include evaluating the impacts of increased
 physical exercise on aging in the elderly~\citep{diaz2012population}, reductions
@@ -35,18 +35,19 @@ outcomes~\citep{haneuse2013estimation}, changes in vaccination-induced
 immunologic response activity on disease risk~\citep{hejazi2020efficient}, and
 how total nurse hours per patient affects the risk of hosptial
 readmission~\citep{mchugh2013hospitals}. The evaluation of the causal effects of
-quantitative treatments leads most naturally to scientific parameters that
+continuous treatments leads most naturally to scientific parameters that
 capture dose-response phenomena, such as the well-studied \textit{causal}
-dose-response curve.
+dose-response curve~\citep[e.g.,][]{imbens2000role,
+diaz2013targeted,kennedy2017nonparametric}.
 
-Unfortunately, the definition of counterfactual parameters for quantitative
+Unfortunately, the definition of counterfactual parameters for continuous
 treatments requires significant care. While counterfactual random variables
 provide a formalism to describe the values an outcome measurement would have
 taken if, possibly counter-to-fact, a specific level of the treatment had been
-assigned (instead of that observed), for quantitative treatments, the set of
-enumerable counterfactuals grows quite quickly intractable. A prominent
+assigned (instead of that observed), for continuous treatments, the set of
+enumerable counterfactuals grows quickly intractable. A prominent
 simplification is the coarsening, or discretization into countably few
-categories, of a quantitative treatment variable. The adoption of such
+categories. The adoption of such
 a strategy narrows the set of relevant counterfactual values of the outcome
 variable, allowing for the subsequent straightforward application of standard,
 well-studied parameters (e.g., the average treatment effect) and corresponding
@@ -54,30 +55,29 @@ well-established estimators. Despite their convenience, such coarsening
 strategies come at the cost of ignoring fundamental scientific knowledge about
 the system under study.
 
-As quantitative treatments naturally correspond to innumerable levels of the
-treatment variable, a host of complications emerge for the formulation,
-identification, and estimation of causal effects, usually necessitating
-non-standard techniques for their resolution. While the analysis of the causal
-dose-response curve and related estimands brings with it many statistical
-challenges (e.g., a lack of asymptotic linearity), several recent efforts have
-borne fruit: \citet{diaz2013targeted} proposed a doubly robust substitution
-estimator of the dose-response curve's risk, \citet{kennedy2017nonparametric}
-developed an estimation strategy based on locally linear smoothing,
-\citet{vdl2018cvtmle} considered cross-validated targeted minimum loss
-estimation of a general class of non-standard parameters (including the
-dose-response curve as an example), and \citet{westling2020causal} contributed
-a monotone nonparametric estimator of the dose-response curve. These
-methodological advances notwithstanding, deploying such approaches may yet
-require the consideration of scientifically unrealistic counterfactual variables
-and infeasible intervention schedules for generating them. Accordingly,
-alternative frameworks for working with quantitative treatments have been
-pursued.
+The consideration of continuous treatment variables leads to a host of
+complications for the formulation, identification, and estimation of causal
+effects, usually necessitating non-standard techniques for their resolution.
+While the analysis of the causal dose-response curve and related estimands
+brings with it many statistical challenges (e.g., a lack of asymptotic
+linearity), several recent efforts have borne fruit: \citet{diaz2013targeted}
+proposed a doubly robust substitution estimator of the dose-response curve's
+risk, \citet{kennedy2017nonparametric} developed an estimation strategy based on
+locally linear smoothing, \citet{vdl2018cvtmle} considered cross-validated
+targeted minimum loss estimation of a general class of non-standard parameters
+(including the dose-response curve as an example), and
+\citet{westling2020causal} contributed a monotone nonparametric estimator of the
+dose-response curve. These methodological advances notwithstanding, deploying
+such approaches may yet require the consideration of scientifically unrealistic
+counterfactual variables and infeasible intervention schedules for generating
+them. Accordingly, alternative frameworks for working with continuous
+treatments have been pursued.
 
 One such framework is based on the causal effects of \textit{stochastic}
 interventions~\citep{stock1989nonparametric, diaz2012population,
 haneuse2013estimation, vanderweele2013causal, young2014identification}, which
-consider setting the post-intervention treatment level to a random draw from an
-arbitrary distribution. This approach makes for a highly flexible means of
+consider setting the post-intervention treatment level to a random draw from a
+user-specified distribution. This approach makes for a highly flexible means of
 defining counterfactual random variables --- indeed, even static interventions
 are a special case in which the post-intervention treatment value is drawn from
 a degenerate distribution with all mass placed on a single treatment level. To
@@ -97,11 +97,11 @@ hejazi2020nonparametric}.
 
 While stochastic interventions appear a promising avenue, estimation strategies
 formulated within this framework run aground of a familiar issue: evaluation of
-the \textit{generalized} propensity score (i.e., conditional treatment density
-given covariates), analogous to the propensity
+the \textit{generalized} propensity score~\citep{austin2018assessing} (i.e.,
+conditional treatment density given covariates), analogous to the propensity
 score~\citep{rosenbaum1983central}, is required. The generalized propensity
 score has been a common ingredient for evaluating the causal effects of
-quantitative treatments, both within and without the stochastic intervention
+continuous treatments, both within and without the stochastic intervention
 framework. For example, \citet{robins2000marginal} posited a marginal structural
 model of the outcome process and used inverse probability weighted estimation of
 its parameters, which include the generalized propensity score. Avoiding direct
@@ -114,42 +114,31 @@ estimator utilizing inverse weighting based on the generalized propensiy score.
 Despite its prevalence, most proposals rely upon restrictive parametric modeling
 assumptions to facilitate estimation of the generalized propensity score,
 though, more recently, flexible estimators leveraging advances in machine
-learning have received limited attention~\citep{diaz2011super, zhu2015boosting}.
+learning have received relatively meager attention~\citep{diaz2011super,
+zhu2015boosting}.
 
 In the present work, we discuss several flexible semiparametric strategies for
 estimation of the generalized propensity score, all presented within the context
-of evaluating the causal effects of stochastic interventions on quantitative
+of evaluating the causal effects of stochastic interventions on continuous
 treatments. From among these proposals, we highlight a nonparametric estimator
 of the conditional treatment density based on pooled hazard regression. Building
 upon our proposed generalized propensity score estimator, we develop and
 evaluate a unique inverse probability weighted estimator capable of achieving
 levels of efficiency usually attainable only with doubly robust estimation
 frameworks. We additionally discuss open source software packages,
-\texttt{haldensify}~\citep{hejazi2020haldensify} and
-\texttt{sl3}~\citep{coyle2020sl3}, for the \texttt{R} statistical programming
+\texttt{haldensify}~\citep{hejazi2021haldensify} and
+\texttt{sl3}~\citep{coyle2021sl3}, for the \texttt{R} statistical programming
 environment~\citep{R}, that facilitate implementation of our generalized
 propensity score estimators and efficient inverse probability weighted
 estimators.
 
-The remainder of the present manuscript is organized as follows.
-Section~\ref{prelim} introduces notation and discusses existing theory on the
-causal effects of stochastic interventions and their efficient estimation.
-Section~\ref{methods} outlines our proposed conditional density estimation
-procedures as well as their use in constructing nonparametric inverse
-probability weighted estimators. Section~\ref{sim} investigates the relative
-performance of our proposed estimators in a series of simulation experiments.
-%Section~\ref{application} demonstrates the application of our estimators in
-%evaluating immune correlates of protection in the HVTN 505 trial.
-Section~\ref{discuss} concludes with a discussion of future avenues of
-investigation.
-
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\section{Preliminaries}\label{prelim}
+\section{Preliminaries}\label{one_prelim}
 
-\subsection{Problem formulation and notation}\label{setup}
+\subsection{Problem Formulation and Notation}\label{setup}
 
 Let $W \in \mathcal{W}$ denote a vector of baseline covariates, $A \in
-\mathcal{A}$ a real-valued quantitative treatment, and $Y \in \mathcal{Y}$ an
+\mathcal{A}$ a real-valued continuous treatment, and $Y \in \mathcal{Y}$ an
 outcome of interest. To formalize the causal question of interest, we introduce
 a nonparametric structural equation model (NPSEM) to describe the
 data-generating process~\citep{pearl2009causality}. Specifically, we assume the
@@ -196,14 +185,10 @@ On the other hand, when the cardinality of $\mathcal{A}$ is large, or when $A$
 is continuous-valued, the evaluation of many such counterfactual means is of
 questionable scientific relevance and, besides, statistically challenging.
 
-%\nh{One may consider static interventions along all points in the support
-%$\mathcal{A}$, yielding a dose-response curve of causal effects corresponding
-%to such interventions.}
-
-By contrast, a \textit{stochastic intervention} modifies the value $A$ would
-naturally assume, $f_A(W, U_A)$, by replacing it with a draw from
-a post-intervention distribution $\tilde{g}_{0,A}(\cdot \mid W)$ (n.b., the zero
-subscript emphasizes that this distribution may depend on the true, but unknown,
+A \textit{stochastic intervention} modifies the value $A$ would naturally
+assume, $f_A(W, U_A)$, by replacing it with a draw from a post-intervention
+distribution $\tilde{g}_{0,A}(\cdot \mid W)$ (n.b., the zero subscript
+emphasizes that this distribution may depend on the true, but unknown,
 data-generating distribution $P_0$). Of course, a stochastic intervention may be
 designed to collapse into a static intervention simply by selecting the
 post-intervention distribution $\tilde{g}_{0,A}(\cdot \mid W)$ to be degnerate,
@@ -211,16 +196,30 @@ so as to place all mass on a single point $a \in \mathcal{A}$.
 
 \citet{diaz2012population} described a stochastic intervention that draws $A$
 from a distribution such that $\tilde{g}_{0,A}(a \mid W) = g_{0,A}(d^{-1}(a, w)
-\mid W)$, indexed by a user-supplied \textit{shifting} function $\delta(W)$, and
+\mid W)$, indexed by a user-supplied \textit{shifting} function, and
 a given $a \in \mathcal{A}$. Shortly thereafter, \citet{haneuse2013estimation}
 showed that estimation of the causal effect of this shifting intervention is
-equivalent with that of an intervention that modifies the value $A$ would
-naturally assume according to a regime $d(A,W)$. Importantly, the regime
-$d(A,W)$ may depend on both covariates $W$ and the treatment $A$ that would be
-assigned in the absence of the regime; consequently, this has been termed
-a \textit{modified treatment policy} (MTP). Both \citet{haneuse2013estimation}
-and \citet{diaz2018stochastic} considered an MTP of the form
-\begin{equation}\label{eqn:defn_shift}
+equivalent to that of an intervention modifying the value $A$ would naturally
+assume according to a regime $d(A,W)$ under the assumption of
+\textit{piecewise smooth invertibility}:
+\begin{assumptioniden}[Piecewise smooth invertibility]\label{ass:one_inv}
+  For each $w \in \cal W$, assume that the interval
+  ${\cal I}(w) = (l(w,), u(w))$ may be partitioned into subintervals
+  ${\cal I}_{\delta,j}(w):j = 1, \ldots, J(w)$ such that $d(a, w)$ is equal to
+  some $d_j(a, w)$ in ${\cal I}_{\delta,j}(w)$ and $d_j(\cdot,w)$ has inverse
+  function $h_j(\cdot, w)$ with derivative $h_j'(\cdot, w)$.
+\end{assumptioniden}
+Assumption~\ref{ass:one_inv} can be used to show that the intervention may be
+interpreted on the individual level~\citep{young2014identification}.
+Importantly, the regime $d(A,W)$ may depend on both covariates $W$ and the
+treatment $A$ that would be assigned in the absence of the regime; consequently,
+this has been termed a \textit{modified treatment policy} (MTP). Both
+\citet{haneuse2013estimation} and \citet{diaz2018stochastic} were motivated by
+counterfactual questions of modifying an intervention, the former seeking to
+evaluate effect on patient health of reducing surgical operating time and the
+latter by adjusting exercise regimens by the habits of patients. Conveniently,
+both sets of authors considered an MTP of the form
+\begin{equation}\label{eqn:one_defn_shift}
   d(a, w) =
   \begin{cases}
     a + \delta(w) & \text{if } a + \gamma \leq u(w) \\
@@ -234,15 +233,14 @@ $Y_{d(A, W)} \coloneqq f_Y(d(A, W), W, U_Y)$ whose distribution we denote
 $P_0^{\delta}$. The goal, then, is to estimate $\psi_{0, \delta} \coloneqq
 \E_{P_0^{\delta}} \{ Y_{d(A, W)} \}$, the mean of this counterfactual outcome.
 
-\subsection{Identification of the population intervention
-  effect}\label{pie_param}
+\subsection{Identifying the Population Intervention Effect}\label{one_pie_param}
 
 \citet{diaz2012population} introduced the \textit{population intervention
 effect} (PIE) $\theta_{0, \delta} \coloneqq \psi_{0, \delta} - \E Y$. As $\E Y$
 is trivially estimable from the observed data, their efforts focused on
 identification and estimation of $\psi_{0,\delta}$. In particular, these authors
 showed that $\psi_{0, \delta}$ is identified by
-\begin{align}\label{eqn:identification2012}
+\begin{align}\label{eqn:ident_pie_2012}
   \psi_{0,\delta} &= \int_{\mathcal{W}} \int_{\mathcal{A}}
   \overline{Q}_{0,Y}(a, w) g_{0, A}(d^{-1}(a, w) \mid W = w)
   q_{0, W}(w) d\mu(a)d\nu(w) \nonumber \\
@@ -253,34 +251,32 @@ showed that $\psi_{0, \delta}$ is identified by
 where $\overline{Q}_{0,Y}(a,w) \coloneqq \E_{P_0}[Y \mid A = a, W = w]$, the
 conditional mean of $Y$ given $A = a$ and $W = w$, as implied by $P_0$, and
 $g_{0,A}(a \mid W = w)$ is the conditional density of the treatment. For the
-statistical functional given in equation~(\ref{eqn:identification2012}) to
+statistical functional given in equation~\ref{eqn:ident_pie_2012} to
 correspond to the causal estimand of interest, several untestable assumptions
 are required, including
 % Identification assumptions
 \begin{assumptioniden}[Lack of interference]
-  Assume $Y^{d(a_i, w_i)}_i \indep d(a_j, w_j)$ for $i \neq j$ and
-  $i = 1, \ldots, n$.
-  \label{ass:interfere}
+  Assume $Y^{d(a_i, w_i)}_i \indep d(a_j, w_j)$ for $i \neq j$.
+  \label{ass:interfere_one}
 \end{assumptioniden}
 \begin{assumptioniden}[Consistency]
-  Assume $Y^{d(a_i, w_i)}_i = Y_i$ in the event $A_i = d(a_i, w_i)$, for
-  $i = 1, \ldots, n$.
-  \label{ass:consist}
+  Assume $Y^{d(a, w)} = Y$ in the event $A = d(a, w)$.
+  \label{ass:consist_one}
 \end{assumptioniden}
 \begin{assumptioniden}[No unmeasured confounding]
-  Assume $A_i \indep Y^{d(a_i, w_i)}_i \mid W = w_i$, for $i = 1, \ldots, n$.
-  \label{ass:nuc}
+  Assume $A \indep Y^{d(a, w)} \mid W = w$.
+  \label{ass:nuc_one}
 \end{assumptioniden}
 \begin{assumptioniden}[Positivity]
-  Assume $a_i \in \mathcal{A} \implies d(a_i, w_i) \in \mathcal{A} \mid
-  W = w_i$ for all $w \in \mathcal{W}$ and $i = 1, \ldots n$.
-  \label{ass:pos}
+  Assume $a \in \mathcal{A} \implies d(a, w) \in \mathcal{A} \mid
+  W = w$ for all $w \in \mathcal{W}$.
+  \label{ass:pos_one}
 \end{assumptioniden}
-Together, assumptions~\ref{ass:interfere} and~\ref{ass:consist} are often
+Together, assumptions~\ref{ass:interfere_one} and~\ref{ass:consist_one} are often
 referred to as the stable unit treatment value assumption
 (SUTVA)~\citep{rubin1978bayesian,rubin1980randomization}. The positivity
-assumption~\ref{ass:pos}, required to establish
-equation~(\ref{eqn:identification2012}), is unlike its analog for simpler (i.e.,
+assumption~\ref{ass:pos_one}, required to establish
+equation~(\ref{eqn:ident_pie_2012}), is unlike its analog for simpler (i.e.,
 static or dynamic) intervention schedules. Instead of requiring positive mass to
 be placed across all treatment levels for all covariate strata $w \in
 \mathcal{W}$, this positivity assumption requires only that the
@@ -296,7 +292,7 @@ theory, of $\psi_{0, \delta}$ with respect to the nonparametric statistical
 model $\M$. Using the EIF, these authors proposed efficient estimators
 constructed based on the form of the EIF. When evaluated on a typical
 observation $o$, a suitable expression for the EIF is
-\begin{equation}\label{eqn:eif_full}
+\begin{equation}\label{eqn:one_eif_full}
   D^{\star}(P_0)(o) = H(a, w)\{y - \overline{Q}_{0,Y}(a, w)\} +
   \overline{Q}_{0,Y}(d(a, w), w) - \psi_{0,\delta},
 \end{equation}
@@ -306,19 +302,19 @@ possible asymptotic variance, or efficiency bound, of all regular asymptotically
 linear estimators of $\psi_{0, \delta}$ and may thus be used in the development
 of efficient estimation strategies.
 
-\subsection{Estimation of the population intervention effect}\label{pie_est}
+\subsection{Estimating the Population Intervention Effect}\label{pie_est}
 
-To facilitate estimation of $\psi_{0,\delta}$, \citet{diaz2012population,
-diaz2018stochastic} defined a direct (or, substitution) estimator based on the
-G-computation formula. This classical estimator is of the form
+To facilitate estimation of $\psi_{0,\delta}$, \citet{diaz2018stochastic}
+defined a direct (or, substitution) estimator based on the G-computation
+formula. This classical estimator is of the form
 \begin{align}\label{eqn:plugin}
   \psi_{n,\delta}^{\text{SUB}} \coloneqq&
       \int \overline{Q}_{n,Y}(d(a, w), w) dQ_{n,AW}(a,w) \nonumber \\
       =& \frac{1}{n} \sum_{i=1}^n \overline{Q}_{n,Y}(d(A_i, W_i), W_i)\ ,
 \end{align}
 where $Q_{n,AW}(a,w)$ is an estimate of the joint distribution of $(A,W)$ based
-on the empirical distribution. This direct estimator is trivially equivalent to
-the inverse probability weighted (IPW) estimator
+on the empirical distribution. An inverse probability weighted (IPW) estimator
+of $\psi_{0,\delta}$ takes the form
 \begin{equation}\label{eqn:ipw}
   \psi_{n,\delta}^{\text{IPW}} = \frac{1}{n} \sum_{i=1}^n \frac{g_{n, A}
     (d^{-1}(A_i, W_i) \mid W_i)}{g_{n, A}(A_i \mid W_i)} Y_i \ .
@@ -331,11 +327,11 @@ outcome mechanism $\overline{Q}_{0,Y}$. Both the direct estimator
 $\psi_{n,\delta}^{\text{SUB}}$ and the IPW estimator
 $\psi_{n,\delta}^{\text{IPW}}$ require estimation of only a single nuisance
 parameter (the outcome mechanism and the conditional treatment density,
-respectively) but are well-known to be generally incapable of achieving the
-nonparametric efficiency bound. What's more, neither estimator is consistent for
-$\psi_{0,\delta}$ when flexible regression strategies are used for nuisance
-parameter estimation, significantly limiting the scenarios in which these
-approaches may be successfully applied.
+respectively) but are well-known to be irregular, fail to be asymptotically
+consistent, or fail to achieve the semiparametric efficiency bound. What's more,
+neither estimator is asymptotically linear for $\psi_{0,\delta}$ when flexible
+regression strategies are used for nuisance parameter estimation, significantly
+limiting the scenarios in which these approaches may be successfully applied.
 
 Two popular frameworks for efficient estimation, both taking advantage of the
 EIF, include one-step
@@ -347,12 +343,12 @@ Firstly, both estimators are consistent for $\psi_{0,\delta}$ when either of the
 initial estimates of $g_{n,A}$ and $\overline{Q}_{n,Y}$ are consistent for their
 respective targets; however, these estimators only achieve asymptotic efficiency
 when \textit{both} initial estimates are consistent. Secondly, as a consequence
-of their construction, both accommodate the use of flexible, data-adaptive
-estimation strategies for the initial estimation of nuisance parameters. This
-latter property provides these estimators with a distinct advantage over their
-direct and IPW estimator counterparts: two opportunities to avoid model
-misspecification arising from the use of restrictive (e.g., parametric) modeling
-strategies.
+of their explicit construction based on the EIF, both readily accommodate the
+use of flexible, data-adaptive estimation strategies for the initial estimation
+of nuisance parameters. This latter property provides these estimators with
+a distinct advantage over their substitution and IPW estimator counterparts: two
+opportunities to avoid model misspecification from restrictive (e.g.,
+parametric) modeling strategies.
 
 Invoking either estimation strategy proceeds first by constructing initial
 estimates, $g_{n,A}$ and $\overline{Q}_{n,Y}$, of the conditional treatment
@@ -368,8 +364,9 @@ formula given in equation~\ref{eqn:plugin} results in a targeted estimator of
 $\psi_{0,\delta}$.
 
 As both the one-step and TML estimation procedures require the EIF, we recall
-that an estimate of the EIF may be constructed from equation~\ref{eqn:eif_full}
-by plugging in initial estimates of nuisance parameters. The estimated EIF is
+that an estimate of the EIF may be constructed from
+equation~\ref{eqn:one_eif_full} by plugging in initial estimates of nuisance
+parameters. The estimated EIF, evaluated on observation $i$, is
 \begin{equation*}
   D^{\star}_{n,i} \coloneqq H_n(A_i, W_i) \{Y_i -
   \overline{Q}_{n,Y}(A_i, W_i)\} +
@@ -386,7 +383,7 @@ Similarly, an asymptotically linear TML estimator may be constructed by updating
 the initial estimator $\overline{Q}_{n,Y}$ to a tilted variant
 $\overline{Q}_{n,Y}^{\star}$, through a logistic tilting model of the form
 $\logit \overline{Q}_{n,Y}^{\star} = \logit \overline{Q}_{n,Y} + \epsilon
-H_n(A,W)$, in which the initial estimate $\overline{Q}_{n,Y}$ is taken as an
+H_n$, in which the initial estimate $\overline{Q}_{n,Y}$ is taken as an
 offset and only the parameter $\epsilon$ need be estimated. The targeted plug-in
 estimator is then
 \begin{equation}\label{eqn:tmle}
@@ -399,22 +396,20 @@ improved estimators $g_{n,A}$ of the generalized propensity score $g_{0,A}$,
 ultimately towards the goal of facilitating the construction of enhanced
 efficient estimators of $\psi_{0, \delta}$.
 
-\subsection{The highly adaptive lasso estimator}\label{hal}
+\subsection{The Highly Adaptive Lasso Estimator}\label{one_hal_est}
 
 In our subsequent developments, we make use of a recently developed
-nonparametric regression function, the highly adaptive lasso (HAL), shown to be
-capable of estimating infinite-dimensional functional parameters at a reasonably
-fast rate while imposing only relatively mild
-assumptions~\citep{vdl2017generally, vdl2017uniform}. The HAL estimator
-approximates a functional parameter of interest using a linear combination of
-basis functions, with the requirement that the target functional parameter
-belong to the set of c\`{a}dl\`{a}g (i.e., right-hand continuous with left-hand
-limits) functions with sectional variation norm bounded by a finite (but
-unknown) constant, a global smoothness restriction that limits the degree of
-variability that the target functional may exhibit. Similarly positioned
-approaches in nonparametric estimation generally require more restrictive local
-smoothness assumptions. For example, minimax convergence rates achieved under
-the assumption that the target functional belongs to a smoothness class
+nonparametric regression function, the highly adaptive lasso
+(HAL)~\citep{vdl2017generally, vdl2017uniform}. The HAL estimator approximates
+a functional parameter of interest using a linear combination of basis
+functions, with the requirement that the target functional parameter belong to
+the set of c\`{a}dl\`{a}g (i.e., right-hand continuous with left-hand limits)
+functions with sectional variation norm bounded by a finite (but unknown)
+constant, a global smoothness restriction that limits the degree of variability
+that the target functional may exhibit. Similarly positioned approaches in
+nonparametric estimation generally require more restrictive local smoothness
+assumptions. For example, minimax convergence rates achieved under the
+assumption that the target functional belongs to a smoothness class
 characterized by H{\"o}lder balls~\citep[e.g.,][]{robins2008higher,
 robins2017minimax} are compromised by the failure of resultant function classes
 to exclude from admissibility highly erratic functions (e.g., the Weierstrass
@@ -440,25 +435,24 @@ components in $u_s$.
 %of variation norm and the notion of Hardy-Krause
 %variation~\citep{qiu2020universal, owen2005multidimensional}.
 
-Relying upon only this fairly weak restriction, \citet{vdl2015generally,
-vdl2017generally} proved that the HAL estimator converges to the target
-functional at a rate faster than $n^{-1/4}$, without any contribution from the
-dimensionality $d$ of the problem at hand, so long as $d$ remains fixed.
-Subsequent efforts improved this rate of convergence to $n^{-1/3}
-\log(n)^{d/2}$~\citep{bibaut2019fast}, with ongoing work yielding promising
-further improvements still. The HAL estimator can be thought of as proceeding in
-two general steps. Firstly, a rich set of indicator (or higher-order, i.e.,
-spline) basis functions are generated to represent the target functional; this
-step is a mapping of the covariate space in terms of the HAL basis.
-Subsequently, lasso regression~\citep{tibshirani1996regression} is applied to
-a linear combination of these basis functions, minimizing the expected value of
-an appropriately chosen loss function while constraining the $L_1$-norm of the
-vector of coefficients to be bounded by a finite constant matching the sectional
-variation norm of the HAL representation of the target functional.
-\citet{benkeser2016highly} first demonstrated the utility of the HAL estimator
-in an extensive series of numerical experiments. The HAL estimator is
+\citet{vdl2015generally, vdl2017generally} proved that the HAL estimator
+converges to the target functional at a rate faster than $n^{-1/4}$, without any
+contribution from the dimensionality $d$ of the problem at hand, so long as $d$
+remains fixed. Subsequent theoretical investigations improved this rate of
+convergence to $n^{-1/3} \log(n)^{d/2}$~\citep{bibaut2019fast}, with ongoing
+work yielding promising further improvements still. The HAL estimator can be
+thought of as proceeding in two general steps. Firstly, a rich set of indicator
+(or higher-order, i.e., spline) basis functions are generated to represent the
+target functional; this step is a mapping of the covariate space in terms of the
+HAL basis. Subsequently, lasso regression~\citep{tibshirani1996regression} is
+applied to a linear combination of these basis functions, minimizing the
+expected value of an appropriately chosen loss function while constraining the
+$L_1$-norm of the vector of coefficients to be bounded by a finite constant
+matching the sectional variation norm of the HAL representation of the target
+functional. \citet{benkeser2016highly} first demonstrated the utility of the HAL
+estimator in an extensive series of numerical experiments. The HAL estimator is
 implemented in the free and open source \texttt{hal9001}
-package~\citep{coyle2020hal9001-rpkg, hejazi2020hal9001-joss} for the \texttt{R}
+package~\citep{coyle2021hal9001, hejazi2020hal9001} for the \texttt{R}
 language and environment for statistical computing~\citep{R}.
 
 When a nuisance parameter of interest is taken as the target functional, the HAL
@@ -495,32 +489,32 @@ where $P_n f = n^{-1} \sum_{i = 1}^n f(O_i)$ and $L(\cdot)$ is an appropriately
 chosen loss function; see~\citet{dudoit2005asymptotics} for an illuminating
 discussion of appropriate choices of loss function for a range of loss-based
 estimation problems. Salient to our goal of estimating the generalized
-propensity score, $L(\eta) = -\log(p_{\eta})$ is a suitable loss function for
-density estimation. Finally, the HAL estimate of $\eta$ may be denoted
-$\eta_{n,\lambda} \equiv \eta_{\beta_{n, \lambda}}$. Each choice of the
-regularization term $\lambda$ corresponds to a unique HAL estimator, though,
-generally speaking, methods for the selection of $\lambda$ must be tailored to
-the estimation goal in order to yield suitable candidate estimators.
+propensity score, the negative log-likelihood loss, $L(\eta) = -\log(p_{\eta})$,
+is a suitable loss function for density estimation. Finally, the HAL estimate of
+$\eta$ may be denoted $\eta_{n,\lambda} \equiv \eta_{\beta_{n, \lambda}}$. Each
+choice of the regularization term $\lambda$ corresponds to a unique HAL
+estimator, though, generally speaking, methods for the selection of $\lambda$
+must be tailored to the estimation goal in order to yield suitable candidate
+estimators.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\section{Estimation of the Generalized Propensity Score}\label{methods}
+\section{Estimating the Generalized Propensity Score}\label{methods}
 
-We now turn our focus to two distinct procedures for estimation of the
-generalized propensity score $g_{0,A}$, from which we may be able to
-subsequently develop efficient, nonparametric estimators of $\psi_{0,\delta}$.
-As will be demonstrated in the sequel, both sets of conditional density
-estimation procedures are flexible, allowing for the use of arbitrary,
-data-adaptive regression methods to be leveraged towards this goal. Having noted
-this, we will, in our presentation of these conditional density estimation
-procedures, focus on the HAL estimator discussed in Section~\ref{hal}; this is
-chiefly for three reasons. Firstly, formal theory guaranteeing the convergence
-rate of the HAL estimator is unique among data-adaptive procedures that eschew
-strong assumptions on the target functional's form. Secondly, contemporaneous
-efforts have made headway in developing efficient direct and IPW estimators of
-low-dimensional parameters in causal inference
+We now turn to procedures for estimation of the generalized propensity score
+$g_{0,A}$, from which we may be able to subsequently develop efficient,
+nonparametric estimators of $\psi_{0,\delta}$. As will be demonstrated in the
+sequel, both conditional density estimators are flexible, allowing for the use
+of arbitrary, data-adaptive regression methods to be leveraged. For
+compatibility with our subsequent theoretical results, we present our
+conditional density estimation procedures using the HAL estimator discussed in
+Section~\ref{one_hal_est}; this is chiefly for three reasons. Firstly, formal
+theory guarantees a suitable convergence rate, for estimator construction, when
+the HAL estimator is used to approximate a nuisance functionals. Secondly,
+contemporaneous efforts have made headway in developing efficient direct and IPW
+estimators of low-dimensional parameters in causal inference
 settings~\citep{vdl2019efficient,ertefaie2020nonparametric}. Thirdly, the
 algorithm is readily available in the free and open source \texttt{hal9001}
-\texttt{R} package~\citep{coyle2020hal9001-rpkg, hejazi2020hal9001-joss}.
+\texttt{R} package~\citep{coyle2021hal9001, hejazi2020hal9001}.
 
 In considering estimation of $g_{0,A}$, a straightforward strategy involves
 assuming a parametric working model for relevant moments of the density
@@ -548,7 +542,7 @@ the sequel, with implementations of these proposals provided in the free and
 open source \texttt{sl3} and \texttt{haldensify} \texttt{R}
 packages~\citep{coyle2021sl3, hejazi2021haldensify}, respectively.
 
-\subsection{Semiparametric location-scale estimators}\label{hose_hese_est}
+\subsection{Semiparametric Location-Scale Estimators}\label{hose_hese_est}
 
 A recently developed family of flexible semiparametric conditional density
 estimators takes the general form $\rho(A - \mu(W) / \sigma(W))$, where $\rho$
@@ -556,7 +550,7 @@ is a given marginal density function. Conditional density estimation procedures
 falling within this framework may be characterized as belonging to
 a \textit{conditional location-scale} family, i.e., where $g_{n,A}(A \mid W)
 = \rho((A - \mu_n(W)) / \sigma_n(W))$; where we stress that the marginal density
-mapping $rho$ is selected \textit{a priori}, leaving only the relevant moments
+mapping $\rho$ is selected \textit{a priori}, leaving only the relevant moments
 $\mu$ and $\sigma$ to be estimated.
 
 Though the restriction to (conditional) location-scale families imposes some
@@ -571,7 +565,7 @@ function admits such a representation. While we stress that this procedure is
 surely not a novel contribution of the present work, we have been otherwise
 unable to ascertain a formal description of it; thus, we provide such
 a formalization in Algorithm~\ref{alg:loc_scale_dens}, which sketches the
-construction of conditional density estimators of this family.
+construction of conditional density estimators of this family.\\
 
 \begin{algorithm}[H]
 \label{alg:loc_scale_dens}
@@ -580,7 +574,7 @@ construction of conditional density estimators of this family.
 \SetKwInOut{Input}{Input}\SetKwInOut{Output}{Output}
 \Input{
   \begin{itemize}
-    \item[] An observed data vector of the quantitative treatment for $n$
+    \item[] An observed data vector of the continuous treatment for $n$
       units: $A$
     \item[] An observed data vector (or matrix) of the baseline covariates for
       $n$ units: $W$
@@ -588,30 +582,26 @@ construction of conditional density estimators of this family.
        estimate: $\rho$
     \item[] A candidate regression procedure to estimate the conditional mean
       $\mu(W)$: $f_{\mu}$
-    \item[] Optionally, a candidate regression procedure to estimate the
+    \item[] A candidate regression procedure to estimate the
        conditional variance $\sigma(W)$: $f_{\sigma}$
   \end{itemize}
 }
 \BlankLine
-
-Estimate $\E[A \mid W]$, the conditional mean of $A$ given $W$, by applying the
-regression estimator $f_{\mu}$, yielding $\hat{\mu}(W)$.
-
-Estimate $\mathbb{V}[A \mid W]$, the conditional variance of $A$ given $W$, by
-applying the regression estimator $f_{\sigma}$, yielding $\hat{\sigma}^2(W)$.
-Note that this step involves only estimation of the conditional mean $\E[(A
-- \hat{\mu}(W))^2 \mid W]$.
-
-Estimate the one-dimensional density of $(A - \hat{\mu}(W))^2
-/ \hat{\sigma}^2(W)$, using kernel smoothing to obtain $\hat{\rho}(A)$.
-
-Construct the estimated conditional density $g_{n,A}(A \mid W) = \hat{\rho}((A
-- \hat{\mu}(W)) / \hat{\sigma}(W))$.
+\begin{enumerate}
+\itemsep4pt
+\item Estimate $\E[A \mid W]$, the conditional mean of $A$ given $W$, by
+  applying the regression estimator $f_{\mu}$, yielding $\hat{\mu}(W)$.
+\item Estimate $\mathbb{V}[A \mid W]$, the conditional variance of $A$ given
+  $W$, by applying the regression estimator $f_{\sigma}$, yielding
+  $\hat{\sigma}^2(W)$. Note that this step involves only estimation of the
+  conditional mean $\E[(A - \hat{\mu}(W))^2 \mid W]$.
+\item Estimate the one-dimensional density of $(A - \hat{\mu}(W))^2
+  / \hat{\sigma}^2(W)$, using kernel smoothing to obtain $\hat{\rho}(A)$.
+\item Construct the estimated conditional density $g_{n,A}(A \mid W)
+  = \hat{\rho}((A - \hat{\mu}(W)) / \hat{\sigma}(W))$.
+\end{enumerate}
 \BlankLine
-
-\Output{
-  $g_{n,A}$, an estimate of the generalized propensity score.
-}
+\Output{$g_{n,A}$, an estimate of the generalized propensity score.}
 \caption{Location-scale conditional density estimation}
 \end{algorithm}
 
@@ -639,12 +629,8 @@ affords a degree of flexibility that ought to limit opportunities for model
 misspecification to compromise estimation of $g_{0,A}$; morever, their improved
 convergence rate will help to facilitate the construction of asymptotically
 linear, and possibly efficient, estimators of $\psi_{0, \delta}$.
-%In Section~\ref{sim}, we compare doubly robust estimators based on these
-%estimators of $g_{n,A}$ under both flexible (HAL) and parametric (GLM)
-%estimators of the conditional moments.
 
-\subsection{Nonparametric pooled hazard regression
-estimator}\label{pooled_haz_est}
+\subsection{Nonparametric Hazard Regression Estimator}\label{pooled_haz_est}
 
 Estimators that eschew any assumptions on the form of the conditional density
 are a rarity. Notably, \citet{diaz2011super} gave a proposal for constructing
@@ -652,9 +638,11 @@ semiparametric estimators of this target quantity based on exploitation of the
 relationship between the (conditional) hazard and density functions. Our
 proposal builds upon theirs, replacing the original recommendation of an
 arbitrary classification model with the HAL regression function. This
-contribution requires two key changes adjusting the penalization aspect of HAL
+contribution requires the key change of adjusting the penalization aspect of HAL
 regression to respect the use of a loss function appropriate for prediction on
-the hazard scale, i.e., $-\log g_{n,A}$~\citep{dudoit2005asymptotics}.
+the hazard scale, i.e., $-\log g_{n,A}$~\citep{dudoit2005asymptotics}. As
+a consequence of this adjustment, the resultant conditional density estimator
+is made capable of incorporating sample-level weights.
 
 To build an estimator of a conditional density, \citet{diaz2011super} considered
 discretizing the observed $A \in \mathcal{A}$ based on a number of bins $T$ and
@@ -679,13 +667,13 @@ representation as multiple records allows for the hazard probability of $A_i$
 belonging to a particular bin along the discretized support to be evaluated via
 standard classification techniques. In fact, this proposal reformulates the
 classification problem into a corresponding set of hazard regressions:
-\begin{equation*}
-   \prob (a \in [\alpha_{t-1}, \alpha_t) \mid W) = \prob (a \in [\alpha_{t-1},
-   \alpha_t) \mid A \geq \alpha_{t-1}, W) \times  \prod_{j = 1}^{t -1} \{1
-   - \prob (a \in [\alpha_{j-1}, \alpha_j) \mid A
+\begin{align*}
+   \prob (A \in [\alpha_{t-1}, \alpha_t) \mid W) = &\prob (A \in [\alpha_{t-1},
+   \alpha_t) \mid A \geq \alpha_{t-1}, W) \\ &\times  \prod_{j = 1}^{t -1} \{1
+   - \prob (A \in [\alpha_{j-1}, \alpha_j) \mid A
    \geq \alpha_{j-1}, W) \},
-\end{equation*}
-where the probability of $a \in \mathcal{A}$ falling in a bin $[\alpha_{t-1},
+\end{align*}
+where the probability of $A \in \mathcal{A}$ falling in a bin $[\alpha_{t-1},
 \alpha_t)$ may be directly estimated from any arbitrary binary regression model,
 since the likelihood of this model may be re-expressed in terms of the
 likelihood of a binary variable in a data set expressed through a repeated
@@ -694,18 +682,19 @@ measures structure.
 Specifically, this data-reformatting procedure is carried out by creating a data
 set in which any given observation $A_i$ appears (repeatedly) for as many
 intervals $[\alpha_{t-1}, \alpha_t)$ as there are prior to the interval to which
-the observed $a$ belongs. A new binary outcome variable, indicating $A_i \in
-[\alpha_{t-1}, \alpha_t)$, is recorded as part of this new data structure. With
-the reformatted data, a pooled hazard regression, spanning the support of $A$ is
-then performed. Finally, the conditional density estimate may be constructed as
+the observed $a$ belongs. A new binary outcome variable, indicating membership
+in the support set, is generated and recorded as part of this new data
+structure. With the reformatted data, a pooled hazard regression, spanning the
+support of $A$ is then performed. Finally, the conditional density estimate may
+be constructed as
 \begin{equation*}
-   g_{n, \alpha}(a \mid W) = \frac{\prob(a \in [\alpha_{t-1}, \alpha_t)
-      \mid W)}{\lvert \alpha_t - \alpha_{t-1} \rvert},
+   g_{n, \alpha}(A \mid W) = \frac{\prob(A \in [\alpha_{t-1}, \alpha_t)
+      \mid W)}{\lvert \alpha_t - \alpha_{t-1} \rvert} \ .
 \end{equation*}
-for $\alpha_{t-1} \leq a < \alpha_t$. As part of this procedure, the hazard
-estimates are mapped to density estimates through re-scaling of the estimates by
-the bin size $\lvert \alpha_t - \alpha_{t-1} \rvert$. We formalize this
-procedure in Algorithm~\ref{alg:pooled_haz_dens}.
+As part of this procedure, the hazard estimates are mapped to density estimates
+through re-scaling of the estimates by the bin size $\lvert \alpha_t
+- \alpha_{t-1} \rvert$. We formalize this procedure in
+Algorithm~\ref{alg:pooled_haz_dens}.\\
 
 \begin{algorithm}[H]
 \label{alg:pooled_haz_dens}
@@ -714,57 +703,55 @@ procedure in Algorithm~\ref{alg:pooled_haz_dens}.
 \SetKwInOut{Input}{Input}\SetKwInOut{Output}{Output}
 \Input{
   \begin{itemize}
-    \item[] An observed data vector of the quantitative treatment for $n$
+    \item[] An observed data vector of the continuous treatment for $n$
       units: $A$
     \item[] An observed data vector (or matrix) of the baseline covariates for
       $n$ units: $W$
     \item[] A scalar indicating the number of bins into which the support of
       $A$ is to be divided: $T$
+    \item[] A procedure for discretizing the support of $A$ into the selected
+    number of bins $T$: $c_T$
   \end{itemize}
 }
 \BlankLine
-
-Divide the observed support of $A$, $\max(A) - \min(A)$, into $T$ bins:
-$[\alpha_1, \alpha_2), \ldots, [\alpha_{T-1}, \alpha_T), [\alpha_T,
-\alpha_{T+1}]$.
-
-Expand the observed data in a repeated measures data structure, expressing each
-individual observation as a set of up to $T$ records, recording the observation
-ID alongside each such record. For a single unit $i$, the set of records takes
-the form $\{A_{ij}, W_{ij}\}_{j=1}^{T_i}$, where $W_{ij}$ are constant in the
-index $j$, $A_{ij}$ is a binary counting process that jumps from $0$ to $1$ at
-the final index, and $T_i \leq T$ indicates the bin along its support into which
-$A_i$ falls.
-
-Estimate the hazard probability, conditional on $W$, of bin membership
-$\prob(A_i \in [\alpha_{t-1}, \alpha_t) \mid W)$ using HAL regression, using
-cross-validation to choose the regularization parameter based on a loss function
-for density estimation, e.g., the negative logarithm of the estimated
-density~\citep{dudoit2005asymptotics}.
-
-Rescale the conditional hazard probability estimates to the conditional density
-scale by dividing the cumulative hazard by the width of the bin into which $A_i$
-falls, for each observation $i = 1, \ldots, n$.
+\begin{enumerate}
+\itemsep4pt
+\item Apply the procedure $c_T$ to divide the observed support of $A$ into $T$
+  bins: $[\alpha_1, \alpha_2), \ldots, [\alpha_{T-1}, \alpha_T), [\alpha_T,
+  \alpha_{T+1}]$.
+\item Expand the observed data in a repeated measures data structure, expressing
+  each individual observation as a set of up to $T$ records, recording the
+  observation ID alongside each such record. For a single unit $i$, the set of
+  records takes the form $\{A_{ij}, W_{ij}\}_{j=1}^{T_i}$, where $W_{ij}$ are
+  constant in the index $j$, $A_{ij}$ is a binary counting process that jumps
+  from $0$ to $1$ at the final index, and $T_i \leq T$ indicates the bin along
+  its support into which $A_i$ falls.
+\item Estimate the hazard probability, conditional on $W$, of bin membership
+  $\prob(A_i \in [\alpha_{t-1}, \alpha_t) \mid W)$ using HAL regression, using
+  cross-validation to choose the regularization parameter based on a loss
+  function for density estimation, e.g., the negative logarithm of the estimated
+  density~\citep{dudoit2005asymptotics}.
+\item Rescale the conditional hazard probability estimates to the conditional
+  density scale by dividing the cumulative hazard by the width of the bin into
+  which $A_i$ falls, for each observation $i = 1, \ldots, n$.
+\end{enumerate}
 \BlankLine
-
-\Output{
-  $g_{n,A}$, an estimate of the generalized propensity score.
-}
-\caption{Pooled hazards conditional density estimation}
+\Output{$g_{n,A}$, an estimate of the generalized propensity score.}
+\caption{Pooled hazard conditional density estimation}
 \end{algorithm}
 
 In its original proposal, a key element of this procedure was the use of any
-arbitrary binary regression procedure to estimate $\prob(a \in [\alpha_{t-1},
+arbitrary binary regression procedure to estimate $\prob(A \in [\alpha_{t-1},
 \alpha_t) \mid W)$, facilitating the incorporation of flexible, data adaptive
 estimators~\citep{diaz2011super}. We alter this proposal, replacing the
-arbitrary estimator of $\prob(a \in [\alpha_{t-1}, \alpha_t) \mid W)$ with HAL
+arbitrary estimator of $\prob(A \in [\alpha_{t-1}, \alpha_t) \mid W)$ with HAL
 regression, making it possible for the resultant conditional density estimator
 to achieve a convergence rate with respect to a loss-based dissimilarity of
 $n^{-1/3}$ under only mild assumptions~\citep{vdl2017generally, vdl2017uniform}.
 We stress that this is an important advance that is needed for the asymptotic
 analysis of estimators of $\psi_{0,\delta}$.
 
-\subsection{Nonparametric inverse probability weighted estimation}\label{npipw}
+\subsection{Nonparametric Inverse Probability Weighted Estimation}\label{npipw}
 
 We now turn our attention to considering estimators of $\psi_{0,\delta}$ that
 can be constructed solely from nuisance estimation of the generalized propensity
@@ -777,17 +764,17 @@ estimator. This theoretical impasse has, in part, fueled the now-considerable
 popularity enjoyed by doubly robust estimation procedures, such as those
 constructed within the one-step estimation~\citep{bickel1993efficient} or
 targeted minimum loss-based estimation frameworks~\citep{vdl2006targeted,
-vdl2011targeted,vdl2018targeted}. As previously noted in section~\ref{pie_est},
-we recall that doubly robust estimators require estimation of both the outcome
-mechanism $\overline{Q}_{0,Y}$ and the propensity score $g_{0,A}$; moreover,
-such estimators are consistent for $\psi_{0,\delta}$ when either of the two
-nuisance parameter estimators converge to their targets but asymptotically
-efficient only when \textit{both} nuisance estimators converge. In settings
-wherein consistent estimation of the outcome mechanism $\overline{Q}_{0,Y}$ can
-prove challenging, asymptotic efficiency may yet be attained by focusing on a
-unique class of IPW estimators capable of incorporating data adaptive estimation
-of $g_{0,A}$ while achieving asymptotic efficiency. The construction of such IPW
-estimators requires considerable care and has been considered previously by
+vdl2011targeted,vdl2018targeted}. As noted previously, we recall that doubly
+robust estimators require estimation of both the outcome mechanism
+$\overline{Q}_{0,Y}$ and the propensity score $g_{0,A}$; moreover, such
+estimators are consistent for $\psi_{0,\delta}$ when either of the two nuisance
+parameter estimators converge to their targets but asymptotically efficient only
+when \textit{both} nuisance estimators converge. In settings wherein consistent
+estimation of the outcome mechanism $\overline{Q}_{0,Y}$ can prove challenging,
+asymptotic efficiency may yet be attained by focusing on a unique class of IPW
+estimators capable of incorporating data adaptive estimation of $g_{0,A}$ while
+achieving asymptotic efficiency. The construction of such IPW estimators
+requires considerable care and has been considered previously by
 \citet{hirano2003efficient}, who proposed a logistic series estimator of the
 propensity score, requiring strong smoothness assumptions, and, more recently,
 by \citet{ertefaie2020nonparametric}, who propose the use of HAL regression.
@@ -808,8 +795,9 @@ covariates. \citet{ertefaie2020nonparametric} provide general conditions under
 which HAL regression may be used to obtain a data adaptive estimator $g_{n,A}$
 that converges to $g_{0,A}$ at a suitably fast rate. Further, these authors
 showed that their nonparametric IPW estimators could be asymptotically efficient
-when the HAL estimator $g_{n,A}$ is undersmoothed so as to include a larger
-number of basis functions than is required for optimal estimation of $g_{0,A}$.
+when the HAL estimator $g_{n,A}$ is undersmoothed (relative to the estimator
+selected by $V$-fold cross-validation) so as to include a larger number of basis
+functions than is required for optimal estimation of $g_{0,A}$.
 
 We propose two classes of selection procedures for undersmoothing HAL estimators
 of the generalized propensity score, both beginning with a common first step:
@@ -823,7 +811,7 @@ to return a family of estimators $\{g_{n,A,\lambda}: \lambda_1, \ldots,
 Algorithm~\ref{alg:pooled_haz_dens} for the very high degree of flexibility
 offered; however, the semiparametric location-scale conditional density
 estimators outlined in Algorithm~\ref{alg:loc_scale_dens} can just as easily be
-adapted for this purpose, with similarly minor adjustments. Going on, we assume
+adapted for this purpose, with similarly minor adjustments. We assume
 access to a grid of generalized propensity score estimators $\{g_{n,A,\lambda}:
 \lambda_1, \ldots, \lambda_K\}$, for $\lambda_1 > \ldots > \lambda_K$,
 facilitating the construction of a grid of IPW estimators
@@ -838,20 +826,20 @@ influence function up to a desirable degree, and (2) minimization of a score
 term arising from the treatment mechanism $(A - g_{n,A})$. Their first selector
 makes explicit use of the form of the EIF and must thus be derived anew for any
 given intervention regime. As a minor contribution, we provide the first
-explicit re-characterization of the EIF of equation~\ref{eqn:eif_full} in a form
-suitable for IPW estimator selection. The second selection procedure is
+explicit re-characterization of the EIF of equation~\ref{eqn:one_eif_full} in
+a form suitable for IPW estimator selection. The second selection procedure is
 incompatible with stochastic interventions, as there is no explicit score for
 the treatment mechanism in this setting. Intuitively, this is attributable to
-the fact that the stochastic intervention $d(a,w)$ defined by
-equation~\ref{eqn:defn_shift} depends on the natural value of the treatment $A$,
-not the case in static or dynamic treatment regimes. Alternatively, we develop
-a novel class of selection procedures based on changes in the IPW estimators
-$\{\psi_{n,\delta,\lambda}: \lambda_1, \ldots, \lambda_K \}$ as the
+the fact that the stochastic intervention $d(A,W)$ defined by
+equation~\ref{eqn:one_defn_shift} depends on the natural value of the treatment
+$A$, not the case in static or dynamic treatment regimes. Alternatively, we
+develop a novel class of selection procedures based on changes in the IPW
+estimators $\{\psi_{n,\delta,\lambda}: \lambda_1, \ldots, \lambda_K \}$ as the
 regularization parameter $\lambda$ is weakened. Importantly, we note that, as an
 integral aspect of both of these contributions, we provide, to or knowledge, the
 first demonstration of the undersmoothing of conditional density estimators.
 
-\subsubsection{Targeted undersmoothing, using the efficient influence function}
+\subsubsection{Targeted Undersmoothing, with the Influence Function}
 
 In order to select an IPW estimator from the grid $\{\psi_{n,\delta,\lambda}:
 \lambda_1, \ldots, \lambda_K \}$ based on the EIF, it is necessary to re-express
@@ -891,28 +879,26 @@ required form of the EIF.
     g_{0,A}(d^{-1}(A,W) \mid W)}{g_{0,A}(A \mid W)}\right) .
   \end{align*}
   Given a family of IPW estimators $\{\psi_{n,\delta,\lambda}: \lambda_1,
-  \ldots, \lambda_K\}$, a singularly best IPW estimator may be selected based on
+  \ldots, \lambda_K\}$, an optimal IPW estimator may be selected based on
   minimization (up to a tolerance $\tau$) of $\lvert P_n D_{\text{CAR}} \rvert$,
   the empirical mean of the estimate, evaluated at the nuisance parameter
   estimates $\{g_{n,A}, Q_{n,Y}\}$. The selected estimator
   $\psi_{n,\delta,\lambda}$ is an approximate solution to the estimated EIF.
 \end{lemma}
-%A proof of Lemma~\ref{lemma:dcar} is provided in the Supplement.
 As noted in Lemma~\ref{lemma:dcar}, the term $D_{\text{CAR}}$ arises by
 projection of the estimating function $U_{g_A}(\Psi)$ onto the tangent space
 $T_{\text{CAR}} = \{\zeta(A,W): \E_{P_0} \{\zeta(A,W) \mid W \} =
 0\}$~\citep{robins1994estimation,vdl2003unified}. Intuitively, since
-IPW estimators are constructed as explicit solutions to $U_{g_A}(O; \Psi)$, the
-first term of the EIF representation in the lemma is trivially solved; thus,
-selection of an IPW estimator need only consider the second term. Our selector
-is then
+IPW estimators are constructed as explicit solutions to the empirical mean of
+$U_{g_A}(O; \Psi)$, the first term of the EIF representation in the lemma is
+trivially solved; thus, selection of an IPW estimator need only consider the
+second term. Our selector is then
 \begin{equation*}
   \lambda_n = \argmin_{\lambda} \lvert P_n D_{\text{CAR}}(g_{n,A,\lambda},
     Q_{n,Y}) \rvert .
 \end{equation*}
 
-\subsubsection{Agnostic undersmoothing, avoiding the efficient influence
-  function}
+\subsubsection{Agnostic Undersmoothing, without the Influence Function}
 
 As demonstrated in the preceding section, explicit characterization of the form
 of the EIF in a manner amenable to the selection of an IPW estimator can prove
@@ -931,8 +917,6 @@ and sieve methods, such ideas were popularized in seminal work
 by~\citet{lepskii1991problem,lepskii1992asymptotically}, with extensions
 appearing sporadically in the literature~\citep[e.g.,][]{lepskii1997optimal,
 birge2001alternative}.
-%through to contemporaneous
-%developments~\citep[e.g.,][]{qiu2020universal}.
 
 The formulation of such EIF-agnostic selection procedures for undersmoothing
 aims to produce selections similar to those given by the targeted procedures ---
@@ -1011,7 +995,7 @@ $\psi_{0,\delta}$, when $g_{0,A}$ is estimated using the conditional density
 estimator of Algorithm~\ref{alg:pooled_haz_dens}. Both the estimator of
 Algorithm~\ref{alg:pooled_haz_dens} and our nonparametric IPW estimators of
 $\psi_{0,\delta}$ are implemented in the \texttt{haldensify} \texttt{R}
-package~\citep{hejazi2020haldensify}.
+package~\citep{hejazi2021haldensify}.
 
 Throughout our experiments, we compare several variants of our IPW estimators
 $\psi_{n,\delta,\lambda_n}$, each differing in the manner in which the
@@ -1028,17 +1012,17 @@ on the agnostic undersmoothing criterion of equation~\ref{eqn:plateau_psi_rel},
 where the cutoff $\tau$ is taken to be extreme $\tau = 0.01$ or relaxed $\tau
 = 0.2$.
 
-Across each of three DGPs, we consider a collection of observed data units
-$O = (W_1, W_2, W_3, A, Y)$, where $W_1 \sim \text{Bernoulli}(p = 0.6)$,
-$W_2 \sim \text{Uniform}(\min = 0.5, \max = 1.5)$, and
-$W_3 \sim \text{Poisson}(\lambda = 2)$; the generating functions for $A$ and $Y$
-vary across the three scenarios. For each simulation experiment in a given
-scenario, we sample $n \in \{100, 200, 500\}$ units and apply the variants of
-our proposed IPW estimators to estimate $\psi_{0,\delta}$ at $\delta = 1$,
-repeating each experiment $300$ times. We approximate $\psi_{0,\delta}$ in each
-scenario by applying the direct estimator (equation~\ref{eqn:plugin}), using the
-known outcome mechanism, in a single, very large sample of $n = 10,000,000$.
-As evaluation criteria, we consider the scaled asymptotic bias (i.e.,
+Across each of three DGPs, we consider a collection of observed data units $O
+= (W_1, W_2, W_3, \allowbreak A, Y)$, where $W_1 \sim \text{Bernoulli}(p
+= 0.6)$, $W_2 \sim \text{Uniform}(\min = 0.5, \max = 1.5)$, and $W_3 \sim
+\text{Poisson}(\lambda = 2)$; the generating functions for $A$ and $Y$ vary
+across the three scenarios. For each simulation experiment in a given scenario,
+we sample $n \in \{100, 200, 500\}$ units and apply the variants of our proposed
+IPW estimators to estimate $\psi_{0,\delta}$ at $\delta = 1$, repeating each
+experiment $300$ times. We approximate $\psi_{0,\delta}$ in each scenario by
+applying the direct estimator (equation~\ref{eqn:plugin}), using the known
+outcome mechanism, in a single, very large sample of $n = 10,000,000$. As
+evaluation criteria, we consider the scaled asymptotic bias (i.e.,
 $\sqrt{n}(\psi_{0,\delta} - \psi_{n,\delta,\lambda_n})$), which is expected to
 decrease with increasing sample size for consistent estimators; the scaled mean
 squared error (MSE) (i.e., $n \{(\psi_{0,\delta} - \psi_{n,\delta,\lambda_n})^2
@@ -1051,8 +1035,8 @@ which are not our focus here. All numerical experiments were performed using
 version 4.0.3 of the \texttt{R} language and environment for statistical
 computing~\citep{R}.
 
-\subsection{Simulation \#1: Treatment mechanism with constant
-  variance}\label{hose_sim_norm}
+\subsection{Simulation \#1: Treatment Mechanism with Constant
+  Variance}\label{hose_sim_norm}
 
 The first DGP in our experiments uses the following generating functions for the
 treatment and outcome mechanism. While the form of the outcome mechanism is a
@@ -1102,8 +1086,8 @@ targeted undersmoothing of the HAL generalized propensity score estimator can be
 used to construct nonparametric IPW estimators with reasonably good, though not
 excellent, asymptotic consistency and efficiency.
 
-\subsection{Simulation \#2: Treatment mechanism with unequal mean and variance
-dependent on $W$}\label{hese_sim_norm}
+\subsection{Simulation \#2: Treatment Mechanism with Unequal Mean and Variance
+Dependent on Baseline}\label{hese_sim_norm}
 
 The next scenario is a modification of the previous, in which the form of the
 treatment mechanism is kept fixed to a normal distribution, though the mean and
@@ -1117,12 +1101,12 @@ heteroscedasticity with respect to the baseline covariates complicates accurate
 estimation of the conditional density $g_{0,A}$ relative to the form of the
 treatment mechanism in the prior scenario. While the form of the outcome
 mechanism differs from that in the previous scenario, we again do not expect its
-form to affect the construction of our IPW estimators much. In this setting, the
-form of the treatment mechanism is $A \mid W \sim \text{Normal}\left(\mu = W_1
-+ 2 W_2 - 2 \cdot (1 - W_1) \cdot W_2, \sigma^2 = 2 W_1 + 0.5 (1 - W_1) + W_2
-\right)$, and that of the outcome mechanism is $Y \mid A, W \sim
-\text{Bernoulli}\left(p = \text{expit}(5 (A - 2) + W_1 + 3 W_2^4 - 2 W_3 - 4 (1
-- W_1) W_2)\right)$.
+form to affect the construction of our IPW estimators much. The treatment
+mechanism takes the form $A \mid W \sim \text{Normal}\left(\mu = W_1 + 2 W_2
+- 2 \cdot (1 - W_1) \cdot W_2, \sigma^2 = 2 W_1 + 0.5 (1 - W_1) + W_2 \right)$,
+while the outcome mechanism is $Y \mid A, W \sim \text{Bernoulli}\left(p
+= \text{expit}(5 (A - 2) + W_1 + 3 W_2^4 - 2 W_3 - \allowbreak 4 (1 - W_1)
+W_2)\right)$.
 
 We summarize the performance of our proposed IPW estimators in terms estimation
 of $\psi_{0,\delta}$ across the $300$ simulation experiments in
@@ -1152,8 +1136,8 @@ rate, consistent with expectations. The results of this experiment echo those of
 the first --- our IPW estimators utilizing targeted undersmoothing outperform
 the others, though not considerably in any metric.
 
-\subsection{Simulation \#3: Treatment mechanism with equal mean and variance
-dependent on $W$}\label{hese_sim_poisson}
+\subsection{Simulation \#3: Treatment Mechanism with Equal Mean and Variance
+Dependent on Baseline}\label{hese_sim_poisson}
 
 We next consider our final experimental scenario, which breaks from the
 preceding two examples by basing the form of the treatment mechanism on
@@ -1216,7 +1200,7 @@ estimate $\psi_{0,\delta}$.
 \section{Discussion}\label{discuss}
 
 The generalized propensity score is a central object in evaluating the causal
-effects of quantitative treatments. While stochastic interventions provide
+effects of continuous treatments. While stochastic interventions provide
 a framework for identifying causal effects of realistic interventions, their
 formulation too depends on the generalized propensity score. Accordingly,
 flexible estimators of this key nuisance quantity, relying on recent

@@ -135,12 +135,12 @@ In particular, conditional density estimates of immune response markers will be
 principally based on a nonparametric estimation strategy that reconstructs the
 conditional density through estimates of the conditional hazard of the
 discretized immune response marker values~\citep{hejazi2020efficient,
-hejazi2020efficient, hejazi2020haldensify}; this approach is an extension of the
+hejazi2021haldensify}; this approach is an extension of the
 proposal of~\citet{diaz2011super}. A Super Learner ensemble~\citep{vdl2007super}
 of variants of this nonparametric conditional density estimator and
 semiparametric conditional density estimators based on Gaussinization of
 residuals is constructed using the \texttt{sl3} \texttt{R}
-package~\citep{coyle2020sl3}. In settings with limited numbers of case
+package~\citep{coyle2021sl3}. In settings with limited numbers of case
 endpoints, the outcome process is modeled as a Super Learner ensemble of
 a library of parametric regression
 techniques~\citep[per][]{gruber2010application}, while the algorithm library is
@@ -151,9 +151,9 @@ friedman2009glmnet}, random forests~\citep{breiman2001random, wright2017ranger},
 extreme gradient boosting machines~\citep{chen2016xgboost}, multivariate
 adaptive polynomial and regression splines~\citep{friedman1991multivariate,
 stone1994use, kooperberg1997polychotomous}, and the highly adaptive
-lasso~\citep{vdl2017generally, benkeser2016highly, hejazi2020hal9001-joss} ---
-as the number of case endpoints grows. The choice of algorithm library is
-coordinated across the CoVPN correlates of protection
+lasso~\citep{vdl2017generally, benkeser2016highly, hejazi2020hal9001,
+coyle2021hal9001} --- as the number of case endpoints grows. The choice of
+algorithm library is coordinated across the CoVPN correlates of protection
 analyses~\citep{gilbert2021covpn}.
 
 Output of the analyses will be presented as point and 95\% confidence interval

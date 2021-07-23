@@ -16,7 +16,6 @@ $(OUTPUT_DIRECTORY)/approvalpage.pdf: $(INPUT_DIRECTORY)/approvalpage.tex
 $(OUTPUT_DIRECTORY)/thesis.pdf: $(INPUT_DIRECTORY)/thesis.tex
 	cd $(INPUT_DIRECTORY) && \
 	latexmk \
-	--xelatex \
 	-pdfxe \
 	-f \
 	-quiet \

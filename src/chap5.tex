@@ -1,5 +1,89 @@
 \chapter{Open Source Software for Causal Inference}\label{five}
 
+\section{The Need for Open Source Statistics Software}
+
+[TO FILL IN]
+Just as the conscientious use of modern statistical methodology is necessary to
+ensure that scientific practice thrives, robust, well-tested software plays
+a critical role in allowing practitioners to direct access the published results
+of a given scientific investigation. In fact, “an article…in a scientific
+publication is not the scholarship itself, it is merely advertising of the
+scholarship. The actual scholarship is the complete software development
+environment and the complete set of instructions which generated the figures,”
+thus making the availability and adoption of robust statistical software key to
+enhancing the transparency that is an inherent (and assumed) aspect of the
+scientific process~\citep{buckheit1995wavelab}.
+
+For a statistical methodology to be readily accessible in practice, it is
+crucial that it is accompanied by user-friendly
+software~\citep{pullenayegum2016knowledge, stromberg2004write}.
+
+\citet{peng2011reproducible, kitzes2017practice, peng2009reproducible,
+stodden2014implementing, millman2018developing, vdl2022targeted}
+
+
+Software is not an ancillary activity: How can a theorem or
+result impact science if no one can apply it?
+Writing software is important for learning statistics:
+How do people plan to use the software?
+What is the problem that the software solves?
+What’s the “best” way to estimate the quantity of interest?
+
+
+  ``The origins of the scientific method$\ldots$ amount to insistence on
+  direct evdience. This is reflected in the motto of The Royal Society, founded
+  in 1660: \textit{Nullius in verba}, which roughly means `take nobody's word
+  for it'.'' ---Philip B.~Stark~\citep{kitzes2017practice}
+
+\begin{itemize}
+  \itemsep4pt
+  \item \textit{Show me}, not \textit{trust me} --- robust, well documented,
+    rigorously tested software allows others to directly assess our claims.
+  \item The software we distribute allows others to engage with our analysis of
+    the HVTN 505 trial and to apply our method to similar vaccine efficacy
+    trials.
+  \item We will be making \textit{causal} claims about vaccine efficacy. Our
+    results could be medically impactful, so reproducibility is vital.
+\end{itemize}
+
+  ``An article$\ldots$in a scientific publication is not the scholarship itself,
+  it is merely advertising of the scholarship. The actual scholarship is the
+  complete software development environment and the complete set of instructions
+  which generated the figures.'' ---David Donoho, on \textit{WaveLab}
+
+\begin{itemize}
+  \item Reproducible applied statistics \textit{requires robust software}:
+    \begin{itemize}
+      \itemsep4pt
+      \item Clear, easily acessible documentation, including examples.
+      \item Unit testing to rigorously assess functions, classes, etc.
+      \item Continuous integration, ensuring accessibility across systems and
+        constant monitoring of software quality.
+      \item Open source development, embodying an ongoing, continuous, public
+        peer review of the software product.
+    \end{itemize}
+\end{itemize}
+
+\begin{itemize}
+  \itemsep4pt
+  \item Statistical publications feature simulation and data analytic results,
+    largely insufficient for rigorously assessing claims.
+  \item ``\textit{A Year is a Long Time in this Business.} Once, about a year
+    after one of us had done some work and written an article (and basically
+    forgot the details of the work he had done), he had the occasion to apply
+    the methods of the article on a newly-arrived dataset. When he went back to
+    the old software library to try and do it, he couldn't remember how the
+    software worked --- invocation sequences, data structures, etc. In the end,
+    he abandoned the project, saying he just didn't have time to get in to it
+    anymore.'' ---from \textit{WaveLab}
+  \item Another example (also from \textit{WaveLab}): this one about how the
+    figures in an interesting paper were produced by software built by the
+    authors, but the authors themselves did not remember the parameter settings
+    that produced the nice figure, so they just hoped that the configuration
+    would come back to them some time later.
+\end{itemize}
+
+
 \section{The \texttt{txshift} \texttt{R} Package}
 
 \subsection{Summary}
@@ -91,11 +175,11 @@ inverse probability of censoring weights directly into relevant loss functions,
 as discussed in \citet{rose2011targeted2sd}; as well as (2) an augmented
 efficient influence function estimating equation, studied more thoroughly by
 \citet{hejazi2020efficient}. \texttt{txshift} integrates with the \texttt{sl3}
-package~\citep{coyle2020sl3} to allow for ensemble machine learning to be
+package~\citep{coyle2021sl3} to allow for ensemble machine learning to be
 leveraged in the estimation of nuisance parameters. What's more, the
 \texttt{txshift} package draws on both the
 \texttt{hal9001}~\citep{coyle2021hal9001,hejazi2020hal9001} and
-\texttt{haldensify}~\citep{hejazi2020haldensify} \texttt{R} packages to allow
+\texttt{haldensify}~\citep{hejazi2021haldensify} \texttt{R} packages to allow
 each of the efficient estimators to be constructed in a manner consistent with
 the methodological and theoretical advances of~\citet{hejazi2020efficient},
 which require fast convergence rates of nuisance parameters to their true
@@ -252,7 +336,7 @@ sl_binary_lrnr <- Lrnr_sl$new(
 )
 \end{lstlisting}
 
-\subsection{Decomposing the population intervention effect}
+\subsection{Population Intervention Effect Decomposition}
 
 We may decompose the population intervention effect (PIE) in terms of a
 \textit{population intervention direct effect} (PIDE) and a \textit{population
@@ -414,7 +498,7 @@ and flexible procedure for constructing conditional density estimates
 $g_{n,A}(a \mid w)$ of $A$ given $W = w$ (possibly subject to observation-level
 weights), evaluated at $a \in \mathcal{A}$.
 
-\subsection{Conditional Density Estimation by Pooled Hazards Regression}
+\subsection{Conditional Density Estimation by Pooled Hazard Regression}
 
 As consistent estimation of the generalized propensity score is an integral part
 of constructing estimators of the causal effects of continuous-valued exposures,
@@ -496,7 +580,7 @@ Our procedure alters the HAL regression function to use a loss function tailored
 for estimation of the hazard, invoking $\ell_1$-penalization in a manner
 consistent with this loss.
 
-\subsection{Demonstration with Example Code}
+\subsection{Code Demonstration}
 
 First, let's load a few required packages, set a seed to make our example
 reproducible, and generate some very simple, simulated example data.

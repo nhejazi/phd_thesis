@@ -1,4 +1,4 @@
-\chapter{Future Directions}\label{six}
+\chapter{Directions for Future Investigation}\label{six}
 
 While the presented body of work has provided novel statistical methodology for
 working with stochastic treatment regimes, there remains much more to do. To
@@ -7,40 +7,21 @@ and software for (1) higher-order efficient estimation of novel causal effects,
 including (in)direct effects; and (2) generalizable, nonparametric estimation of
 flexible, path-specific causal effects for time-to-event outcomes and
 outcome-dependent sampling. Such statistical developments are well-positioned to
-be guided by scientific necessity and applied in analyzing Phase III COVID-19
-vaccine efficacy trials.
+be guided by the pressing scientific necessity of analyzing Phase III COVID-19
+vaccine efficacy trials, though myriad other applications will surely emerge as
+the proposed new class of methodology reaches maturity.
 
 \section{Pressing New Challenges}
-
-Over the last century, a new science of causality, ushered in by the foundations
-of statistics, has emerged. Today, causal inference lies at the heart of
-questions of science, policy, and medicine, What, if any, nutritional
-interventions are most effective in promoting child growth and inhibiting
-wasting in at-risk regions? such as determining which immunobiological pathways
-mediate the action mechanism by which a candidate vaccine reduces infection
-risk. By what mechanistic pathways does a novel therapeutic mitigate the risk of
-substance abuse disorder relapse? What immunobiological pathways mediate the
-action mechanism by which a candidate vaccine reduces infection risk? While
-randomization, which enforces balance across treatment groups on average,
-remains the ``gold standard'' for elucidating causal questions, randomized
-controlled trials (RCTs) can be costly and constrained by ethics and
-practicality (e.g., individuals cannot be forced to vaccinate). Consequently,
-science has turned increasingly to observational studies, necessitating the
-development of robust statistical methods for causal effect estimation and
-uncertainty quantification, subject to the complications arising in the absence
-of randomization. Even in RCTs, answering complex causal questions, such as
-those concerning path-specific effects, requires posing causal models akin to
-those used for observational studies.
 
 Fueled by the deluge of ``Big Data'' amassed across collaborative research
 networks, observational studies arm today's scientists with the means to
 investigate elaborate, albeit daunting, questions. Fortunately, formal causal
 inference frameworks outline tools for expressing such questions in terms of
 hypothetical interventions and complex \textit{path-specific}
-effects~\citep{pearl2009causality,hernan2020causal}. Consider, for example,
+effects~\citep{pearl2009causality,hernan2021causal}. Consider, for example,
 efficacy trials to evaluate candidate preventive vaccines for COVID-19; the
-observed data are a sample of random variables $X$, with distribution $P_0$,
-where $X = (L, A, Z, M, Y)$ consists of baseline covariates $L$ (e.g., age, sex,
+observed data are a sample of random variables $O$, with distribution $P_0$,
+where $O = (W, A, Z, M, Y)$ consists of baseline covariates $W$ (e.g., age, sex,
 co-morbidities), randomized vaccine v.~placebo assignment $A$, mediating
 immunologic biomarkers such as binding or neutralizing antibody levels $M$,
 mediator-outcome confounders affected by treatment $Z$ (e.g., post-vaccination
@@ -63,7 +44,7 @@ biomarkers $M$.
 Although observational studies have led to a renaissance in statistical causal
 inference, many significant challenges remain: causal estimands can be
 ``unidentifiable'' (i.e., learning $\psi(P_0^{\star})$ may be impossible from
-observed data $X$), under even mildly non-standard conditions; unfounded
+observed data $O$), under even mildly non-standard conditions; unfounded
 parametric assumptions can cause estimation bias, leading to questionable
 conclusions; and, estimation of the statistical parameter $\psi(P)$ may be
 complicated by biased sampling and high-dimensional or longitudinal data. Even
@@ -93,35 +74,39 @@ non/semi-parametric causal inference to develop improved statistical estimation
 techniques as well as new effect definitions extending causal inference
 approaches to non-standard yet real-world settings.
 
-\section{Efficient Estimation and Corrections for Two-phase Sampling}
+\section{Efficient Estimation and Two-Phase Sampling Corrections}
 
 Despite significant strides in statistical causal inference with the development
 of multiply robust non/semi-parametric techniques (e.g., double machine
 learning~\citep{chernozhukov2017double, chernozhukov2018double}, targeted
 minimum loss estimation~\citep{vdl2006targeted, vdl2011targeted,
 vdl2018targeted}), classical procedures such as inverse probability weighting
-(IPW)~\citep{horvitz1952generalization, rosenbaum1983central, hernan2020causal}
+(IPW)~\citep{horvitz1952generalization, rosenbaum1983central, hernan2021causal}
 remain widely used for their ease of implementation across a diversity of
-settings~\citep{hernan2020causal}. Though straightforward, IPW estimators
-require consistent estimation of a re-weighting mechanism $\pi_0(A \mid L)$,
-used to induce balance on $A$. Estimates $\pi_n(A \mid L)$ are usually obtained
+settings~\citep{hernan2021causal}. Though straightforward, IPW estimators
+require consistent estimation of a re-weighting mechanism $\g_0(A \mid W)$,
+used to induce balance on $A$. Estimates $\g_n(A \mid W)$ are usually obtained
 via finite-dimensional parametric models, a practice prone to biasing estimates
 through model misspecification. While machine learning provides a potential
 solution, most approaches are inconsistent with efficiency theory, which
 requires a fast convergence rate ($1/\sqrt[4]{n}$) of the estimate to the true
 mechanism (typically unattainable by machine learning). We have formulated
 a novel class of IPW estimators~\citep{ertefaie2020nonparametric} by coupling
-a recent machine learning algorithm (the highly adaptive
-lasso~\citep{benkeser2016highly, vdl2017generally, bibaut2019fast,
-hejazi2020hal9001}) with sieve-based selection strategies to achieve guarantees
-of consistency and non/semi-parametric efficiency without sacrificing flexible
-estimation of $\pi_n(A \mid L)$. Our work is the first demonstration that IPW
-estimators can successfully incorporate flexible modeling without compromising
-asymptotic bias or variance, outlining numerous avenues for future
-investigation.
+the highly adaptive lasso~\citep{benkeser2016highly, vdl2017generally,
+bibaut2019fast, hejazi2020hal9001} with sieve-based selection strategies to
+achieve guarantees of consistency and non/semi-parametric efficiency without
+sacrificing flexible estimation of $\g_n(A \mid W)$. Our work is the first
+demonstration that IPW estimators can successfully incorporate flexible modeling
+without compromising asymptotic bias or variance, outlining numerous avenues for
+future investigation. A simple extension of this approach appeared in
+Chapter~\ref{one}, in which we developed nonparametric-efficient IPW estimators
+for the causal effects of stochastic interventions, showing that this class of
+procedure could work even when $\g_0$ is the conditional density of treatment,
+instead of the much simpler conditional probability of treatment studied
+previously.
 
 While non/semi-parametric causal inference can provide interpretable estimands,
-their estimation is often complicated by thorny challenges posed by complex
+their estimation is often complicated by the thorny challenges posed by complex
 study designs. For example, immune correlates analyses of vaccine efficacy
 trials commonly use outcome-dependent two-phase
 sampling~\citep{haynes2012immune}, in which immunologic biomarkers are measured
@@ -131,25 +116,26 @@ problem. \citet{janes2017higher} followed just such a design in providing the
 first immune correlates analysis of the HIV Vaccine Trial Network 505 preventive
 HIV-1 vaccine efficacy trial~\citep{hammer2013efficacy}. Seeking to quantify the
 causal impact of post-vaccination antibody and T-cell immunologic biomarkers on
-the risk of HIV-1 infection, in~\citet{hejazi2020efficient}, we fused two
-disparate literatures on (1) stochastic
-interventions~\citep{stock1989nonparametric,diaz2012population}, to adopt
-a counterfactual framework applicable to continuous-valued immunologic
+the risk of HIV-1 infection, in Chapter~\ref{two}
+and~\citet{hejazi2020efficient}, we fused two disparate literatures on (1)
+stochastic interventions~\citep{stock1989nonparametric,diaz2012population}, to
+adopt a counterfactual framework applicable to continuous-valued immunologic
 biomarkers, and (2) non/semi-parametric efficiency for two-phase
 designs~\citep{breslow2003large,rose2011targeted2sd}, to generalize our causal
-effect estimates beyond the second-phase sample.
-%\peter{always use ``phase'' not ``stage'' (just a convention in the field)}
-Our approach allowed for the mean counterfactual HIV-1 infection risk in the 505
-trial to be quantified under hypothetical shifts in the observed immunologic
-biomarker profile. We developed non/semi-parametric estimators of such causal
-effect estimands, with guarantees of efficiency and multiple robustness despite
-two-phase sampling. Using marginal structural
-models~\citep{neugebauer2007nonparametric}, we formulated a dose-response
-analysis strategy for summarizing the effects of shifting immunogenicity along
-a pre-specified grid, providing a variable importance measure for ranking
-immunologic biomarkers as study endpoints in future vaccine trials.
+effect estimates beyond the second-phase sample. Our approach allowed for the
+mean counterfactual HIV-1 infection risk in the HVTN 505 trial to be quantified
+under hypothetical shifts in the observed immunologic biomarker profile. We
+developed non/semi-parametric estimators of such causal effect estimands, with
+guarantees of efficiency and multiple robustness despite two-phase sampling.
+Using marginal structural models~\citep{neugebauer2007nonparametric}, we
+formulated a dose-response analysis strategy for summarizing the effects of
+shifting immunogenicity along a pre-specified grid, providing a variable
+importance measure for ranking immunologic biomarkers as study endpoints in
+future vaccine trials. In Chapter~\ref{three}, we showed that an extension of
+this strategy could be used to study candidate mechanistic correlates of
+protection in vaccine efficacy trials of COVID-19.
 
-\section{Robust Causal Mediation Analysis for Complex Path-specific Effects}
+\section{Robust Causal Mediation for Complex Path Analysis}
 
 While interest in path-specific effects dates back to the work
 of~\citet{wright1934method}, causal mediation analysis came into its modern form
@@ -172,8 +158,8 @@ categorical or continuous $A$. Our novel (in)direct effects do not require any
 cross-world counterfactual independencies, allowing for their implications to be
 rigorously tested in RCTs. We outlined modern, multiply robust estimators of our
 (in)direct effects (implemented in our open source \texttt{medshift} software
-package~\citep{hejazi-gh-medshift}), alongside corresponding non/semi-parametric
-efficiency theory.
+package~\citep{hejazi2020medshift}), alongside non/semi-parametric efficiency
+theory.
 
 Though our developments laid the foundations of a new, general framework for
 causal mediation analysis, our (in)direct effects, like their natural effect
@@ -187,7 +173,7 @@ confounding. In our initial contribution to the literature on interventional
 effects, we provided the first detailed developments of efficiency theory and
 non/semi-parametric efficient estimators for existing interventional (in)direct
 effects~\citep{diaz2020nonparametric} (and the first open source software
-package, \texttt{medoutcon}, for their application~\citep{hejazi-gh-medoutcon}).
+package, \texttt{medoutcon}, for their application~\citep{hejazi2021medoutcon}).
 We then expanded upon our new mediation analysis framework by defining the
 \textit{stochastic} interventional (in)direct
 effects~\citep{hejazi2020nonparametric}, applicable to categorical or continuous
@@ -195,18 +181,21 @@ $A$ and identifiable under less restrictive assumptions than their classical
 counterparts. It remains to generalize such effects to accommodate censored
 mediators and (possibly time-to-event) outcomes.
 
-\section{Higher-order Efficiency for Estimation of Novel Causal Effects}
+\section{Higher-Order Efficient Estimation of Novel Causal Effects}
 
+Several important developments must be pursued in order for the currently
+budding study of higher-order efficiency to apply to complex causal effect
+estimands and their non/semi-parametric estimators.
 \begin{enumerate}[label=(\alph*)]
   \itemsep0.2pt
   \item Theoretical development and evaluation of novel higher-order efficient
     estimators based on targeted undersmoothing with the highly adaptive lasso
-    nonparametric regression function.
-  \item Higher-order efficient estimators of the causal (in)direct effects of
-    stochastic interventions.
-  \item Motivated by immune correlates analyses of COVID-19 and HIV-1 vaccine
-    efficacy trials, develop techniques for higher-order efficient estimation
-    under two-phase sampling designs.
+    regression function.
+  \item Higher-order non/semiparametric efficient estimators of the causal
+    direct and indirect effects of stochastic treatment regimes.
+  \item Techniques for higher-order efficient estimation under outcome-dependent
+      two-phase sampling designs, readily applicable to immune correlates
+      analyses of COVID-19 and HIV-1 vaccine efficacy trials.
 \end{enumerate}
 
 Higher-order efficient estimation of the complex statistical functionals arising
@@ -219,41 +208,43 @@ In our work constructing nonparametric-efficient IPW
 estimators~\citep{ertefaie2020nonparametric}, we demonstrated that a targeted
 undersmoothing approach based on the highly adaptive lasso (HAL) could solve
 a critical component of the estimating equation implied by the efficient
-influence function (EIF), $D^{\star}$. A significant step in developing this
-family of approaches for higher-order efficient estimation requires deriving
-second-order remainder terms $R_2(P, P_0)$ of the EIF Taylor expansion, for
-example, in problems with flexible stochastic interventions on the treatment
-$A$ and/or of complex causal (in)direct effect estimands. The formulation of
-a unique targeted undersmoothing approach to construct HAL nuisance parameter
-estimators solving the EIF estimating equation $D^{\star}$ and remainder
-$R_2(P, P_0)$ would constitute a generalizable strategy for higher-order
-estimation without reliance on specialized knowledge beyond standard
-non/semi-parametric efficiency theory, a significant step past similar recent
-developments~\citep{vdl2017generally, benkeser2017doubly}. Like related
-approaches, our estimators would be equipped with multiply robust confidence
-intervals, allowing for valid, efficient statistical inference even under
-nuisance parameter misspecification. Extending our undersmoothing approach to
-the augmented EIFs implied by outcome-dependent two-phase sampling corrections
-would allow our higher-order estimators to be applied in statistical analyses of
-immune correlates in vaccine efficacy trials, through our ongoing collaborations
-with the COVID-19 Prevention Trials and HIV Vaccine Trials Networks.
+influence function (EIF). A significant step in developing this family of
+approaches for higher-order efficient estimation requires deriving second-order
+remainder terms $R_2(P, P_0)$ of the EIF Taylor expansion, for example, in
+problems with flexible stochastic interventions on the treatment $A$ and/or of
+complex causal (in)direct effect estimands. The formulation of a unique targeted
+undersmoothing approach to construct HAL nuisance parameter estimators solving
+the EIF estimating equation and remainder $R_2(P, P_0)$ would constitute
+a generalizable strategy for higher-order estimation without reliance on
+specialized knowledge beyond standard non/semi-parametric efficiency theory,
+a significant step past similar recent developments~\citep{vdl2017generally,
+benkeser2017doubly}. Like related approaches, our estimators would be equipped
+with multiply robust confidence intervals, allowing for valid, efficient
+statistical inference even under nuisance parameter misspecification. Extending
+our undersmoothing approach to the augmented EIFs implied by outcome-dependent
+two-phase sampling corrections would allow our higher-order estimators to be
+applied in statistical analyses of immune correlates in vaccine efficacy trials,
+through our ongoing collaborations with the COVID-19 Prevention Trials and HIV
+Vaccine Trials Networks.
 
 \section{Extending Causal Mediation Analysis to Complex Settings}
 
+Causal mediation analysis has proven to be a powerful tool for dissecting the
+mechanism of particular interventions in well-studied systems; however, the
+complex data produced by modern studies is largely incompatible with the
+comparatively simple estimation strategies prominent in mediation analysis.
+Consequently, several important developments ought to be considered.
 \begin{enumerate}[label=(\alph*)]
   \itemsep0.2pt
-  \item Outlining novel decompositions of (in)direct causal effects and their
-    efficient estimation in settings with possibly right-censored time-to-event
-    outcomes and two-phase sampling.
-  \item Formulating and developing novel causal inference transport methodology
-    for bridging these (in)direct effects to new and heterogeneous populations
-    (e.g., across vaccine trials).
-  \item For application in immune correlates analyses of COVID-19 and HIV-1
-     vaccine efficacy trials, extend the above (in)direct effects and develop
-     open source software for their adoption.
-  %\item Formulation of novel direct and indirect effects of stochastic
-    %interventions on exposures and mediators based on path decompositions
-    %involving intermediate confounders.
+  \item Novel decompositions of direct and indirect causal effects as well as
+      their efficient estimation in settings with possibly right-censored
+      time-to-event outcomes and outcome-dependent two-phase sampling.
+  \item Robust, novel causal inference transport methodology for bridging these
+    direct and indirect effects to heterogeneous populations (e.g., between
+    vaccine efficacy trials).
+  \item Open source software for the adoption of these newly formulated direct
+    and indirect effects in immune correlates analyses of COVID-19 and HIV-1
+     vaccine efficacy trials.
 \end{enumerate}
 
 Biomedical and health studies, vaccine efficacy trials especially, are often
@@ -264,7 +255,7 @@ A common goal is to ascertain the effect of a treatment, through mediating
 variables, on the occurrence of a possibly right-censored time-to-event outcome.
 For example, in immune correlates analyses of vaccine
 trials~\citep{haynes2012immune}, the observed data are random variables $X =
-(L, A, Z, M, \Delta, \widetilde{T})$, where $\widetilde{T} = \min(T, C)$ for
+(W, A, Z, M, \Delta, \widetilde{T})$, where $\widetilde{T} = \min(T, C)$ for
 failure time $T$ and censoring time $C$ with $\Delta = \mathbb{I}(T \leq C)$
 indicating observed failure (other variables remain as previously defined). To
 assess the indirect effect of vaccination $A$ through immunologic biomarkers
@@ -292,16 +283,7 @@ with the application of these approaches in immune correlates analyses of Phase
 III vaccine trials through our collaborative role in the COVID-19 Prevention
 Trials Network.
 
-%Data structure for time-to-event outcomes under two-phase sampling for Covid-19
-%vaccine efficacy trials: $O = (W, A, M, B, \Delta, C, \tilde{T}$, where $W$ are
-%baseline covariates, $A \in \{0, 1\}$ is placebo or vaccine assignment, $M$ are
-%immune correlates, $\Delta = f(B, W)$ is an indicator of inclusion in the
-%two-phase sample, $B$ is a censoring indicator (for day 57), $C$ is a censoring
-%time, and $\tilde{T} = min(T, C)$. Goal is to estimate direct and indirect
-%effects through the immune correlate under complex censoring structure. $T$ is
-%the time-to-event for symptomatic Covid-19 infection.
-
-\section{A Broader Significance}
+\section{A Broader Significance: Advancing Science}
 
 Since path-specific causal effects are ideal for developing scientific answers
 to questions of mechanism, my proposed research program will have important
@@ -310,11 +292,10 @@ economics and psychology. In the health and medical sciences, where the
 measurement of important but costly variables (e.g., immunologic biomarkers)
 complicates effect estimation, sophisticated methods for handling
 outcome-dependent two-phase sampling, a key tool in scientific trial design, are
-sorely needed. I am particularly motivated by avenues for formulating (in)direct
-effects applicable to complex data from vaccine efficacy trials and will
-leverage my collaborations with the COVID-19 Prevention Trials and HIV Vaccine
-Trials Networks to inform scientifically impactful open problems in causal
-inference. In turn, the methods we develop will help to maximize what we can
-learn about critical and timely scientific questions, such as how best to tailor
-future vaccines to mitigate infection risk.
-
+sorely needed. I am particularly motivated by avenues for formulating direct and
+indirect effects applicable to complex data from vaccine efficacy trials and
+will leverage my collaborations with the COVID-19 Vaccine Prevention Trials and
+HIV Vaccine Trials Networks to inform scientifically impactful open problems in
+causal inference. In turn, the methods we develop will help to maximize what we
+can learn about critical and timely scientific questions, such as how best to
+tailor future vaccines to mitigate infection risk.

@@ -371,7 +371,7 @@ however, their contributions assume the absence of intermediate confounding.
 %\mid w)$. Such stochastic interventions can be used to define the
 %\textit{population intervention effect (PIE)} of $A$ on $Y$.
 
-\subsection{Stochastic mediation effects}
+\subsection{Stochastic Mediation Effects}
 
 \cite{diaz2020causal} defined the (in)direct effect of $A$ on $Y$ in
 terms of a decomposition of the total effect of a stochastic
@@ -404,7 +404,7 @@ the exposure $A$ and mediator $Z$. We also show that the effects defined in this
 paper are a generalization of the effects of~\cite{diaz2020causal} in the sense
 that the former reduce to the latter in the absence of intermediate confounding.
 
-\subsection{Stochastic interventional mediation effects}
+\subsection{Stochastic Interventional Mediation Effects}
 
 To introduce (in)direct effects robust to the presence of intermediate
 confounders, we draw upon ideas first outlined
@@ -814,7 +814,7 @@ The robustness result for the case an exponentially tilted intervention
 (\ref{eq:npsem}), which does not satisfy assumption~\ref{ass:inv}, is presented
 in the following lemma
 \begin{lemma}[Multiple robustness for exponential tilting]
-  \label{lemma:dr2}\label{finallemma}
+  \label{lemma:dr2}
   Let $\g_\delta$ be defined as in (\ref{eq:tilt}). Let $\eta_1$ be such that at
   least one of Cond. 1-4 in Table \ref{tab:dr1} holds. Then $\P
   D_{\eta_1,\delta}^1=\theta_{1,\delta}$ and $\P
@@ -867,7 +867,7 @@ let $j(i)$ denote the index of the validation set which contains observation
 $i$. Denote by $\hat \eta_{j}$ the estimator of $\eta$ obtained by training a
 prediction algorithm using only data in the sample ${\cal T}_j$.
 
-\subsection{Efficient one-step estimator}
+\subsection{Efficient One-Step Estimator}
 
 To construct a robust and efficient estimator using the efficient influence
 function $D_{\eta, \delta}$, the one-step bias
@@ -950,7 +950,7 @@ $H_{\hat\eta_j(i),\delta}^2(A_i,Z_i,L_i,W_i)$, respectively; as well as dividing
 (\ref{eq:scorea2}) by the empirical mean of $\hat \g_{j(i), \delta}(A_i\mid
 W_i)/\hat \g_{j(i)}(A_i\mid W_i)$.
 
-\subsection{Efficient targeted minimum loss estimator}
+\subsection{Efficient Targeted Minimum Loss Estimator}
 
 Although corrections may be applied to the one-step estimator, a more principled
 way to obtain estimators that remain in the parameter space may be derived from
@@ -1022,7 +1022,7 @@ estimators are defined as
 The fact that the TML estimator solves estimating equations (\ref{eq:eqtmle}) is
 a fundamental step in proving the following theorem.
 \begin{theorem}[Weak convergence of TML estimator]
-  \label{theo:astmle}\label{finalthm}
+  \label{theo:astmle}
   Assume \ref{ass:bounded} and \ref{ass:sec1} hold, and one of
   \ref{ass:pwinv}, \ref{ass:gconv} defined in Theorem~\ref{theo:asos}
   holds, then:
@@ -1090,22 +1090,16 @@ provided inconsistent estimation of each of the nuisance parameters $\{\e, \m,
 achieve consistent estimation. The Super Learner ensemble was constructed with
 a library of algorithms composed of intercept-only logistic regression;
 main-terms logistic regression; and several variants of the highly adaptive
-lasso~\citep{benkeser2016highly, vdl2017generally, coyle2020hal9001},
-a nonparametric regression approach capable of flexibly estimating arbitrary
-functional forms at a fast convergence rate under only a global smoothness
-assumption~\citep{vdl2017uniform, bibaut2019fast}.
-%Computation of our efficient estimators was performed using our open source
-%\texttt{medshift} \texttt{R} package~\citep{hejazi2020medshift}, freely
-%available at \url{https://github.com/nhejazi/medshift}; nuisance parameter
-%estimation leveraged the \texttt{hal9001}~\citep{coyle2019hal9001} and
-%\texttt{sl3}~\citep{coyle2020sl3} \texttt{R} packages for highly adaptive lasso
-%regression and the Super Learner ensemble, respectively.
-Note that we do not consider cases of misspecified estimation of $\{\vv, \s,
-\q, \bar\uu\}$, as their consistent estimation depends on a subset of the
-nuisance parameters $\{\e, \m, \d, \g, \b\}$. Generally, based on
-Lemmas~\ref{lemma:dr1} and~\ref{lemma:dr2}, robustness of the direct and indrect
-effect estimators to misspecification of $\{\e, \m, \d\}$ is to be expected, but
-the same is not true under misspecification of $\{\g, \b\}$.
+lasso~\citep{benkeser2016highly, vdl2017generally, hejazi2020hal9001,
+coyle2021hal9001}, a nonparametric regression approach capable of flexibly
+estimating arbitrary functional forms at a fast convergence rate under only
+a global smoothness assumption~\citep{vdl2017uniform, bibaut2019fast}. Note that
+we do not consider cases of misspecified estimation of $\{\vv, \s, \q,
+\bar\uu\}$, as their consistent estimation depends on a subset of the nuisance
+parameters $\{\e, \m, \d, \g, \b\}$. Generally, based on Lemmas~\ref{lemma:dr1}
+and~\ref{lemma:dr2}, robustness of the direct and indrect effect estimators to
+misspecification of $\{\e, \m, \d\}$ is to be expected, but the same is not true
+under misspecification of $\{\g, \b\}$.
 
 Figure~\ref{fig:simula} summarizes the results of our investigations of the
 relative performance of the estimator variants enumerated above. Specifically,
@@ -1247,14 +1241,14 @@ Wald-style confidence intervals were constructed based on the conclusions of
 Theorem~\ref{theo:astmle}. In order to ensure the flexibility of our estimators,
 each component of the vector of nuisance parameters $\eta = (\e, \m, \d, \g,
 \b)$ was estimated via ensemble machine learning, using the Super Learner
-algorithm~\citep{vdl2007super, coyle2020sl3}. The library of machine learning
+algorithm~\citep{vdl2007super, coyle2021sl3}. The library of machine learning
 algorithms from which the Super Learner ensemble was constructed included
 intercept-only logistic regression, logistic regression with Bayesian priors on
 parameters, multivariate adaptive regression
 splines~\citep{friedman1991multivariate}, generalized additive
 models~\citep{hastie1990generalized}, random forests~\citep{breiman2001random},
 gradient boosted machines~\citep{friedman2001greedy}, and the highly adaptive
-lasso~\citep{benkeser2016highly, coyle2020hal9001, hejazi2020hal9001}.
+lasso~\citep{benkeser2016highly, coyle2021hal9001, hejazi2020hal9001}.
 
 From examination of the point estimates and confidence intervals of the direct
 and indirect effects in Figure~\ref{fig:xbot_ipsi}, two conclusions may be
@@ -1362,7 +1356,7 @@ of scientific problems on which these robust and flexible (in)direct effects may
 be brought to bear.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\section{Supplementary Materials}\label{sm}
+\section{Supplementary Material}\label{sm}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \subsection{Theorem \ref{theo:iden}}
@@ -1416,7 +1410,7 @@ be brought to bear.
   theorem.
 \end{proof}
 
-\subsection{Efficient influence functions (Theorem~\ref{theo:eif})}
+\subsection{Efficient Influence Functions (Theorem~\ref{theo:eif})}
 \begin{proof}
   In this proof we will use $\Theta_j(\P):j=1,2$ to denote a parameter
   as a functional that maps the distribution $\P$ in the model to a
@@ -1463,7 +1457,7 @@ be brought to bear.
   well as $\theta_2$.
 \end{proof}
 
-\subsection{Targeted minimum loss estimation algorithm}
+\subsection{Targeted Minimum Loss Estimation Algorithm}
 
 To simplify notation, in the remaining of this section we will denote
 $\tilde \eta_{j(i)}(O_i)$ with $\tilde \eta(O_i)$. If $L$ is binary,
@@ -1656,7 +1650,7 @@ $\bar\vv$ by $\bar\s$.
   that $R_{n,2}=o_P(1)$, concluding the proof of the theorem.
 \end{proof}
 
-\subsection{Additional results}
+\subsection{Additional Results}
 
 \begin{lemma}[Second order terms for modified treatment
   policies]\label{lemma:so1}
@@ -1833,4 +1827,3 @@ It thus remains to
   where (\ref{eq:intone}) follows from $c\int b \g\dd\kappa = 1$. The proof for
   $\psi_2$ is analogous.
 \end{proof}
-

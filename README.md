@@ -1,7 +1,7 @@
 # Biostatistics PhD Thesis
 
-> "Nonparametric and Robust Methods for Causal Inference with Stochastic
-> Interventions," by [Nima Hejazi](https://nimahejazi.org)
+> "Semiparametric Statistical Methods for Causal Inference with Stochastic
+> Treatment Regimes" by [Nima Hejazi](https://nimahejazi.org)
 
 ---
 
@@ -9,12 +9,12 @@
 
 My PhD dissertation.
 
-This repository is for archival purposes. If you'd like to build the PDF
-yourself (why!?), then you will find all of the necessary files within this
-repository. I haven't yet included the necessary files to reproduce the data
-analyses and simulation studies discussed in the document (just the results are
-available); ~~I may get around to fixing this up once I've returned from a
-much-needed vacation~~ I have no immediate plans to fix this.
+This repository is for archival purposes. The files required to build the PDF
+yourself (wait, why!?) are all included within this repository. Files necessary
+to reproduce the simulation studies and data analyses in the various chapters of
+the document are not yet available -- that is, just the results are available.
+I have no immediate plans to fix this~~, but it's possible that I will get
+around to fixing this after a much-needed vacation~~.
 
 __The dissertation document (in PDF) is available for browsing
 [here](http://statistics.berkeley.edu/~nhejazi/publications/dissertation-phd-biostat.pdf).__
