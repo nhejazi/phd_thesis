@@ -46,14 +46,13 @@ provide a formalism to describe the values an outcome measurement would have
 taken if, possibly counter-to-fact, a specific level of the treatment had been
 assigned (instead of that observed), for continuous treatments, the set of
 enumerable counterfactuals grows quickly intractable. A prominent
-simplification is the coarsening, or discretization into countably few
-categories. The adoption of such
-a strategy narrows the set of relevant counterfactual values of the outcome
-variable, allowing for the subsequent straightforward application of standard,
-well-studied parameters (e.g., the average treatment effect) and corresponding
-well-established estimators. Despite their convenience, such coarsening
-strategies come at the cost of ignoring fundamental scientific knowledge about
-the system under study.
+simplification is coarsening, or discretization into countably few categories.
+The adoption of such a strategy narrows the set of relevant counterfactual
+values of the outcome variable, allowing for the subsequent straightforward
+application of standard, well-studied parameters (e.g., the average treatment
+effect) and corresponding well-established estimators. Despite their
+convenience, such coarsening strategies come at the cost of ignoring fundamental
+scientific knowledge about the system under study.
 
 The consideration of continuous treatment variables leads to a host of
 complications for the formulation, identification, and estimation of causal
@@ -191,7 +190,7 @@ distribution $\tilde{g}_{0,A}(\cdot \mid W)$ (n.b., the zero subscript
 emphasizes that this distribution may depend on the true, but unknown,
 data-generating distribution $P_0$). Of course, a stochastic intervention may be
 designed to collapse into a static intervention simply by selecting the
-post-intervention distribution $\tilde{g}_{0,A}(\cdot \mid W)$ to be degnerate,
+post-intervention distribution $\tilde{g}_{0,A}(\cdot \mid W)$ to be degenerate,
 so as to place all mass on a single point $a \in \mathcal{A}$.
 
 \citet{diaz2012population} described a stochastic intervention that draws $A$
@@ -216,9 +215,10 @@ treatment $A$ that would be assigned in the absence of the regime; consequently,
 this has been termed a \textit{modified treatment policy} (MTP). Both
 \citet{haneuse2013estimation} and \citet{diaz2018stochastic} were motivated by
 counterfactual questions of modifying an intervention, the former seeking to
-evaluate effect on patient health of reducing surgical operating time and the
-latter by adjusting exercise regimens by the habits of patients. Conveniently,
-both sets of authors considered an MTP of the form
+evaluate the effect on patient health of reducing surgical operating time and
+the latter by the effect of adjusting prescribed exercise regimens based on the
+athletic habits of patients. Conveniently, both sets of authors considered an
+MTP of the form
 \begin{equation}\label{eqn:one_defn_shift}
   d(a, w) =
   \begin{cases}
@@ -1060,7 +1060,7 @@ Figure~\ref{fig:dgp1a_npipw}.
   \centering
   \includegraphics[scale=0.28]{dgp1a_npipw_all_paneled_Qn_hal}
   \caption{Numerical comparisons of nonparametric IPW estimator variants of
-     $\psi_{0,\delta}$ for $A \sim N(\mu = f(W), \sigma^2 = k)$.}
+     $\psi_{0,\delta}$ for $A \sim \text{Normal}(\mu = f(W), \sigma^2 = k)$.}
   \label{fig:dgp1a_npipw}
 \end{figure}
 Inspection of Figure~\ref{fig:dgp1a_npipw} reveals generally acceptable
@@ -1115,7 +1115,8 @@ Figure~\ref{fig:dgp1b_npipw}.
   \centering
   \includegraphics[scale=0.28]{dgp1b_npipw_all_paneled_Qn_hal}
   \caption{Numerical comparisons of nonparametric IPW estimator variants of
-     $\psi_{0,\delta}$ for $A \sim N(\mu = f_1(W), \sigma^2 = f_2(W))$.}
+     $\psi_{0,\delta}$ for $A \sim \text{Normal}(\mu = f_1(W), \sigma^2 =
+     f_2(W))$.}
   \label{fig:dgp1b_npipw}
 \end{figure}
 Upon examination, Figure~\ref{fig:dgp1b_npipw} reveals relative performance
@@ -1166,7 +1167,7 @@ Figure~\ref{fig:dgp2a_npipw}.
   \centering
   \includegraphics[scale=0.28]{dgp2a_npipw_all_paneled_Qn_hal}
   \caption{Numerical comparisons of nonparametric IPW estimator variants of
-       $\psi_{0,\delta}$ for $A \sim \text{Pois}(\lambda = f(W))$.}
+       $\psi_{0,\delta}$ for $A \sim \text{Poisson}(\lambda = f(W))$.}
   \label{fig:dgp2a_npipw}
 \end{figure}
 Figure~\ref{fig:dgp2a_npipw} reveals the best performance of our proposed IPW
