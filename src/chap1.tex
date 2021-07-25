@@ -710,15 +710,15 @@ Algorithm~\ref{alg:pooled_haz_dens}.\\
     \item[] A scalar indicating the number of bins into which the support of
       $A$ is to be divided: $T$
     \item[] A procedure for discretizing the support of $A$ into the selected
-    number of bins $T$: $c_T$
+    number of bins $T$: $\omega$
   \end{itemize}
 }
 \BlankLine
 \begin{enumerate}
 \itemsep4pt
-\item Apply the procedure $c_T$ to divide the observed support of $A$ into $T$
-  bins: $[\alpha_1, \alpha_2), \ldots, [\alpha_{T-1}, \alpha_T), [\alpha_T,
-  \alpha_{T+1}]$.
+\item Apply the procedure $\omega(A, T)$ to divide the observed support of $A$
+  into $T$ bins: $[\alpha_1, \alpha_2), \ldots, [\alpha_{T-1}, \alpha_T),
+  [\alpha_T, \alpha_{T+1}]$.
 \item Expand the observed data in a repeated measures data structure, expressing
   each individual observation as a set of up to $T$ records, recording the
   observation ID alongside each such record. For a single unit $i$, the set of
