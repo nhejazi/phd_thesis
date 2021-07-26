@@ -52,14 +52,14 @@ norm, rather than the exception, as has historically been the
 case~\citep{stromberg2004write, pullenayegum2016knowledge}. We hold that such
 software is characterized by
 \begin{enumerate}[itemsep=-1ex]
-  \item clear, easily acessible, highly detailed documentation, including
-      examples, produced with literate programming tools like Jupyter
+  \item clear, easily accessible, highly detailed documentation, including
+      examples produced with literate programming tools like Jupyter
       notebooks~\citep{kluyver2016jupyter, granger2021jupyter} or \texttt{R}
       Markdown~\citep{xie2018r};
-   \item rigorous unit testing to assess computing and data structures (e.g.,
-      functions, classes, and methods);
+   \item rigorous unit testing to assess computing workflows and data structures
+      (e.g., functions, classes, and methods);
   \item automated continuous integration, ensuring accessibility across systems
-       and constant monitoring of software quality; and
+       and near-constant monitoring of software quality; and
   \item open source development, embodying an ongoing, continuous, public
       peer review of the research product.
 \end{enumerate}
@@ -73,23 +73,23 @@ many academic circles, the core aspects of software development are still viewed
 as an ancillary activity, rather than as a primary pursuit.
 
 As the fields of statistics and data science continue to co-develop in the
-coming decades, we hope that statisticians are challenged by questions that
-highlight the importance of software, including, for example, (1) in what way
-a theorem (or similar mathematical result) can hope to impact science, except
-through software, or (2) how software implementations can reveal important
-insights about the computational bottlenecks of newly developed statistical
-methodology. Recalling an anecdote of~\citet{buckheit1995wavelab}, we note that,
-without continued investment in open source software standards, ``a year [will
-continue to be] a long time in our business,'' as the application of existing
-statistical methodology to newly produced datasets will be marked by the
-unreliability and instability of accompanying software. We hope that such
-occurrences will become exceedingly rare. To that end, we next present three
-open source software packages, each developed to implement distinct statistical
-methods described in this body of work. Written for the \texttt{R} programming
-language~\citep{R}, the entire source code of each of these packages is
-available on the collaborative programming platform, GitHub; moreover, all of
-these packages are accompanied by a suite of unit tests and automated continuous
-integration to ensure continuous quality checking.
+coming decades, statisticians will be challenged by questions that highlight the
+importance of software to the field, including, for example, (1) how a theorem
+(or similar mathematical result) could impact science except through
+software, or (2) how software implementations could reveal important insights
+about the computational bottlenecks of newly developed statistical methodology.
+Recalling an anecdote of~\citet{buckheit1995wavelab}, we note that, without
+continued investment in open source software standards, ``a year [will continue
+to be] a long time in our business,'' as the application of existing statistical
+methodology to newly produced datasets will be marked by the unreliability and
+instability of accompanying software. We hope that such occurrences will become
+exceedingly rare. To that end, we next present three open source software
+packages, each developed to implement distinct statistical methods described in
+this body of work. Written for the \texttt{R} programming language~\citep{R},
+the entire source code of each of these packages is available on the
+collaborative programming platform, GitHub; moreover, all of these packages are
+accompanied by a suite of unit tests and automated continuous integration to
+ensure quality checking.
 
 \section{The \texttt{txshift} \texttt{R} Package}
 
