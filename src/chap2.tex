@@ -252,29 +252,27 @@ identified by
 \begin{align}\label{eqn:identification2012}
   \psi_{0,\delta} &= \int_{\mathcal{W}} \int_{\mathcal{A}}
   \overline{Q}_{0,Y}(a + \delta(w), w) q_{0, A}(a \mid W = w)
-  q_{0, W}(w) d\mu(a)d\nu(w)
-  %\E_{P_0^X} \{Y \mid A = \delta(a, w), W = w\} q_{0, A}^X(a \mid W = w)
-  %q_{0, W}^X(w) d\mu(a)d\nu(w) \ .
+  q_{0, W}(w) d\mu(a)d\nu(w) \ ,
 \end{align}
 where $\overline{Q}_{0,Y}(a,w) \coloneqq \E_{P_0^X}[Y \mid A = a, W = w]$, the
 conditional mean of $Y$ given $A = a$ and $W = w$, as implied by $P_0^X$. Let
 $Y_{a_i + \delta(w_i)}$ denote the outcome that would have been observed had the
 observed exposure been, possibly counter-to-fact, set to $a_i + \delta(w_i)$;
 identification of the causal estimand of interest by
-equation~\ref{eqn:identification2012} is established under several assumptions:
-consistency ($Y_{a + \delta(w)} = Y$ in the event $A = a + \delta(w)$); no
-interference ($Y_{i, a_i + \delta(w_i)}$ does not depend on $a_j + \delta(w_j)$
-for $i \neq j$); no unmeasured confounding ($A \indep Y_{a + \delta(w)} \mid
-W = w$); and positivity ($a \in \mathcal{A} \implies a + \delta(w) \in
-\mathcal{A} \mid W = w$ for all $w \in \mathcal{W}$). Importantly, even when
-these untestable assumptions go unsatisfied, the statistical parameter appearing
-in equation~\ref{eqn:identification2012} has a straightforward interpretation:
-it is the adjusted mean of the outcome $Y$ under the contrast $A + \delta(W)$,
-marginalizing over strata of potential baseline confounders
-$W$~\citep{diaz2012population, vdl2011targeted}.
+equation~\eqref{eqn:identification2012} is established under several
+assumptions: consistency ($Y_{a + \delta(w)} = Y$ in the event $A
+= a + \delta(w)$); no interference ($Y_{i, a_i + \delta(w_i)}$ does not depend
+on $a_j + \delta(w_j)$ for $i \neq j$); no unmeasured confounding ($A \indep
+Y_{a + \delta(w)} \mid W = w$); and positivity ($a \in \mathcal{A} \implies
+a + \delta(w) \in \mathcal{A} \mid W = w$ for all $w \in \mathcal{W}$).
+Importantly, even when these untestable assumptions go unsatisfied, the
+statistical parameter appearing in equation~\eqref{eqn:identification2012} has
+a straightforward interpretation: it is the adjusted mean of the outcome $Y$
+under the contrast $A + \delta(W)$, marginalizing over strata of potential
+baseline confounders $W$~\citep{diaz2012population, vdl2011targeted}.
 
 The positivity assumption required to establish
-equation~\ref{eqn:identification2012} is unlike that required for static or
+equation~\eqref{eqn:identification2012} is unlike that required for static or
 dynamic interventions. In particular, it does not require that the
 post-intervention exposure density place mass across all strata defined by $W$.
 Instead, for $\overline{Q}_{0,Y}$ to be well-defined, we require that the
@@ -294,7 +292,7 @@ evaluated on a typical full-data observation $x$ can be written
 \subsection{Correcting for Two-Phase Sampling}\label{samp_lit}
 
 The subject of two-phase sampling has long been discussed in the statistical
-literature \citep{neyman1938contribution,manski1977estimation,white1982two}.
+literature~\citep{neyman1938contribution,manski1977estimation,white1982two}.
 Recent estimation strategies include, among others, methods based on parametric
 models of the sampling mechanism~\citep{breslow1988logistic}, weighted
 semiparametric estimators~\citep{robins1994estimation}, nonparametric maximum
@@ -322,7 +320,7 @@ estimator can be applied in settings where the sampling design is unknown and
 must be estimated using nonparametric regression. However, the authors did not
 provide a formal study of the theoretical properties of this estimator nor
 numerical evaluations. Owing to its complexity, examples of this approach are
-limited \citep[e.g.,][]{brown2014applications}. We aim to fill in these gaps by
+limited~\citep[e.g.,][]{brown2014applications}. We aim to fill in these gaps by
 providing formal theory establishing conditions under which this estimator
 achieves asymptotic efficiency as well as numerical studies demonstrating its
 performance in the stochastic intervention context.
@@ -595,7 +593,7 @@ parameters.
 The proposed estimators were evaluated using two simulation experiments. In the
 first, we compare our proposed estimators to alternative estimators proposed in
 the literature. To highlight the benefits offered by our approach over the
-simple reweighted estimator of \citet{rose2011targeted2sd}, we focus on how
+simple reweighted estimator of~\citet{rose2011targeted2sd}, we focus on how
 estimation of $g_{0,C}$ influences the estimator performance comparing standard
 logistic regression to the highly adaptive lasso in the construction of
 $g_{n,C}$. In a second, we evaluate our estimators in a data-generating
@@ -614,7 +612,7 @@ estimators considered. This was repeated $1000$ times. We considered estimation
 of $\psi_{0, \delta}$ for $\delta \in \{-0.5, 0, 0.5\}$, where the corresponding
 true values $\psi_{0, \delta}$ were $\{0.501, 0.415, 0.333\}$.
 
-We compared the reweighted estimators of \citet{rose2011targeted2sd} to our
+We compared the reweighted estimators of~\citet{rose2011targeted2sd} to our
 proposed estimators. For reference, we also present the results of a naive
 estimate that ignores the two-phase sampling design. In each of these three
 cases, we consider one-step and TML estimators, giving six estimators in total.
@@ -687,7 +685,7 @@ a stratified random sample of uninfected controls~\citep{janes2017higher}. The
 two-phase sampling of vaccine-recipient controls sampled five controls per case
 without-replacement within each of eight baseline covariate strata defined by
 categories of body mass index and race/ethnicity (White, Hispanic, Black).
-\citet{janes2017higher} and \citet{fong2018modification} analyzed these immune
+\citet{janes2017higher} and~\citet{fong2018modification} analyzed these immune
 responses, and both found CD4+ and CD8+ polyfunctionality scores to be
 associated with risk of HIV-1 infection status by month 24.
 
@@ -768,12 +766,9 @@ CD8+ polyfunctionality score would have improved the HVTN 505 vaccine. Still, it
 may be informative that the counterfactual HIV-1 infection risk is over four
 times that observed in the HVTN 505 trial at the largest negative shift
 considered.
-%that is, a vaccine inducing a significantly attenuated immune
-%response would have been far less efficacious, underscoring the importance of
-%post-vaccination immune response mechanisms in the infection process.
 
-Overall, the results of our analyses support the conclusions of
-\citet{janes2017higher} and \citet{fong2018modification}, further indicating
+Overall, the results of our analyses support the conclusions
+of~\citet{janes2017higher} and~\citet{fong2018modification}, further indicating
 that modulation of the CD4+ and CD8+ polyfunctionality scores may reduce the
 risk of HIV-1 infection, with CD8+ polyfunctionality playing a particularly
 important role. Notably, our analysis differs from the previous efforts in two
@@ -867,7 +862,7 @@ ways: (i) we adjust their algorithm so as to incorporate sample-level weights,
 necessary for making use of inverse probability of censoring weights; and (ii)
 we replace their use of an arbitrary classification model with one based on the
 HAL regression function. While our first modification is general and may be
-applied to the estimation strategy \citet{diaz2011super} propose, our latter
+applied to the estimation strategy~\citet{diaz2011super} propose, our latter
 contribution requires adjusting the penalization aspect of HAL regression to
 respect the use of a loss function appropriate for prediction on the hazard
 scale. To make these contributions widely accessible, we introduce the
@@ -875,20 +870,20 @@ scale. To make these contributions widely accessible, we introduce the
 at \url{https://github.com/nhejazi/haldensify}
 
 To build an estimator of a conditional density, \citet{diaz2011super} considered
-discretizing the observed $a \in A$ based on a number of bins $T$ and a binning
-procedure (e.g., including the same number of points in each bin or forcing
-bins to be of the same length). We note that the choice of the tuning parameter
-$T$ corresponds roughly to the choice of bandwidth in classical kernel density
+discretizing the observed $A$ based on a number of bins $T$ and a binning
+procedure (e.g., including the same number of points in each bin or forcing bins
+to be of the same length). We note that the choice of the tuning parameter $T$
+corresponds roughly to the choice of bandwidth in classical kernel density
 estimation; this will be made clear upon further examination of the proposed
 algorithm. The data $\{A, W\}$ are reformatted such that the hazard of an
-observed value $a \in A$ falling in a given bin may be evaluated via standard
+observed value $A$ falling in a given bin may be evaluated via standard
 classification techniques. In fact, this proposal may be viewed as
 a re-formulation of the classification problem into a corresponding set of
 hazard regressions:
-$\prob (a \in [\alpha_{t-1}, \alpha_t) \mid W) = \prob (a \in [\alpha_{t-1},
+$\prob (A \in [\alpha_{t-1}, \alpha_t) \mid W) = \prob (A \in [\alpha_{t-1},
 \alpha_t) \mid A \geq \alpha_{t-1}, W) \times \prod_{j = 1}^{t -1} \{1 - \prob
-(a \in [\alpha_{j-1}, \alpha_j) \mid A \geq \alpha_{j-1}, W) \}$,
-where the probability that a value of $a \in A$ falls in a bin $[\alpha_{t-1},
+(A \in [\alpha_{j-1}, \alpha_j) \mid A \geq \alpha_{j-1}, W) \}$,
+where the probability that a value of $A$ falls in a bin $[\alpha_{t-1},
 \alpha_t)$ may be directly estimated from a standard classification model. The
 likelihood of this model may be re-expressed in terms of the likelihood of
 a binary variable in a data set expressed through a repeated measures structure.
@@ -899,17 +894,17 @@ observed $a$ belongs. A new binary outcome variable, indicating $A_i \in
 [\alpha_{t-1}, \alpha_t)$, is recorded as part of this new data structure. With
 the re-formatted data, a pooled hazard regression, spanning the support of $A$
 is then executed. Finally, the conditional density estimator
-$q_{n, \alpha}(a \mid W) = (\prob(a \in [\alpha_{t-1}, \alpha_t) \mid W)) /
-(\alpha_t - \alpha_{t-1})$,
-for $\alpha_{t-1} \leq a < \alpha_t$, may be constructed. As part of this
-procedure, the hazard estimates are mapped to density estimates through
-rescaling of the estimates by the bin size ($\alpha_t - \alpha_{t-1}$).
+$q_{n, \alpha}(A \mid W) = (\prob(A \in [\alpha_{t-1}, \alpha_t) \mid W))
+/ (\alpha_t - \alpha_{t-1})$, for $\alpha_{t-1} \leq a < \alpha_t$, may be
+constructed. As part of this procedure, the hazard estimates are mapped to
+density estimates through rescaling of the estimates by the bin size ($\alpha_t
+- \alpha_{t-1}$).
 
 In its original proposal, a key element of this procedure was the use of any
-arbitrary classification procedure for estimating $\prob(a \in [\alpha_{t-1},
+arbitrary classification procedure for estimating $\prob(A \in [\alpha_{t-1},
 \alpha_t) \mid W)$, facilitating the incorporation of flexible, data adaptive
 estimators. We alter this proposal in two ways, (i) replacing the arbitrary
-estimator of $\prob(a \in [\alpha_{t-1}, \alpha_t) \mid W)$ with HAL regression
+estimator of $\prob(A \in [\alpha_{t-1}, \alpha_t) \mid W)$ with HAL regression
 and (ii) accommodating the use of sample-level weights, making it possible for
 the resultant conditional density estimator to achieve a convergence rate with
 respect to a loss-based dissimilarity of $n^{-1/4}$ under only mild assumptions.
@@ -994,11 +989,6 @@ regression ensures that $\sum_{i=1}^n C_i/g_{n,C}(Y_i, W_i) D_{n,i}^F = 0$.
 \subsection{Summarization via Working Marginal Structural
 Models}\label{msm_summary}
 
-%\db{Basically, the point is that $\psi_{0,d}$ is like one
-%counterfactual mean. So I can know the mean if I give everyone treatment, but
-%that's only useful if I also know the mean when every one takes control. So we
-%need to make explicit that we're trying to define an interesting
-%\textit{contrast}.}
 Estimation of $\psi_{0,\delta}$ for a single pre-specified shift $\delta$ may be
 unsatisfactory in some contexts, as it does not provide information concerning
 a dose-response relationship between exposure and outcome. Thus, to develop an

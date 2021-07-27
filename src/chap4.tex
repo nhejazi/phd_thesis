@@ -277,8 +277,8 @@ and integration with respect to multivariate conditional densities on the
 mediator $Z$ to be avoided. We use $\cal W, \cal A, \cal Z$, $\cal L$, and
 $\cal Y$ to denote the support of the corresponding random variables.
 
-Causal effects are defined in terms of hypothetical interventions on the NPSEM
-(\ref{eq:npsem}). In particular, consider an intervention in which the
+Causal effects are defined in terms of hypothetical interventions on the
+NPSEM~\eqref{eq:npsem}. In particular, consider an intervention in which the
 structural equation corresponding to $A$ is removed, with the treatment drawn
 instead from a user-specified distribution $g_\delta(a \mid w)$, which may
 itself depend on the natural exposure distribution and a user-specified
@@ -603,7 +603,7 @@ define the following auxiliary nuisance parameters:
   \bar \s(a,w) & = \int \s(l,a,w) \dd\P(l\mid a,w)
 \end{split}\label{eq:nuis}
 \end{equation}
-Proofs for the following results are detailed in the \ref{sm}.
+Proofs for the following results are detailed in Section~\ref{sm}.
 \begin{theorem}[Efficient influence functions]\label{theo:eif}
 \begin{equation}
   H^1_{\P,\delta}(a,z,l,w) = \frac{\g_\delta(a\mid
@@ -1005,7 +1005,7 @@ $\logit \hat\m(z,l,a,w)$. Let $\hat\beta$ denote the MLE, and let $\tilde
 \m=\m_{\hat\beta}$ denote the updated estimates. Fitting this model ensures that
 $\tilde\m$ solves the relevant score equations. Models like this are estimated
 iteratively for all parameters in a way that guarantees that the estimating
-equations (\ref{eq:eqtmle}) are solved up to a term that converges to zero in
+equations~\eqref{eq:eqtmle} are solved up to a term that converges to zero in
 probability at rate faster than $n^{-1/2}$. After the iteration ends, the TML
 estimators are defined as
 \begin{equation}
@@ -1019,7 +1019,7 @@ estimators are defined as
     W_i)\dd\kappa(a).
   \end{split}\label{eq:tmle}
 \end{equation}
-The fact that the TML estimator solves estimating equations (\ref{eq:eqtmle}) is
+The fact that the TML estimator solves estimating equations~\eqref{eq:eqtmle} is
 a fundamental step in proving the following theorem.
 \begin{theorem}[Weak convergence of TML estimator]
   \label{theo:astmle}
@@ -1153,10 +1153,6 @@ efficient, a result unpredictable from theory given the irregularity of the
 estimators under this configuration. Altogether, results of our numerical
 experiments indicate that our proposed estimators exhibit properties that align
 with the theoretical results of Lemmas~\ref{lemma:dr1} and~\ref{lemma:dr2}.
-%while, under similar misspecification of $\b$, the TML estimators exhibit
-%diverging bias, an inability to achieve the efficiency bound, and quickly
-%diminishing coverage of 95\% confidence intervals. In these latter two cases,
-%the irregularity of both the one-step and TML estimators
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Application to the X:BOT Trial}\label{sec:applic}
@@ -1470,8 +1466,8 @@ $\bar\vv$ by $\bar\s$.
 \begin{enumerate}[label=Step \arabic*., align=left, leftmargin=*]
 \item Initialize $\tilde\eta =\hat\eta$. Compute $\tilde\vv$,
   $\tilde\s$, and $\tilde\q^j$ by plugging in $\tilde \m$,
-  $\tilde \g$, $\tilde \e$, $\tilde \d$ into equations
-  (\ref{eq:nuis}), (\ref{eq:altnuis}) and (\ref{eq:defqs}) if
+  $\tilde \g$, $\tilde \e$, $\tilde \d$ into equations~\eqref{eq:nuis},
+  \eqref{eq:altnuis} and~\eqref{eq:defqs} if
   $Z$ is multivariate, and fitting data-adaptive regression algorithms as
   appropriate.
 
@@ -1527,8 +1523,8 @@ $\bar\vv$ by $\bar\s$.
   $\logit \tilde\m(A_i,Z_i,L_i,W_i)$. Let $\hat\beta$ denote the
   estimate, and let $\tilde \m=\m_{\hat\beta}$ denote the updated
   estimates. Perform analogous computations for $\b$ and $\g$.
-\item \label{step:computeu} Compute $\tilde\uu$ according to equation
-  (\ref{eq:nuis}) by plugging in $\tilde\m$ and $\tilde\b$. Compute
+\item \label{step:computeu} Compute $\tilde\uu$ according to
+   equation~\eqref{eq:nuis} by plugging in $\tilde\m$ and $\tilde\b$. Compute
   the covariate
   \[J_i = \frac{{\tilde\g}_\delta(A_i
       \mid W_i)}{{\tilde\g}(A_i\mid W_i)},\]

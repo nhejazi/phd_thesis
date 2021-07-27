@@ -251,7 +251,7 @@ showed that $\psi_{0, \delta}$ is identified by
 where $\overline{Q}_{0,Y}(a,w) \coloneqq \E_{P_0}[Y \mid A = a, W = w]$, the
 conditional mean of $Y$ given $A = a$ and $W = w$, as implied by $P_0$, and
 $g_{0,A}(a \mid W = w)$ is the conditional density of the treatment. For the
-statistical functional given in equation~\ref{eqn:ident_pie_2012} to
+statistical functional given in equation~\eqref{eqn:ident_pie_2012} to
 correspond to the causal estimand of interest, several untestable assumptions
 are required, including
 % Identification assumptions
@@ -276,7 +276,7 @@ Together, assumptions~\ref{ass:interfere_one} and~\ref{ass:consist_one} are ofte
 referred to as the stable unit treatment value assumption
 (SUTVA)~\citep{rubin1978bayesian,rubin1980randomization}. The positivity
 assumption~\ref{ass:pos_one}, required to establish
-equation~(\ref{eqn:ident_pie_2012}), is unlike its analog for simpler (i.e.,
+equation~\eqref{eqn:ident_pie_2012}, is unlike its analog for simpler (i.e.,
 static or dynamic) intervention schedules. Instead of requiring positive mass to
 be placed across all treatment levels for all covariate strata $w \in
 \mathcal{W}$, this positivity assumption requires only that the
@@ -319,12 +319,12 @@ of $\psi_{0,\delta}$ takes the form
   \psi_{n,\delta}^{\text{IPW}} = \frac{1}{n} \sum_{i=1}^n \frac{g_{n, A}
     (d^{-1}(A_i, W_i) \mid W_i)}{g_{n, A}(A_i \mid W_i)} Y_i \ .
 \end{equation}
-In both equations~\ref{eqn:plugin} and~\ref{eqn:ipw}, as well as in the sequel,
-the subscript $n$ denotes the use of estimated quantities in lieu of their true
-counterparts --- that is, $g_{n,A}$ is simply an estimate of the conditional
-treatment density $g_{0,A}$, while $\overline{Q}_{n,Y}$ is an estimate of the
-outcome mechanism $\overline{Q}_{0,Y}$. Both the direct estimator
-$\psi_{n,\delta}^{\text{SUB}}$ and the IPW estimator
+In both equations~\eqref{eqn:plugin} and~\eqref{eqn:ipw}, as well as in the
+sequel, the subscript $n$ denotes the use of estimated quantities in lieu of
+their true counterparts --- that is, $g_{n,A}$ is simply an estimate of the
+conditional treatment density $g_{0,A}$, while $\overline{Q}_{n,Y}$ is an
+estimate of the outcome mechanism $\overline{Q}_{0,Y}$. Both the direct
+estimator $\psi_{n,\delta}^{\text{SUB}}$ and the IPW estimator
 $\psi_{n,\delta}^{\text{IPW}}$ require estimation of only a single nuisance
 parameter (the outcome mechanism and the conditional treatment density,
 respectively) but are well-known to be irregular, fail to be asymptotically
@@ -360,12 +360,12 @@ EIF. In the TML estimation framework, a univariate (often, logistic) parametric
 tilting model is used to update the initial estimate $\overline{Q}_{n,Y}$ of the
 outcome mechanism in such a way that the EIF estimating equation is solved to
 a desirable degree. Plugging this updated initial estimate into the substitution
-formula given in equation~\ref{eqn:plugin} results in a targeted estimator of
+formula given in equation~\eqref{eqn:plugin} results in a targeted estimator of
 $\psi_{0,\delta}$.
 
 As both the one-step and TML estimation procedures require the EIF, we recall
 that an estimate of the EIF may be constructed from
-equation~\ref{eqn:one_eif_full} by plugging in initial estimates of nuisance
+equation~\eqref{eqn:one_eif_full} by plugging in initial estimates of nuisance
 parameters. The estimated EIF, evaluated on observation $i$, is
 \begin{equation*}
   D^{\star}_{n,i} \coloneqq H_n(A_i, W_i) \{Y_i -
@@ -826,18 +826,19 @@ influence function up to a desirable degree, and (2) minimization of a score
 term arising from the treatment mechanism $(A - g_{n,A})$. Their first selector
 makes explicit use of the form of the EIF and must thus be derived anew for any
 given intervention regime. As a minor contribution, we provide the first
-explicit re-characterization of the EIF of equation~\ref{eqn:one_eif_full} in
+explicit re-characterization of the EIF of equation~\eqref{eqn:one_eif_full} in
 a form suitable for IPW estimator selection. The second selection procedure is
 incompatible with stochastic interventions, as there is no explicit score for
 the treatment mechanism in this setting. Intuitively, this is attributable to
 the fact that the stochastic intervention $d(A,W)$ defined by
-equation~\ref{eqn:one_defn_shift} depends on the natural value of the treatment
-$A$, not the case in static or dynamic treatment regimes. Alternatively, we
-develop a novel class of selection procedures based on changes in the IPW
-estimators $\{\psi_{n,\delta,\lambda}: \lambda_1, \ldots, \lambda_K \}$ as the
-regularization parameter $\lambda$ is weakened. Importantly, we note that, as an
-integral aspect of both of these contributions, we provide, to or knowledge, the
-first demonstration of the undersmoothing of conditional density estimators.
+equation~\eqref{eqn:one_defn_shift} depends on the natural value of the
+treatment $A$, not the case in static or dynamic treatment regimes.
+Alternatively, we develop a novel class of selection procedures based on changes
+in the IPW estimators $\{\psi_{n,\delta,\lambda}: \lambda_1, \ldots, \lambda_K
+\}$ as the regularization parameter $\lambda$ is weakened. Importantly, we note
+that, as an integral aspect of both of these contributions, we provide, to or
+knowledge, the first demonstration of the undersmoothing of conditional density
+estimators.
 
 \subsubsection{Targeted Undersmoothing, with the Influence Function}
 
@@ -935,7 +936,7 @@ element of $\lambda_1, \ldots, \lambda_K$ for which the condition
 is met. Note that $Z_{(1-\alpha/2)}$ is the $(1-\alpha/2)$\textsuperscript{th}
 quantile of the standard normal distribution, useful for the construction of
 Wald-style confidence intervals. While we recommend the use of the stabilized
-IPW estimator (equation~\ref{eqn:ipw_stable}) in the criterion, there are
+IPW estimator of equation~\eqref{eqn:ipw_stable} in the criterion, there are
 several choice of the standard error estimate $\sigma_{n,\lambda}$. For ease of
 computation, we recommend a well-known, conservative variance estimator, the
 empirical variance of the estimated IPW estimating equation
@@ -975,8 +976,6 @@ thought of as identifying plateaus in the solution path of $\psi_{n,\delta,
 criterion will suitably solve the EIF estimating equation and thus achieve
 desirable asymptotic properties.
 
-%Lemma 2: Plateau selection satisfies the EIF
-
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Numerical Studies}\label{sim}
 
@@ -1007,10 +1006,10 @@ $\lambda_n$ as the minimizer of $\lvert P_n D_\text{CAR} \rvert$ or through
 a relaxed condition under which $\lvert P_n D_\text{CAR} \rvert$ is required to
 only fall below a rescaling of a standard error estimate based on the EIF
 $\sqrt{\mathbb{V}(D^{\star}_n) / n}/ \log(n)$; one based on the agnostic
-undersmoothing criterion of equation~\ref{eqn:plateau_var_cond}; and two based
-on the agnostic undersmoothing criterion of equation~\ref{eqn:plateau_psi_rel},
-where the cutoff $\tau$ is taken to be extreme $\tau = 0.01$ or relaxed $\tau
-= 0.2$.
+undersmoothing criterion of equation~\eqref{eqn:plateau_var_cond}; and two based
+on the agnostic undersmoothing criterion of
+equation~\eqref{eqn:plateau_psi_rel}, where the cutoff $\tau$ is taken to be
+extreme $\tau = 0.01$ or relaxed $\tau = 0.2$.
 
 Across each of three DGPs, we consider a collection of observed data units $O
 = (W_1, W_2, W_3, \allowbreak A, Y)$, where $W_1 \sim \text{Bernoulli}(p
@@ -1020,7 +1019,7 @@ across the three scenarios. For each simulation experiment in a given scenario,
 we sample $n \in \{100, 200, 500\}$ units and apply the variants of our proposed
 IPW estimators to estimate $\psi_{0,\delta}$ at $\delta = 1$, repeating each
 experiment $300$ times. We approximate $\psi_{0,\delta}$ in each scenario by
-applying the direct estimator (equation~\ref{eqn:plugin}), using the known
+applying the direct estimator of equation~\eqref{eqn:plugin}, using the known
 outcome mechanism, in a single, very large sample of $n = 10,000,000$. As
 evaluation criteria, we consider the scaled asymptotic bias (i.e.,
 $\sqrt{n}(\psi_{0,\delta} - \psi_{n,\delta,\lambda_n})$), which is expected to
@@ -1178,9 +1177,9 @@ EIF term arising from Lemma~\ref{lemma:dcar} achieves the lowest bias and best
 efficiency. By $n=500$, most estimator variants are nearly unbiased, with the
 best performing being IPW estimators minimizing $\lvert P_n D_\text{DCAR}
 \rvert$ via targeted undersmoothing and the less restrictive ($\tau = 0.2$)
-agnostic undersmoothing selector based on equation~\ref{eqn:plateau_psi_rel}. In
-terms of efficiency, all candidates but the IPW estimators constructed from
-agnostic undersmoothing based on equation~\ref{eqn:plateau_psi_rel} succeed in
+agnostic undersmoothing selector based on equation~\eqref{eqn:plateau_psi_rel}.
+In terms of efficiency, all candidates but the IPW estimators constructed from
+agnostic undersmoothing based on equation~\eqref{eqn:plateau_psi_rel} succeed in
 achieving the efficiency bound, an excellent level of performance. Notably, even
 the IPW estimator based on the cross-validation selector succeeds in this
 challenging endeavor, suggesting that it exhibits variance relatively improved
