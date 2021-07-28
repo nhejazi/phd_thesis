@@ -40,6 +40,8 @@ Fortunately, the decade leading to the recent emergence of the interdisciplinary
 field of data science~\citep{donoho2017fifty} has been marked by a renewed and
 fervent interest in these key areas.
 
+\citep{perez2013literate}
+
 As we move into an era in which sophisticated statistical techniques are
 routinely deployed for rigorously evaluating scientific claims of global
 concern, such as the vaccine efficacy trials discussed in Chapters~\ref{two}
@@ -79,19 +81,19 @@ importance of software to the field, including, for example, (1) how a theorem
 or (2) how software implementations could reveal important insights about the
 computational bottlenecks of newly developed statistical methodology. Recalling
 an anecdote of~\citet{buckheit1995wavelab}, we note that, without continued
-investment in open source software standards, ``a year [will continue to be]
-a long time in our business,'' as the application of existing statistical
-methodology to newly produced datasets will be marked by the unreliability and
-instability of accompanying software. We hope that such occurrences will become
-exceedingly rare. To that end, we next present three open source software
-packages, each developed to implement distinct statistical methods described in
-this body of work. Written for the \texttt{R} programming language~\citep{R},
-the unrestricted source for each package is available on the GitHub platform for
-collaborative programming; moreover, each package is accompanied by online
-documentation, a suite of unit tests, and automated quality control through
-continuous integration services.
+investment in the development and promotion of open source software standards,
+``a year [will continue to be] a long time in this business,'' as the
+application of existing statistical methodology to newly produced datasets will
+be marked by the unreliability and instability of accompanying software. We hope
+that such occurrences will become exceedingly rare. To that end, we next present
+three open source software packages, each developed to implement distinct
+statistical methods described in this body of work. Written for the \texttt{R}
+programming language~\citep{R}, the unrestricted source for each package is
+available on the GitHub platform for collaborative programming; moreover, each
+package is accompanied by online documentation, a suite of unit tests, and
+automated quality control through continuous integration services.
 
-\section{The \texttt{txshift} \texttt{R} Package}
+\section{The \texttt{txshift} \texttt{R} Package}\label{pkg_txshift}
 
 \subsection{Summary}
 
@@ -201,7 +203,7 @@ Use of the \texttt{txshift} package has been extensively documented in the
 package's \texttt{README}, two vignettes, and its \texttt{pkgdown} documentation
 website (\url{https://code.nimahejazi.org/txshift}).
 
-\section{The \texttt{medshift} \texttt{R} Package}
+\section{The \texttt{medshift} \texttt{R} Package}\label{pkg_medshift}
 
 \subsection{Background}
 
@@ -467,7 +469,7 @@ de_est
 As given above, we have for our estimate of the direct effect
 $\hat{\beta}_{\text{PIDE}}({\delta}) = -0.007$.
 
-\section{The \texttt{haldensify} \texttt{R} Package}
+\section{The \texttt{haldensify} \texttt{R} Package}\label{pkg_haldensify}
 
 \subsection{Statement of Need}
 

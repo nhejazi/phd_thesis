@@ -1,5 +1,3 @@
-% (This file is included by thesis.tex; you do not latex it by itself.)
-
 \begin{abstract}
 
 Nearly a century ago, the foundations of modern statistics laid the groundwork
@@ -18,55 +16,69 @@ is plagued by confounding: vaccinees may be more likely to engage in risky
 behaviors and patients assigned a candidate therapeutic are not uniformly
 ``treated'' due to clinician heterogeneity. Adjusting for potential confounders
 is a daunting challenge in an era where studies routinely measure numerous
-high-dimensional, longitudinal characteristics. Further, observational studies
-empower scientists to assess mechanistic, path-specific causal effects that
-\textit{cannot be learned} with randomized data. Tools from non/semi-parametric
-statistical theory and machine learning are needed to avoid imposing unrealistic
-statistical assumptions, and novel causal effect estimands are required to
-better address mechanistic questions.
+high-dimensional characteristics. While observational studies empower scientists
+to assess mechanistic, path-specific causal effects that \textit{cannot be
+learned} with randomized data, tools from non/semi-parametric statistical theory
+and machine learning are needed to avoid imposing unrealistic assumptions and
+novel causal effect estimands are required to better address mechanistic
+questions.
 
 Causal inference methodology is critical to answering real-world scientific
 questions, but traditional approaches make too many simplifying assumptions. By
 ignoring biased sampling designs, continuous-valued treatments, and confounding
-of path-specific effects, standard statistical methods fall far short of
-empowering mechanistic discovery. Such techniques often require \textit{a
-priori} modeling assumptions unsupported by domain knowledge, limiting their
-utility for real-world data analysis efforts.
+of path-specific effects, standard techniques fall short of empowering
+mechanistic discovery. Such techniques often require \textit{a priori} modeling
+assumptions unsupported by domain knowledge, limiting their utility for
+real-world data analysis.
 
-This dissertation extends theory and methods for non/semi-parametric causal
-inference in settings with continuous treatments, with particular attention paid
-to issues emerging from biased sampling designs and path-specific causal
-effects. \textit{Stochastic treatment regimes} provide a unifying framework for
-formalizing such causal inference problems. Chapter~\ref{one} considers
-estimation of the generalized propensity score, a quantity critical to
-estimating the causal effects of stochastic interventions. To tractably estimate
-this challenging quantity, we formulate algorithms for its flexible estimation
-using the highly adaptive lasso, a nonparametric regression estimator. We then
-develop a novel inverse probability weighted estimator of the causal effect of
-a stochastic intervention, and show it capable of achieving the
-non/semi-parametric efficiency bound. Chapter~\ref{two} focuses on the
-application of the causal effects of stochastic interventions in real-world
-studies that rely upon outcome-dependent two-phase sampling (e.g., case-cohort
-designs). The work includes a methodological advance that unites techniques for
-estimating the causal effects of stochastic interventions with corrections for
-biased sampling, allowing for these complex causal parameters to be efficiently
-estimated under such designs. Motivated by the aims of an HIV vaccine efficacy
-trial, this contribution allows researchers to probe how the vaccination-induced
-immunogenicity of candidate immune correlates of protection may best be
-modulated by future vaccines, and the proposed methodology is demonstrated
-through a re-analysis of the data from this trial. The COVID-19 pandemic took
-the world by storm during the final year of this work, and Chapter~\ref{three}
-generalizes the methodology proposed in Chapter~\ref{two} to help maximize what
-can be learned from the critical and timely scientific inquiries posed by
-COVID-19 vaccine trials. Chapter~\ref{four} examines path-specific causal
-effects (i.e., causal mediation analysis), formulated based upon stochastic
-interventions, introducing a new class of direct and indirect effect parameters
-robust to intermediate confounding. Developing non/semi-parametric efficient
-techniques for the flexible estimation of these path-specific effects
-facilitates their use in quantifying mechanistic knowledge and extracting
-actionable insights from modern, large-scale studies. Chapter~\ref{five}
-discusses open source software packages for causal inference, which implement
-the statistical methodology discussed prior. Chapter~\ref{six} concludes with
-a discussion of avenues that may motivate future research.
+This dissertation, divided into six chapters, extends theory and methods for
+non/semi-parametric causal inference in settings with continuous treatments,
+with particular attention paid to issues emerging from biased sampling designs
+and path-specific causal effects. Throughout, \textit{stochastic treatment
+regimes}, or stochastic interventions, are leveraged to provide a single,
+unifying framework for formalizing such causal inference problems.
+
+Chapter~\ref{one} considers estimation of the generalized propensity score,
+a quantity critical to estimating the causal effects of stochastic
+interventions. We formulate algorithms for flexibly estimating it using the
+highly adaptive lasso, a nonparametric regression estimator. We then develop
+a novel inverse probability weighted estimator of these types of causal effects
+and demonstrate its ability to achieve the non/semi-parametric efficiency bound
+in numerical experiments.
+
+Chapter~\ref{two} focuses on the application of the causal effects of stochastic
+interventions in real-world studies that rely upon outcome-dependent two-phase
+sampling (e.g., case-cohort designs). The work includes a methodological advance
+that unites techniques for estimating the causal effects of stochastic
+interventions with corrections for biased sampling, allowing for these complex
+causal parameters to be efficiently estimated under such designs. Motivated by
+the aims of an HIV vaccine efficacy trial, this contribution allows researchers
+to probe how vaccination-induced immunogenicity of candidate immune correlates
+of protection may best be modulated by future vaccines, and the proposed
+methodology is demonstrated through a re-analysis of this trial's data.
+
+The COVID-19 pandemic took the world by storm during the final year of this
+work. Chapter~\ref{three} generalizes the methodology proposed in
+Chapter~\ref{two} to help maximize what can be learned from the critical
+scientific questions posed by vaccine trials to combat COVID-19. These
+developments have served as part of the immune correlates analyses of the
+COVID-19 Prevention Network, a large-scale collaboration organized by the
+National Institute of Allergy and Infectious Diseases.
+
+Chapter~\ref{four} examines path-specific causal effects formulated via
+stochastic interventions and broadens the scope of the general framework of
+causal mediation analysis. In particular, this work introduces a new class of
+direct and indirect effect parameters robust to intermediate confounding.
+Developing non/semi-parametric efficient techniques for the flexible estimation
+of these path-specific effects facilitates their use in quantifying mechanistic
+knowledge and extracting actionable insights from modern, large-scale studies.
+
+Chapter~\ref{five} discusses the role of open source software and reproducible
+research in statistics and allied computational sciences. Three software
+packages for statistical causal inference, each implementing elements of the
+statistical methodology discussed prior, are introduced.
+
+Chapter~\ref{six} concludes with a discussion of interesting avenues that may
+motivate future research.
 
 \end{abstract}

@@ -395,7 +395,7 @@
 
   \begin{center}
     \fmfont
-    \textbf{\@title}\par
+    \@title\par
     \vspace{14pt minus 4pt}
     by \par
     {\@author}\par
@@ -502,7 +502,7 @@ The \@dissertation of {\@author}, titled {\@title}, is approved:
 \thispagestyle{empty}
 \begin{center}
 {\fmfont
-{\bfseries\@title}\par
+{\@title}\par
 \vspace{1in}
 Copyright \@degreeyear\par
 by\par
@@ -535,8 +535,7 @@ by\par
 \vspace{.1in}
 {\@degree} in \@field\par
 \ifdefined\@emphasis
-  and the Designated Emphasis in\par
-  {\@emphasis}\par
+  Designated Emphasis in {\@emphasis}\par
 \fi
 \vspace{.1in}
 University of California, {\@campus}\par
