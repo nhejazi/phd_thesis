@@ -2,94 +2,103 @@
 
 \section{Towards ``Really Reproducible'' Research}
 
-The introduction of electronic computation had a transformative impact on the
-discipline of statistics, especially in the development of novel statistical
-methodology and the practice of statistical data analysis. Modern statistical
-techniques rely heavily upon the widespread availability of personal computers
-and high-performance computing systems, and, today, some of the most well-known
-and influential procedures in statistical estimation and inference --- such as
-ensemble machine learning~\citep{vdl2007super}, the
-jackknife~\citep{efron1981nonparametric}, or the
+Electronic computation has had a transformative impact on the discipline of
+statistics, both in the development of novel statistical methodology and the
+practice of statistical data analysis. Modern statistical techniques rely
+heavily upon the widespread availability of personal computers and
+high-performance computing systems, and, today, some of the most well-known and
+influential procedures for statistical estimation and inference --- including
+ensemble machine learning~\citep{wolpert1992stacked, breiman1996stacked,
+vdl2007super}, the jackknife~\citep{efron1981nonparametric}, and the
 bootstrap~\citep{efron1981nonparametric, efron1994introduction,
-davison1997bootstrap} --- presume access to significant computational resources.
-The ease of access to computing resources, coupled with the ever-increasing
-capabilities of modern computing systems, has allowed tremendous strides in not
-only how statistical methods are developed but in the range of scientific
+davison1997bootstrap} --- presume the availability of significant computational
+resources. The ease of access to and reliability of modern computing systems,
+coupled with their ever-increasing capabilities, has allowed tremendous strides
+in not only how statistical methods are developed but in the range of scientific
 problems to which they may be applied. Despite these advances, critical lessons
-and pratices for facilitating the reproducibility of computational science work,
-readily absorbed by allied disciplines, were left largely unheeded by
-statisticians for most of the twentieth and early twenty-first centuries.
+and pratices for facilitating the reproducibility of findings from the
+computational sciences, readily absorbed by allied disciplines, were left
+largely unheeded by statisticians for most of the twentieth and early
+twenty-first centuries.
 
 An early call to embrace computing and programming was issued
 by~\citet{tukey1962future}, who saw such activities as critical to the next
-generation of statistical data analysis. While Tukey's prominence afforded his
-timely concerns visibility, only a small fraction of the total academic effort
-in statistics research became concentrated upon the inception and improvement of
-standards for statistical programming, computing, and
-graphics~\citep{becker1984s, becker1988new, ihaka1996r} or the complementary
-paradigm of literate programming~\citep{knuth1984literate}. Cross-talk between
-statistics and related computationally intensive sciences led to further concern
-about the state of reproducibility of computational work. For example, as
-lessons learned from their development of \textit{Wavelab}, a robust software
-toolkit for wavelet analysis, \citet{buckheit1995wavelab} bemoaned that the
-``release of software underlying scientific publication is the exception rather
-than the rule'' and simultaneously observed that, with respect to scientific
-publications, ``the actual scholarship is the complete software development
-environment and the complete set of instructions which generated the figures.''
-Fortunately, the decade leading to the recent emergence of the interdisciplinary
-field of data science~\citep{donoho2017fifty} has been marked by a renewed and
-fervent interest in these key areas.
-
-\citep{perez2013literate}
+generation of developments in statistical data analysis. While Tukey's
+prominence afforded his timely concerns visibility, only a very small fraction
+of the total academic effort in statistics research became concentrated upon the
+inception and improvement of standards for statistical programming, computing,
+and graphics~\citep{becker1984s, becker1988new, ihaka1996r} or on the
+complementary paradigms of literate programming~\citep{knuth1984literate} and
+literate computing~\citep{perez2013literate}. Cross-talk between statistics and
+related computationally intensive sciences led to further concern about the
+state of reproducibility in computational research. For example, as lessons
+learned from their development of \textit{Wavelab}, a robust software toolkit
+for wavelet analysis, \citet{buckheit1995wavelab} bemoaned the lack of
+availability of scientific software, remarking that the ``release of software
+underlying scientific publication is the exception rather than the rule'' while
+simultaneously observing that, with respect to scientific publications, ``the
+actual scholarship is the complete software development environment and the
+complete set of instructions which generated the figures.'' Fortunately, the
+decades leading to the recent emergence of the interdisciplinary field of data
+science~\citep{donoho2017fifty} have been marked by a renewed and fervent
+interest in open source software development and reproducible research.
 
 As we move into an era in which sophisticated statistical techniques are
 routinely deployed for rigorously evaluating scientific claims of global
 concern, such as the vaccine efficacy trials discussed in Chapters~\ref{two}
 and~\ref{three}, the availability and adoption of robust statistical software
-will play a key role in enhancing the transparency inherent to the scientific
-process. That is, the conscientious use of modern statistical methodology alone
-has become insufficient for the practice of open science. For transparent
-scientific practice to thrive, user-friendly software will need to become the
-norm, rather than the exception, as has historically been the
-case~\citep{stromberg2004write, pullenayegum2016knowledge}. We hold that such
-software is characterized by
-\begin{enumerate}[itemsep=-1ex]
-  \item clear, easily accessible, highly detailed documentation, including
-      examples produced with literate programming tools like Jupyter
-      notebooks~\citep{kluyver2016jupyter, granger2021jupyter} or \texttt{R}
-      Markdown~\citep{xie2018r};
-   \item rigorous unit testing to assess computing workflows and data structures
-      (e.g., functions, classes, and methods);
-  \item automated continuous integration, ensuring accessibility across systems
-       and near-constant monitoring of software quality; and
-  \item open source development, embodying an ongoing, continuous, public
-      peer review of the research product.
+will undoubtedly play a central role in enhancing the transparency inherent to
+the scientific process. That is, the conscientious use of modern statistical
+methodology alone has become insufficient for the practice of open science. For
+transparent scientific practice to thrive, user-friendly software will need to
+become the norm, rather than the exception, as has historically been the
+case~\citep{stromberg2004write, pullenayegum2016knowledge}. Such software is
+characterized by at least five essential characteristics.
+\begin{enumerate}[topsep=0.5pt,itemsep=0pt,partopsep=1ex,parsep=1ex]
+  \item Clear, easily accessible, highly detailed documentation of all
+       code-derived interfaces and objects, whether developer-oriented or
+       user-facing.
+   \item Rigorous and focused testing to assess programmatic procedures (e.g.,
+       functions, classes, methods) and data structures (e.g., the
+       ubiquitous data frame).
+  \item In-depth examples using literate programming documents that blend
+      executable code with prose (e.g., \texttt{RMarkdown}~\citep{xie2018r}) or
+      literate computing notebooks that promote the interactive development of
+      computation \textit{informed by data} (e.g., Jupyter
+      notebooks~\citep{kluyver2016jupyter, granger2021jupyter}).
+  \item Open source development, embodying an ongoing, continuous, public
+       peer review of the research product.
+  \item The automated, near-constant monitoring of software quality through
+      continuous integration services, ensuring accessibility across diverse
+      computer systems and architectures.
 \end{enumerate}
-Such software will allow the scientific community --- and possibly even the
-public at large --- to directly access the published results of scientific
-investigations. Such practices for reproducible research in statistics and
-allied computational sciences have been the subject of much
-discussion~\citep[e.g.,][]{peng2009reproducible, peng2011reproducible,
-stodden2014implementing, kitzes2017practice, millman2018developing}; however, in
-many academic circles, the core aspects of software development are still viewed
-as an ancillary activity, rather than as a primary pursuit.
+By displaying these characteristics, software for statistics can empower the
+scientific community --- and possibly even the public at large --- to directly
+access the published results of scientific investigations. Practices for
+reproducible research in statistics and allied computational sciences have been
+the subject of much discussion~\citep[e.g.,][]{peng2009reproducible,
+peng2011reproducible, stodden2014implementing, kitzes2017practice,
+millman2018developing}; however, in many academic circles, the core aspects of
+software development are still viewed as an ancillary activity, rather than as
+a primary pursuit.
 
 As the fields of statistics and data science continue to co-develop in the
 coming decades, statisticians will be challenged by questions that highlight the
-importance of software to the field, including, for example, (1) how a theorem
-(or similar mathematical result) could impact science except through software,
-or (2) how software implementations could reveal important insights about the
-computational bottlenecks of newly developed statistical methodology. Recalling
-an anecdote of~\citet{buckheit1995wavelab}, we note that, without continued
-investment in the development and promotion of open source software standards,
-``a year [will continue to be] a long time in this business,'' as the
-application of existing statistical methodology to newly produced datasets will
-be marked by the unreliability and instability of accompanying software. We hope
-that such occurrences will become exceedingly rare. To that end, we next present
-three open source software packages, each developed to implement distinct
-statistical methods described in this body of work. Written for the \texttt{R}
-programming language~\citep{R}, the unrestricted source for each package is
-available on the GitHub platform for collaborative programming; moreover, each
+importance of software to the field. Such questions include, for example, (1)
+how a theorem, or similar mathematical result, can significantly impact science
+\textit{except through software}, or (2) in what ways software implementations
+can readily reveal important insights about the computational bottlenecks of
+newly developed statistical methodology. Recalling an anecdote
+of~\citet{buckheit1995wavelab}, we note that, without continued investment in
+the development and promotion of open source software standards, ``a year [will
+continue to be] a long time in this business,'' as the application of existing
+statistical methodology to newly procured datasets will be marked by the
+unreliability and instability of accompanying software. We hope that such
+occurrences will become exceedingly rare. To that end, we next present three
+open source software packages, each developed to implement distinct statistical
+methods described in this greater body of work. Written for the \texttt{R}
+programming language~\citep{R}, the unrestricted source code for each package is
+available on the collaborative programming platform GitHub; moreover, each
 package is accompanied by online documentation, a suite of unit tests, and
 automated quality control through continuous integration services.
 
@@ -212,7 +221,7 @@ intervention direct effect and the population intervention indirect effect,
 based on the effect decomposition of the population intervention effect
 introduced in~\citet{diaz2020causal}.
 
-To proceed, we'll use as our running example a simple data set from an
+To proceed, we will use as our running example a simple data set from an
 observational study of the relationship between BMI and kids behavior,
 distributed as part of the \texttt{mma} \texttt{R} package on the Comprehensive
 \texttt{R} Archive Netowrk (\url{https://CRAN.R-project.org/package=mma}).
@@ -362,17 +371,17 @@ standard decomposition of the average treatment effect. In the sequel, we will
 compute each of the components of the direct and indirect effects above using
 appropriate estimators as follows.
 
-\begin{itemize}
+\begin{itemize}[topsep=0pt,itemsep=0pt,partopsep=1ex,parsep=1ex]
 \item For $\mathbb{E}\{Y(A, Z)\}$, the sample mean $\frac{1}{n}\sum_{i=1}^n
   Y_i$ is sufficient;
 \item for $\mathbb{E}\{Y(A_{\delta}, Z)\}$, an efficient one-step estimator for
   the effect of a joint intervention altering the exposure mechanism but not the
   mediation mechanism, as proposed in~\citet{diaz2020causal}; and,
 \item for $\mathbb{E}\{Y(A_{\delta}, Z_{A_{\delta}})\}$, an efficient one-step
-  estimator for the effect of a joint intervention altering both the exposure
-  and mediation mechanisms, as proposed in~\citet{kennedy2017nonparametric} and
-  implemented in the \texttt{npcausal} \texttt{R}
-  package (\url{https://github.com/ehkennedy/npcausal}).
+  estimator for the effect of a joint intervention on both the exposure and and
+  mediator(s), as proposed in~\citet{kennedy2017nonparametric} and implemented
+  in the \texttt{npcausal} \texttt{R} package
+  (\url{https://github.com/ehkennedy/npcausal}).
 \end{itemize}
 
 \subsection{Estimating the Effect Decomposition Term}
@@ -518,15 +527,13 @@ literature~\citep[e.g.,][]{zhu2015boosting}. Notably, \citet{diaz2011super} gave
 a proposal for constructing semiparametric estimators of such a target quantity
 based on exploiting the relationship between the hazard and density functions.
 Our proposal builds upon theirs in several key ways.
-
-\begin{enumerate}
+\begin{enumerate}[topsep=0.5pt,itemsep=0pt,partopsep=1ex,parsep=1ex]
   \item We adjust their algorithm so as to incorporate sample-level weights,
      necessary for making use of sample-level weights (e.g., inverse probability
      of censoring weighting).
   \item We replace the use of arbitrary classification models with the highly
   adaptive lasso.
 \end{enumerate}
-
 While our first modification is general and may be applied to the estimation
 strategy of~\citet{diaz2011super}, our latter contribution requires adjusting
 the penalization aspect of HAL regression models so as to respect the use of
@@ -573,7 +580,7 @@ In its original proposal, a key element of this procedure was the use of any
 arbitrary classification procedure for estimating $\mathbb{P}(A \in
 [\alpha_{t-1}, \alpha_t) \mid W)$, facilitating the incorporation of flexible,
 data adaptive estimators. We alter this proposal in two ways.
-\begin{enumerate}
+\begin{enumerate}[topsep=0.5pt,itemsep=0pt,partopsep=1ex,parsep=1ex]
   \item Replace the arbitrary estimator of $\mathbb{P}(A \in [\alpha_{t-1},
       \alpha_t) \mid W)$ with HAL regression~\citep{vdl2015generally,
       benkeser2016highly,vdl2017generally}, as implemented in the
