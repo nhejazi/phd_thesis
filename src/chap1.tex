@@ -840,7 +840,7 @@ that, as an integral aspect of both of these contributions, we provide, to or
 knowledge, the first demonstration of the undersmoothing of conditional density
 estimators.
 
-\subsubsection{Targeted Undersmoothing, with the Influence Function}
+\subsubsection{Targeted Undersmoothing, Exploiting the Influence Function}
 
 In order to select an IPW estimator from the grid $\{\psi_{n,\delta,\lambda}:
 \lambda_1, \ldots, \lambda_K \}$ based on the EIF, it is necessary to re-express
@@ -849,7 +849,8 @@ via projection of this latter object onto the space of all functions of $A$ that
 are mean-zero conditional on $W$~\citep{robins1994estimation,vdl2003unified}.
 In this direction, our developments follow closely those
 of~\citet{ertefaie2020nonparametric}. To proceed, we note that the stabilized
-IPW estimator, a minor adaptation of the estimator of equation~\ref{eqn:ipw}, is
+IPW estimator, a minor adaptation of the estimator of equation~\eqref{eqn:ipw},
+is
 \begin{equation}\label{eqn:ipw_stable}
   \psi_{n,\delta}^{\text{IPW}} = \frac{1}{n} \sum_{i=1}^n
   \frac{\{g_{n, A}(d^{-1}(A_i, W_i) \mid W_i) / g_{n, A}(A_i \mid W_i)\}}{
@@ -862,14 +863,14 @@ this estimator takes the form:
   U_{g_A}(O; \Psi)(P) = \frac{g_{n, A}(d^{-1}(A, W) \mid W)}
     {g_{n, A}(A \mid W)}(Y - \Psi(P)).
 \end{equation}
-Note that the IPW estimator appearing in equation~\ref{eqn:ipw_stable} is simply
-a solution to the estimating function given in equation~\ref{eqn:ipw_ee}.
-We now present Lemma~\ref{lemma:dcar}, which explicitly characterizes the
-required form of the EIF.
+Note that the IPW estimator appearing in equation~\eqref{eqn:ipw_stable} is
+simply a solution to the estimating function given in
+equation~\eqref{eqn:ipw_ee}. We now present Lemma~\ref{lemma:dcar}, which
+explicitly characterizes the required form of the EIF.
 \begin{lemma}[IPW representation of the EIF]\label{lemma:dcar}
-  Let $D^{\star}(P)$ denote the EIF (equation~\ref{eqn:eif_full}) and let
+  Let $D^{\star}(P)$ denote the EIF (equation~\eqref{eqn:one_eif_full}) and let
   $U_{g_A}(\Psi)$ denote the IPW estimating function
-  (equation~\ref{eqn:ipw_ee}). Then, the projection of $U_{g_A}(\Psi)$ onto
+  (equation~\eqref{eqn:ipw_ee}). Then, the projection of $U_{g_A}(\Psi)$ onto
   $T_{\text{CAR}}$, the tangent space of all functions of $A$ that are
   mean-zero, conditional on $W$, yields $D^{\star}(P) = U_{g_A}(\Psi)(P)
   - D_{\text{CAR}}(P)$, where the latter term is of the form
@@ -899,7 +900,7 @@ second term. Our selector is then
     Q_{n,Y}) \rvert .
 \end{equation*}
 
-\subsubsection{Agnostic Undersmoothing, without the Influence Function}
+\subsubsection{Agnostic Undersmoothing, Eschewing the Influence Function}
 
 As demonstrated in the preceding section, explicit characterization of the form
 of the EIF in a manner amenable to the selection of an IPW estimator can prove
