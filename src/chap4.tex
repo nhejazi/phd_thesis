@@ -373,7 +373,7 @@ however, their contributions assume the absence of intermediate confounding.
 
 \subsection{Stochastic Mediation Effects}
 
-\cite{diaz2020causal} defined the (in)direct effect of $A$ on $Y$ in
+\citet{diaz2020causal} defined the (in)direct effect of $A$ on $Y$ in
 terms of a decomposition of the total effect of a stochastic
 intervention. In particular, the total effect $\E(Y - Y_{A_\delta})$ may be
 decomposed as the sum of the population intervention direct and indirect effects
@@ -401,37 +401,37 @@ effects~\citep{vanderweele2014effect} resolve, though their limitation to static
 interventions and binary exposures is too significant a limitation. Next, we
 present a solution to this complication using a joint stochastic intervention on
 the exposure $A$ and mediator $Z$. We also show that the effects defined in this
-paper are a generalization of the effects of~\cite{diaz2020causal} in the sense
+paper are a generalization of the effects of~\citet{diaz2020causal} in the sense
 that the former reduce to the latter in the absence of intermediate confounding.
 
 \subsection{Stochastic Interventional Mediation Effects}
 
 To introduce (in)direct effects robust to the presence of intermediate
 confounders, we draw upon ideas first outlined
-by~\cite{didelez2006direct},~\cite{petersen2006estimation},
-and~\cite{vdl2008direct}, all subsequently formalized
-by~\cite{vanderweele2014effect} and~\cite{vansteelandt2017interventional}. Owing
-to their definition in terms of stochastic interventions on the mediator, these
-(in)direct effects have been collectively termed \emph{interventional effects}.
-We leverage two types of stochastic interventions: one on the treatment $A$,
-which defines the intervention of interest, and one on the mediator $Z$, which
-is used to achieve identifiability of the effects. Following the convention of
-the literature, we term stochastic interventions on the mediator $Z$
-\textit{interventional}, while reserving the label of \textit{stochastic} to
-refer only to interventions on the treatment $A$. To proceed, let $G_\delta$
-denote a random draw from the distribution of $Z_{A_\delta}$ conditional on
-$(A_\delta, W)$, and let $G$ denote a random draw from the distribution of $Z$
-conditional on $(A, W)$. We consider the effect defined by $\psi_\delta
-= \E_c\{Y_{A,G} - Y_{A_\delta,G_\delta}\}$. Note that the effect $\psi_{\delta}$
-is distinct from the effect considered by~\cite{diaz2020causal}, which may be
-expressed $\E_c\{Y_{A,Z} - Y_{A_\delta,Z_\delta}\}$. The effect $\psi_\delta$
-arises from fixing the mediator to a random value chosen from its distribution
-among all those with a particular treatment level, rather than fixing it to what
-it would have been under a particular (static) treatment. Defining the effect in
-this way aids in achieving an identifiable decomposition into direct and
-indirect effects. In particular, we may decompose this effect in terms of
-interventional stochastic \textit{direct effects (DE)} and \textit{indirect
-effects (IE)}:
+by~\citet{didelez2006direct},~\citet{petersen2006estimation},
+and~\citet{vdl2008direct}, all subsequently formalized
+by~\citet{vanderweele2014effect} and~\citet{vansteelandt2017interventional}.
+Owing to their definition in terms of stochastic interventions on the mediator,
+these (in)direct effects have been collectively termed \emph{interventional
+effects}. We leverage two types of stochastic interventions: one on the
+treatment $A$, which defines the intervention of interest, and one on the
+mediator $Z$, which is used to achieve identifiability of the effects. Following
+the convention of the literature, we term stochastic interventions on the
+mediator $Z$ \textit{interventional}, while reserving the label of
+\textit{stochastic} to refer only to interventions on the treatment $A$. To
+proceed, let $G_\delta$ denote a random draw from the distribution of
+$Z_{A_\delta}$ conditional on $(A_\delta, W)$, and let $G$ denote a random draw
+from the distribution of $Z$ conditional on $(A, W)$. We consider the effect
+defined by $\psi_\delta = \E_c\{Y_{A,G} - Y_{A_\delta,G_\delta}\}$. Note that
+the effect $\psi_{\delta}$ is distinct from the effect considered
+by~\citet{diaz2020causal}, which may be expressed $\E_c\{Y_{A,Z}
+- Y_{A_\delta,Z_\delta}\}$. The effect $\psi_\delta$ arises from fixing the
+mediator to a random value chosen from its distribution among all those with
+a particular treatment level, rather than fixing it to what it would have been
+under a particular (static) treatment. Defining the effect in this way aids in
+achieving an identifiable decomposition into direct and indirect effects. In
+particular, we may decompose this effect in terms of interventional stochastic
+\textit{direct effects (DE)} and \textit{indirect effects (IE)}:
 \begin{equation}\label{eqn:pie_decomp}
   \psi(\delta) = \overbrace{\E\{Y_{A, G} -
     Y_{A_\delta, G}\}}^{\text{DE}} +
@@ -485,7 +485,7 @@ end, we introduce the following identification assumptions:
 \end{assumptioniden}
 
 Under these assumptions, we have the following identification results. A proof
-is available in the \ref{sm}.
+is available in Section~\ref{sm}.
 
 % Assumption
 % \ref{cond:cet}\ref{cond:cetii} is the standard assumption that $A$ is
@@ -528,14 +528,14 @@ analyses~\citep[e.g., ][]{vanderweele2014effect} require positivity assumptions
 on the treatment and mediation mechanisms. The stochastic intervention framework
 we adopt does not require such assumptions, as positivity can be arranged by
 definition of $\g_\delta$. For example, the interventions in expressions
-(\ref{eq:defdshift}) and (\ref{eq:tilt}) satisfy assumption~\ref{ass:cs} by
+\eqref{eq:defdshift} and \eqref{eq:tilt} satisfy assumption~\ref{ass:cs} by
 definition. The interested reader is encouraged to
-consult~\cite{kennedy2019nonparametric} and~\cite{diaz2020causal} for
+consult~\citet{kennedy2019nonparametric} and~\citet{diaz2020causal} for
 a discussion on this topic.
 
 Another consequence of this identification result is that the definitions
-(\ref{eq:defpsi}) reduce to the stochastic (in)direct effects
-of~\cite{diaz2020causal} in the absence of intermediate confounders $L$.
+\eqref{eq:defpsi} reduce to the stochastic (in)direct effects
+of~\citet{diaz2020causal} in the absence of intermediate confounders $L$.
 Importantly, this implies that our estimators can be safely used in the absence
 of intermediate confounders; furthermore, it implies that the corresponding
 estimates may be interpreted in terms of a decomposition of the population
@@ -543,7 +543,7 @@ intervention effect $\E_c\{Y - Y_{A_\delta}\}$, which is arguably of more
 scientific interest than the interventional effect $\psi_\delta = \E_c\{Y_{A,G}
 - Y_{A_\delta,G_\delta}\}$.
 
-As is clear from the definition (\ref{eq:defpsi}), evaluation of $\psid$ and
+As is clear from the definition \eqref{eq:defpsi}, evaluation of $\psid$ and
 $\psii$ requires access to $\theta_{1,0}$, the population mean in the absence of
 any intervention on the treatment mechanism, as well as both of $\theta_{1,
 \delta}$ and $\theta_{2,\delta}$, which are based on the post-intervention
