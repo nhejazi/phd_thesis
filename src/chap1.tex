@@ -52,7 +52,8 @@ values of the outcome variable, allowing for the subsequent straightforward
 application of standard, well-studied parameters (e.g., the average treatment
 effect) and corresponding well-established estimators. Despite their
 convenience, such coarsening strategies come at the cost of ignoring fundamental
-scientific knowledge about the system under study.
+scientific knowledge about the system under study and lead to significant bias
+when certain implicit assumptions are unsatisfied~\citep{stitelman2010impact}.
 
 The consideration of continuous treatment variables leads to a host of
 complications for the formulation, identification, and estimation of causal
@@ -922,11 +923,11 @@ birge2001alternative}.
 
 The formulation of such EIF-agnostic selection procedures for undersmoothing
 aims to produce selections similar to those given by the targeted procedures ---
-that is, while the agnostic selectors do no explicitly use the form of the EIF,
+that is, while the agnostic selectors do not explicitly use the form of the EIF,
 their selections must still solve the EIF in order to asymptotically attain the
 nonparametric efficiency bound. Our first proposal in this class balances
-changes along the regularization sequence $\{\lambda_1, \ldots, \lambda_K \}$,in
-the IPW estimator $\psi_{n,\delta,\lambda}$ against changes in its estimated
+changes along the regularization sequence $\{\lambda_1, \ldots, \lambda_K \}$,
+in the IPW estimator $\psi_{n,\delta,\lambda}$ against changes in its estimated
 variance $\sigma_{n,\lambda}$. This selection $\lambda_n$ is merely the first
 element of $\lambda_1, \ldots, \lambda_K$ for which the condition
 \begin{equation}\label{eqn:plateau_var_cond}
@@ -935,7 +936,7 @@ element of $\lambda_1, \ldots, \lambda_K$ for which the condition
  \sigma_{n,\lambda_j}]_{j=1}^{K-1}
 \end{equation}
 is met. Note that $Z_{(1-\alpha/2)}$ is the $(1-\alpha/2)$\textsuperscript{th}
-quantile of the standard normal distribution, useful for the construction of
+quantile of the standard normal distribution, used for the construction of
 Wald-style confidence intervals. While we recommend the use of the stabilized
 IPW estimator of equation~\eqref{eqn:ipw_stable} in the criterion, there are
 several choice of the standard error estimate $\sigma_{n,\lambda}$. For ease of
@@ -1216,14 +1217,16 @@ previously absent from the causal inference literature. To further improve our
 IPW estimators, we outlined several selection procedures, to be used in tandem
 with undersmoothing of our proposed HAL-based conditional density estimators, to
 allow these novel IPW estimators to achieve the nonparametric efficiency bound,
-a property previously attainable by doubly robust estimators. In numerical
-experiments, we examined the relative performance our nonparametric IPW
-estimators, demonstrating their capability to achieve low bias and attain the
-efficiency bound in some examples. Several avenues for future investigation
-remain, including potential improvements to doubly robust estimators that
-incorporate undersmoothing of the generalized propensity score, which may
-exhibit higher-order types of efficiency or make doubly robust
-inference~\citep[e.g.,][]{benkeser2017doubly} possible, and the extension of our
+a property previously attainable only within doubly robust estimation
+frameworks. In numerical experiments, we examined the relative performance our
+nonparametric IPW estimators, demonstrating their capability to achieve low bias
+and attain the efficiency bound in some examples. Several avenues for future
+investigation remain, including potential improvements to doubly robust
+estimators by incorporating undersmoothing of the generalized propensity score,
+which may yield higher-order efficiency or accommodate doubly robust
+inference~\citep[e.g.,][]{benkeser2017doubly}; the extension of our
 nonparametric IPW estimators to more complex settings in which stochastic
 interventions have proven useful, including causal mediation
-analysis~\citep[e.g.,][]{diaz2020causal}.
+analysis~\citep[e.g.,][]{diaz2020causal}; and practical improvements to our
+IPW estimators, such as improving their stability via strategies for truncating
+the estimated inverse weights~\citep[e.g.,][]{bembom2008data, ju2019adaptive}.
